@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Claude Code Mandatory Training — Allianz Technology Thailand</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --blue:       #1565C0;
+    --blue-bg:    #EBF4FF;
+    --blue-border:#BBDEFB;
+    --green:      #2E7D32;
+    --green-bg:   #EEFBF0;
+    --green-border:#B7E4C7;
+    --purple:     #6A1B9A;
+    --purple-bg:  #F6EEFA;
+    --purple-border:#CE93D8;
+    --allianz:    #003781;
+    --text:       #1A1A2E;
+    --muted:      #5F6368;
+    --border:     #E0E0E0;
+    --bg:         #FAFAFA;
+    --white:      #FFFFFF;
+    --amber:      #E65100;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13.5px;
+    color: var(--text);
+    background: var(--white);
+    line-height: 1.6;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 28px;
+  }
+
+  a { color: var(--allianz); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── HEADER ── */
+  .header {
+    border-left: 5px solid var(--allianz);
+    padding: 0 0 0 20px;
+    margin-bottom: 36px;
+  }
+  .header .label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--allianz);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .header .sub {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--allianz);
+    margin: 36px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--allianz);
+  }
+
+  /* ── WHY CARDS ── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .why-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--allianz);
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .why-card .why-icon { font-size: 20px; margin-bottom: 8px; }
+  .why-card h4 { font-size: 12.5px; font-weight: 700; color: var(--allianz); margin-bottom: 6px; }
+  .why-card p  { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  .callout {
+    background: #EBF2FF;
+    border-left: 4px solid var(--allianz);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-size: 13px;
+    color: #1a1a2e;
+  }
+  .callout strong { color: var(--allianz); }
+
+  /* ── TRACK CARDS (at a glance) ── */
+  .track-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .track-card {
+    border-radius: 10px;
+    padding: 24px 20px;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+  }
+  .track-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    text-decoration: none;
+    color: var(--white);
+  }
+  .tc-blue   { background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%); }
+  .tc-green  { background: linear-gradient(135deg, #2E7D32 0%, #388E3C 100%); }
+  .tc-purple { background: linear-gradient(135deg, #6A1B9A 0%, #7B1FA2 100%); }
+
+  .track-card .tc-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+  }
+  .track-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .track-card .tc-who {
+    font-size: 12px;
+    opacity: 0.88;
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+  .track-card .tc-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .tc-pill {
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .track-card .tc-cta {
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0.9;
+    margin-top: 6px;
+  }
+
+  /* ── DELIVERY ── */
+  .delivery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .delivery-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    background: var(--bg);
+  }
+  .delivery-card .role-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--allianz);
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+  .delivery-card h4 { font-size: 13.5px; font-weight: 700; color: var(--allianz); margin-bottom: 6px; }
+  .delivery-card p  { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+
+  /* ── CERTIFICATION ── */
+  .cert-box {
+    background: #F5F8FF;
+    border: 1px solid #C8D9F0;
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .cert-box h4 { font-size: 13px; font-weight: 700; color: var(--allianz); margin-bottom: 8px; }
+  .cert-box p  { color: #333; line-height: 1.65; margin-bottom: 8px; }
+  .cert-box p:last-child { margin-bottom: 0; }
+  .cert-highlight {
+    background: #FFF8E1;
+    border-left: 3px solid #F9A825;
+    border-radius: 0 4px 4px 0;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: #5D4037;
+    margin-top: 10px;
+  }
+  .cert-highlight strong { color: #E65100; }
+
+  /* ── TRACK SECTION ── */
+  .track-block {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    scroll-margin-top: 24px;
+  }
+  .track-header { padding: 18px 22px; color: var(--white); }
+  .track-header h2 { font-size: 18px; font-weight: 800; margin-bottom: 3px; }
+  .track-header .track-meta { font-size: 12px; opacity: 0.88; }
+  .th-blue   { background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%); }
+  .th-green  { background: linear-gradient(135deg, #2E7D32 0%, #388E3C 100%); }
+  .th-purple { background: linear-gradient(135deg, #6A1B9A 0%, #7B1FA2 100%); }
+
+  .track-def {
+    padding: 12px 22px;
+    font-size: 12.5px;
+    color: #333;
+    border-bottom: 1px solid var(--border);
+  }
+  .track-def.def-blue   { background: var(--blue-bg); }
+  .track-def.def-green  { background: var(--green-bg); }
+  .track-def.def-purple { background: var(--purple-bg); }
+
+  .segments-bar {
+    padding: 10px 22px;
+    font-size: 11.5px;
+    color: var(--muted);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .segments-bar strong { color: var(--text); }
+
+  /* ── CURRICULUM TABLE ── */
+  .curriculum-table { width: 100%; border-collapse: collapse; }
+
+  .ct-subheader td {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 8px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sub-blue   td { background: var(--blue-bg);   color: var(--blue); }
+  .sub-green  td { background: var(--green-bg);  color: var(--green); }
+  .sub-purple td { background: var(--purple-bg); color: var(--purple); }
+  .sub-all    td { background: #F3F4F6; color: var(--muted); }
+
+  .ct-row td {
+    padding: 8px 22px;
+    border-bottom: 1px solid #F3F3F3;
+    vertical-align: top;
+  }
+  .ct-row:last-child td { border-bottom: none; }
+  .ct-row.alt td { background: var(--bg); }
+
+  .col-code  { width: 80px; font-size: 10.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .col-module { font-size: 13px; font-weight: 600; }
+  .col-module .mod-note { font-weight: 400; font-size: 11.5px; color: var(--muted); display: block; margin-top: 2px; }
+  .col-module .mod-pending { font-weight: 400; font-size: 11.5px; color: var(--amber); display: block; margin-top: 2px; }
+  .col-hours { width: 70px; text-align: right; font-size: 12px; font-weight: 700; white-space: nowrap; color: #444; }
+
+  .ct-total td {
+    padding: 10px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    background: var(--bg);
+    border-top: 2px solid var(--border);
+  }
+  .ct-total .total-hrs { text-align: right; }
+
+  /* ── OUTCOMES ── */
+  .outcomes {
+    padding: 14px 22px;
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+  .outcomes h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .outcomes ul {
+    padding-left: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 20px;
+  }
+  .outcomes ul li { font-size: 12px; color: #444; line-height: 1.5; }
+
+  /* ── ELECTIVES ── */
+  .electives-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .elective-card {
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .elective-card .el-track { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .elective-card h4 { font-size: 12.5px; font-weight: 600; margin-bottom: 4px; }
+  .elective-card p  { font-size: 11.5px; color: var(--muted); }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ── TABS ── */
+  .tab-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    margin-top: 12px;
+  }
+  .tab-btn {
+    padding: 13px 28px;
+    font-size: 13.5px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    background: #EEF2F8;
+    border: 2px solid #C8D9F0;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.18s ease;
+    letter-spacing: 0.01em;
+    box-shadow: none;
+  }
+  .tab-btn:hover {
+    background: #D9E6F7;
+    color: var(--allianz);
+    border-color: var(--allianz);
+  }
+  .tab-btn.active {
+    background: var(--allianz);
+    color: white;
+    border-color: var(--allianz);
+    box-shadow: 0 4px 14px rgba(0,55,129,0.25);
+    animation: none;
+  }
+  @keyframes pulse-tab {
+    0%   { box-shadow: 0 0 0 0 rgba(230,81,0,0.55); border-color: #FFAB76; color: var(--muted); }
+    50%  { box-shadow: 0 0 0 7px rgba(230,81,0,0); border-color: #E65100; color: #E65100; }
+    100% { box-shadow: 0 0 0 0 rgba(230,81,0,0.55); border-color: #FFAB76; color: var(--muted); }
+  }
+  #tab-btn-schedule:not(.active) {
+    animation: pulse-tab 2.4s ease-in-out infinite;
+    border-color: #FFAB76;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  @media print {
+    body { padding: 16px; font-size: 12px; }
+    .track-block { break-inside: avoid; }
+    .track-cards { break-inside: avoid; }
+    .no-print { display: none !important; }
+    .tab-panel { display: block !important; }
+    .tab-nav { display: none; }
+  }
+
+  /* ═══════════════════════════════════════════════
+     SCHEDULE SECTION STYLES
+  ═══════════════════════════════════════════════ */
+  .sched-section-title{font-size:13.5px;font-weight:700;color:var(--allianz);margin:24px 0 10px;padding-bottom:7px;border-bottom:2px solid var(--allianz);}
+  .no-print{} /* placeholder for screen-only elements */
+  .summary-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:18px;}
+  .sc{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+  .sc .sc-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px;}
+  .sc .sc-val{font-size:20px;font-weight:800;color:var(--allianz);}
+  .sc .sc-sub{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;}
+  .callout-sched{padding:11px 16px;border-radius:0 6px 6px 0;margin-bottom:14px;font-size:12px;line-height:1.65;}
+  .callout-blue-s{background:#EBF4FF;border-left:4px solid var(--allianz);color:#1a1a2e;}
+  .callout-amber-s{background:#FFF3E0;border-left:4px solid var(--amber);color:#4E342E;}
+  .callout-blue-s strong{color:var(--allianz);}
+  .callout-amber-s strong{color:var(--amber);}
+  .how-to{background:white;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:24px;}
+  .how-to h3{font-size:13px;font-weight:700;color:var(--allianz);margin-bottom:12px;}
+  .reg-steps{display:flex;flex-direction:column;gap:10px;}
+  .reg-step{display:flex;gap:12px;align-items:flex-start;}
+  .reg-step-num{width:24px;height:24px;background:var(--allianz);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;margin-top:1px;}
+  .reg-step-body{font-size:12px;color:var(--muted);line-height:1.6;}
+  .reg-step-body strong{color:var(--text);display:inline;margin-right:6px;font-size:12px;}
+  .sched-track-section{margin-bottom:32px;}
+  .sched-track-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:8px 8px 0 0;color:white;}
+  .sched-track-header h2{font-size:15px;font-weight:800;}
+  .sched-track-header .track-meta{font-size:11.5px;opacity:.88;text-align:right;}
+  .sched-track-header .track-meta strong{display:block;font-size:13px;}
+  .mandatory-bar{display:flex;align-items:center;gap:10px;padding:10px 16px;font-size:12px;line-height:1.55;}
+  .mandatory-blue{background:#FFF8E1;border:1px solid #FFE082;border-top:none;color:#5D4037;}
+  .mandatory-green{background:#FFF8E1;border:1px solid #FFE082;border-top:none;color:#5D4037;}
+  .mandatory-purple{background:#FFF8E1;border:1px solid #FFE082;border-top:none;color:#5D4037;}
+  .mandatory-icon{font-size:15px;flex-shrink:0;}
+  .mandatory-bar strong{color:#E65100;}
+  .table-wrap{overflow-x:auto;border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;background:white;}
+  table.matrix{width:100%;border-collapse:collapse;min-width:600px;}
+  table.matrix thead tr th{background:#F0F4FA;color:var(--allianz);font-size:11px;font-weight:700;padding:9px 10px;text-align:center;border-bottom:2px solid var(--border);border-right:1px solid var(--border);white-space:nowrap;}
+  table.matrix thead tr th.sess-col{text-align:left;width:230px;min-width:230px;}
+  table.matrix thead tr th:last-child{border-right:none;}
+  table.matrix thead tr th .cohort-num{font-size:13px;font-weight:800;display:block;color:var(--allianz);}
+  table.matrix thead tr th .cohort-cap{font-size:10px;font-weight:400;color:var(--muted);display:block;}
+  table.matrix thead tr th .cohort-start{font-size:10px;color:var(--muted);display:block;margin-top:1px;}
+  table.matrix tbody tr{border-bottom:1px solid #F0F0F0;}
+  table.matrix tbody tr:last-child{border-bottom:none;}
+  .cell-done{background:#E8F5E9!important;}
+  .cell-done .dc-date{color:#2E7D32;font-weight:700;}
+  .cell-done .dc-day{color:#4CAF50;}
+  .dc-done{font-size:10px;font-weight:700;color:#2E7D32;margin-top:3px;}
+  .badge-completed{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#E8F5E9;color:#1B5E20;margin-left:6px;vertical-align:middle;}
+  .sess-completed{background:#F1FBF3!important;}
+  .sess-info-cell{padding:10px 12px;border-right:2px solid var(--border);vertical-align:top;background:#FAFBFF;}
+  .si-num{font-size:12.5px;font-weight:700;color:var(--allianz);margin-bottom:2px;}
+  .si-fac{font-size:11px;color:var(--muted);margin-bottom:3px;}
+  .si-dur{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;margin-bottom:4px;}
+  .dur-ok{background:#E8F5E9;color:#1B5E20;}
+  .dur-warn{background:#FFF3E0;color:#E65100;}
+  .si-topics{font-size:10.5px;color:#555;line-height:1.5;}
+  .date-cell{padding:8px 6px;text-align:center;border-right:1px solid #F0F0F0;vertical-align:middle;min-width:95px;}
+  .date-cell:last-child{border-right:none;}
+  .dc-date{font-size:12px;font-weight:700;color:var(--text);}
+  .dc-day{font-size:10.5px;color:var(--muted);margin-top:1px;}
+  .dc-time{font-size:10px;color:var(--muted);margin-top:2px;}
+  .dc-note{font-size:9.5px;color:#E65100;margin-top:1px;}
+  .cell-tbc{background:#FFF8F0;}
+  .cell-tbc .dc-date{color:#BF360C;font-size:11px;font-style:italic;}
+  .cell-tbc .dc-day{color:#e0a090;}
+  .row-t1 .sess-info-cell{border-left:3px solid var(--blue);}
+  .row-t2 .sess-info-cell{border-left:3px solid var(--green);}
+  .row-t3 .sess-info-cell{border-left:3px solid var(--purple);}
+  .row-ph .sess-info-cell{background:#FFFAF5;}
+  table.matrix tbody tr:hover td{background:#F8FCFF;}
+  table.matrix tbody tr:hover .sess-info-cell{background:#F0F5FF;}
+  table.matrix tbody tr:hover .cell-tbc{background:#FFF0E8;}
+  .ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
+  .ref-card{background:white;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  .ref-card-head{padding:9px 14px;font-size:11.5px;font-weight:700;color:white;}
+  .rh-blue{background:var(--blue);}
+  .rh-green{background:var(--green);}
+  .ref-card table{width:100%;border-collapse:collapse;}
+  .ref-card table td{padding:7px 12px;border-bottom:1px solid #F3F3F3;font-size:11.5px;vertical-align:top;}
+  .ref-card table tr:last-child td{border-bottom:none;}
+  .ref-card table td:first-child{font-weight:700;color:var(--muted);width:70px;white-space:nowrap;}
+  .ref-card table tr:hover td{background:#F8FBFF;}
+  .sched-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;font-size:11.5px;align-items:center;}
+  .sched-li{display:flex;align-items:center;gap:6px;}
+  .sched-ld{width:10px;height:10px;border-radius:50%;}
+  .sj-section{margin-bottom:28px;}
+  .sj-track-block{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:12px;}
+  .sj-track-head{padding:9px 16px;color:white;font-size:12.5px;font-weight:800;}
+  .sj-course-row{display:flex;align-items:center;gap:12px;padding:8px 16px;border-bottom:1px solid #F3F3F3;font-size:12px;}
+  .sj-course-row:last-child{border-bottom:none;}
+  .sj-course-row:nth-child(even){background:#FAFBFF;}
+  .sj-code{font-size:10.5px;font-weight:700;color:var(--muted);width:60px;flex-shrink:0;}
+  .sj-name{flex:1;font-weight:600;color:var(--allianz);}
+  .sj-name a{color:var(--allianz);}
+  .sj-name a:hover{text-decoration:underline;}
+  .sj-dur{font-size:11px;color:var(--muted);white-space:nowrap;}
+  .cert-submit-box{background:#F5F8FF;border:1.5px solid #C8D9F0;border-radius:8px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .cert-submit-box .csb-text{font-size:12.5px;color:#1A1A2E;line-height:1.6;}
+  .cert-submit-box .csb-text strong{color:var(--allianz);}
+  .cert-submit-btn{display:inline-block;padding:10px 22px;background:var(--allianz);color:white;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;}
+  .cert-submit-btn:hover{background:#004fa3;text-decoration:none;}
+  @keyframes pulse-border {
+    0%   { box-shadow: 0 0 0 0 rgba(230,81,0,0.55), 0 4px 18px rgba(230,81,0,0.12); border-color: #E65100; }
+    50%  { box-shadow: 0 0 0 8px rgba(230,81,0,0), 0 4px 24px rgba(230,81,0,0.22); border-color: #FFAB76; }
+    100% { box-shadow: 0 0 0 0 rgba(230,81,0,0.55), 0 4px 18px rgba(230,81,0,0.12); border-color: #E65100; }
+  }
+  @keyframes pulse-input {
+    0%,100% { border-color: #FFAB76; box-shadow: 0 0 0 0 rgba(230,81,0,0.3); }
+    50%      { border-color: #E65100; box-shadow: 0 0 0 4px rgba(230,81,0,0.12); }
+  }
+  .lookup-wrap{background:white;border:2px solid #E65100;border-radius:10px;padding:20px 24px;margin-bottom:20px;animation:pulse-border 2.4s ease-in-out infinite;}
+  .lookup-wrap:focus-within{animation:none;box-shadow:0 0 0 3px rgba(230,81,0,0.18),0 4px 20px rgba(230,81,0,0.15);}
+  .lookup-title{font-size:14px;font-weight:800;color:var(--allianz);margin-bottom:4px;}
+  .lookup-sub{font-size:12px;color:var(--muted);margin-bottom:14px;}
+  .lookup-input-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+  .lookup-input-row input{flex:1;max-width:340px;padding:10px 14px;border:2px solid #FFAB76;border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s,box-shadow .15s;animation:pulse-input 2.4s ease-in-out infinite;}
+  .lookup-input-row input:focus{border-color:#E65100;box-shadow:0 0 0 3px rgba(230,81,0,0.15);animation:none;}
+  .lookup-btn{padding:10px 20px;background:var(--allianz);color:white;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+  .lookup-btn:hover{background:#004fa3;}
+  .lu-divider{height:1px;background:var(--border);margin:16px 0;}
+  .result-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+  .result-name{font-size:15px;font-weight:800;color:var(--text);}
+  .result-track-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;}
+  .rtb-t1{background:var(--blue-bg);color:var(--blue);}
+  .rtb-t2{background:var(--green-bg);color:var(--green);}
+  .rtb-t3{background:var(--purple-bg);color:var(--purple);}
+  .progress-section{margin-bottom:16px;}
+  .progress-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px;}
+  .session-pills{display:flex;gap:6px;flex-wrap:wrap;}
+  .pill{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;}
+  .pill-done{background:#E8F5E9;color:#1B5E20;}
+  .pill-scheduled{background:#FFF8E1;color:#E65100;border:1px solid #FFE082;}
+  .pill-todo{background:#FFF3E0;color:#E65100;border:1px solid #FFCC80;}
+  .cohort-options-title{font-size:12.5px;font-weight:700;color:var(--allianz);margin:14px 0 10px;}
+  .cohort-grid{display:flex;flex-direction:column;gap:8px;}
+  .cohort-card{border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  .cohort-card-head{padding:8px 14px;background:#F0F4FA;display:flex;align-items:center;justify-content:space-between;}
+  .cc-name{font-size:12px;font-weight:800;color:var(--allianz);}
+  .sess-reg-row{display:flex;align-items:center;gap:10px;padding:7px 14px;border-bottom:1px solid #F5F5F5;font-size:12px;flex-wrap:wrap;}
+  .sess-reg-row:last-child{border-bottom:none;}
+  .srr-num{font-weight:700;color:var(--muted);width:62px;flex-shrink:0;}
+  .srr-date{flex:1;min-width:140px;color:var(--text);}
+  .spots-badge{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:10px;flex-shrink:0;min-width:72px;text-align:center;}
+  .spots-ok{background:#E8F5E9;color:#1B5E20;}
+  .spots-low{background:#FFF3E0;color:#E65100;}
+  .spots-full{background:#FFEBEE;color:#C62828;}
+  .reg-btn{display:inline-block;font-size:11px;font-weight:700;padding:5px 14px;border-radius:6px;background:var(--allianz);color:white;text-decoration:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
+  .reg-btn:hover{background:#004fa3;}
+  .reg-btn-full{background:#BDBDBD!important;cursor:not-allowed;pointer-events:none;}
+  .reg-btn-tbc{background:#9E9E9E!important;cursor:not-allowed;pointer-events:none;}
+  .not-found-msg{padding:12px 16px;background:#FFF8F0;border:1px solid #FFCCBC;border-radius:8px;font-size:12.5px;color:#4E342E;margin-bottom:12px;}
+  .not-found-msg strong{color:#E65100;}
+  .track-select-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .tsb-t1{background:var(--blue)!important;}
+  .tsb-t2{background:var(--green)!important;}
+  .tsb-t3{background:var(--purple)!important;}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div class="label">Allianz Technology Thailand &nbsp;·&nbsp; AI Upskilling Program</div>
+  <h1>Claude Code Mandatory Training &nbsp;<span style="display:inline-block; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; background:#C62828; color:#fff; padding:3px 10px; border-radius:4px; vertical-align:middle;">Mandatory</span></h1>
+  <div class="sub">Structured AI Training for All Employees</div>
+</div>
+
+<div style="background:#F5F8FF; border:1px solid #C8D9F0; border-left:4px solid var(--allianz); border-radius:0 6px 6px 0; padding:12px 18px; margin-bottom:20px; font-size:13px; color:#1A1A2E;">
+  <strong style="color:var(--allianz);">This training is mandatory for all Allianz Technology Thailand employees.</strong> Completion is required regardless of role or seniority. Progress will be tracked to ensure full organisational coverage.
+</div>
+
+<!-- ═══ TAB NAV ═══ -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('overview')">Training Overview</button>
+  <button class="tab-btn" id="tab-btn-schedule" onclick="switchTab('schedule')">Onsite Session Schedule &amp; Registration</button>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 1: TRAINING OVERVIEW             -->
+<!-- ══════════════════════════════════════ -->
+<div id="tab-overview" class="tab-panel active">
+
+<!-- ═══ WHY THIS MATTERS ═══ -->
+<div class="section-title">Why This Training Matters</div>
+
+<div class="why-grid">
+  <div class="why-card">
+    <div class="why-icon">⚡</div>
+    <h4>Productivity at Scale</h4>
+    <p>Claude Code multiplies what every employee can deliver — developers ship faster, analysts produce reports in minutes, and support teams eliminate hours of manual document work every week.</p>
+  </div>
+  <div class="why-card">
+    <div class="why-icon">🏆</div>
+    <h4>Competitive Necessity</h4>
+    <p>Organisations adopting structured AI training are accelerating delivery, reducing cost, and outpacing competitors. Standing still is not neutral — it means falling behind.</p>
+  </div>
+  <div class="why-card">
+    <div class="why-icon">🛡️</div>
+    <h4>Responsible AI Use</h4>
+    <p>Untrained AI use creates risk: inconsistent outputs, data mishandling, and poor decisions. This program ensures every employee uses Claude safely, ethically, and within Allianz governance.</p>
+  </div>
+  <div class="why-card">
+    <div class="why-icon">🏗️</div>
+    <h4>Built for Allianz</h4>
+    <p>Every lab uses real Allianz environment, scenarios, and workflows — not generic examples. Employees apply skills directly to their day-to-day work from day one.</p>
+  </div>
+</div>
+
+<div class="callout">
+  <strong>Structured AI fluency across all roles</strong> = a measurably faster, safer, and more capable Allianz Technology Thailand. This is not a one-off workshop — it is a foundational capability uplift for our entire organisation.
+</div>
+
+<!-- ═══ 3 TRAINING TRACKS ═══ -->
+<div class="section-title">Training Tracks</div>
+
+<div class="track-cards">
+  <div class="track-card tc-blue">
+    <div class="tc-label">Track 1</div>
+    <h3>Technical</h3>
+    <div class="tc-who">For employees who build, code, deploy, maintain, or architect software systems and IT infrastructure.</div>
+    <div style="font-size:11px; opacity:0.85; margin-top:2px;">e.g. Developers · Engineers · Architects · Tech Leads · DevOps · Data Engineers · Security · IT Support</div>
+    <div class="tc-pills">
+      <span class="tc-pill">~31.5 hours</span>
+      <span class="tc-pill">7 modules</span>
+    </div>
+    <div class="tc-cta">See details below ↓</div>
+  </div>
+  <div class="track-card tc-green">
+    <div class="tc-label">Track 2</div>
+    <h3>Non-Technical</h3>
+    <div class="tc-who">For employees in IT delivery, product, Agile, and operations who do not write production code.</div>
+    <div style="font-size:11px; opacity:0.85; margin-top:2px;">e.g. BA · Product Owner · Project Manager · Scrum Master · UX Designer · Service Manager · Tribe &amp; Chapter Lead</div>
+    <div class="tc-pills">
+      <span class="tc-pill">~20.5 hours</span>
+      <span class="tc-pill">5 modules</span>
+    </div>
+    <div class="tc-cta">See details below ↓</div>
+  </div>
+  <div class="track-card tc-purple">
+    <div class="tc-label">Track 3</div>
+    <h3>Supporting Function</h3>
+    <div class="tc-who">For employees in HR, Finance, Legal, Compliance, Procurement, Risk, and Data Privacy.</div>
+    <div style="font-size:11px; opacity:0.85; margin-top:2px;">e.g. HR · Finance · Procurement · Legal &amp; Compliance · Risk · Data Privacy</div>
+    <div class="tc-pills">
+      <span class="tc-pill">~14.5 hours</span>
+      <span class="tc-pill">4 modules</span>
+    </div>
+    <div class="tc-cta">See details below ↓</div>
+  </div>
+</div>
+
+<!-- ═══ DELIVERY ═══ -->
+<div class="section-title">Delivery</div>
+
+<div class="delivery-grid">
+  <div class="delivery-card">
+    <div class="role-tag">Self-Paced Online</div>
+    <h4>Anthropic Skilljar Academy <span style="font-weight:700; color:var(--allianz);">with Certificate</span></h4>
+    <p>All Skilljar modules are self-paced, available online, and free of charge. Employees complete these at their own pace before attending instructor-led labs. Each completed course awards a vendor-recognised <strong>Anthropic certificate</strong>.</p>
+    <p style="margin-top:8px;"><a href="https://anthropic.skilljar.com/" target="_blank">anthropic.skilljar.com →</a></p>
+  </div>
+  <div class="delivery-card">
+    <div class="role-tag">Instructor-Led · On-site</div>
+    <h4>Hands-On Labs &amp; Sessions</h4>
+    <p>All lab sessions are instructor-led and conducted on-site using real Allianz environment, scenarios, and data. Employees work through practical exercises that apply directly to their day-to-day role.</p>
+    <p style="margin-top:8px;">View the session schedule, check available cohort dates, and register directly from the <strong style="color:var(--allianz); cursor:pointer;" onclick="document.querySelector('.tab-btn:nth-child(2)').click()">Onsite Session Schedule &amp; Registration</strong> tab above.</p>
+  </div>
+</div>
+
+<!-- ═══ HOW COMPLETION IS TRACKED ═══ -->
+<div class="section-title">How Completion is Tracked</div>
+
+<div style="background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:20px 24px; margin-bottom:8px;">
+  <p style="font-size:13px; color:#374151; margin-bottom:16px;">Completion is tracked at the module level. Each employee must complete both components of their assigned track — Skilljar online courses and instructor-led lab sessions — before their training is considered fully complete.</p>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+    <div>
+      <div style="font-size:12px; font-weight:700; color:var(--allianz); margin-bottom:6px;">Skilljar Modules — Certificate Submission</div>
+      <p style="font-size:12.5px; color:#374151; line-height:1.6;">Upon completing each Skilljar course, Anthropic automatically issues a vendor-recognised certificate. These certificates are issued directly by Anthropic and recognised across the Allianz Group.</p>
+      <div class="cert-highlight" style="margin-top:10px;">
+        <strong>Action required:</strong> Save your certificate immediately after each Skilljar course. You are required to upload it as proof of completion. <strong>Certificates not saved or submitted will not be counted.</strong>
+        <div style="margin-top:10px;">
+          <a href="https://forms.cloud.microsoft/e/dyuAxzbp8h" target="_blank" style="display:inline-block;padding:8px 18px;background:var(--purple);color:white;font-size:12px;font-weight:700;border-radius:6px;text-decoration:none;">Submit Certificate ↗</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px; font-weight:700; color:var(--allianz); margin-bottom:6px;">Lab Sessions — Attendance Confirmation</div>
+      <p style="font-size:12.5px; color:#374151; line-height:1.6;">Attendance is recorded by the session facilitator. Employees do not need to take any additional action — attendance is marked based on confirmed registration and presence at the session.</p>
+      <p style="font-size:11.5px; font-style:italic; color:#999; margin-top:8px;">Session recordings will be made available after each lab for reference only. Viewing a recording does not count as attendance.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HOW TO FOLLOW ═══ -->
+<div class="section-title">How to Get Started</div>
+<div style="background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:20px 24px; margin-bottom:8px;">
+
+  <!-- Circles + arrows row -->
+  <div style="display:grid; grid-template-columns:1fr 40px 1fr 40px 1fr 40px 1fr; align-items:center; margin-bottom:12px;">
+    <div style="display:flex; justify-content:center;">
+      <div style="width:44px; height:44px; background:var(--allianz); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800;">1</div>
+    </div>
+    <div style="text-align:center; font-size:18px; color:#CCC;">→</div>
+    <div style="display:flex; justify-content:center;">
+      <div style="width:44px; height:44px; background:var(--allianz); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800;">2</div>
+    </div>
+    <div style="text-align:center; font-size:18px; color:#CCC;">→</div>
+    <div style="display:flex; justify-content:center;">
+      <div style="width:44px; height:44px; background:var(--allianz); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800;">3</div>
+    </div>
+    <div style="text-align:center; font-size:18px; color:#CCC;">→</div>
+    <div style="display:flex; justify-content:center;">
+      <div style="width:44px; height:44px; background:var(--green); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800;">✓</div>
+    </div>
+  </div>
+
+  <!-- Labels + descriptions row -->
+  <div style="display:grid; grid-template-columns:1fr 40px 1fr 40px 1fr 40px 1fr; align-items:start;">
+    <div style="text-align:center; padding:0 4px;">
+      <div style="font-size:12.5px; font-weight:700; color:var(--text); margin-bottom:3px;">Find Your Track</div>
+      <div style="font-size:11.5px; color:var(--muted); line-height:1.5;">Identify which of the 3 tracks applies to your role.</div>
+    </div>
+    <div></div>
+    <div style="text-align:center; padding:0 4px;">
+      <div style="font-size:12.5px; font-weight:700; color:var(--text); margin-bottom:3px;">Learn with Skilljar</div>
+      <div style="font-size:11.5px; color:var(--muted); line-height:1.5;">Self-paced online courses. Complete each module in order before attending the labs. All Skilljar links are provided in the respective tracks.</div>
+    </div>
+    <div></div>
+    <div style="text-align:center; padding:0 4px;">
+      <div style="font-size:12.5px; font-weight:700; color:var(--text); margin-bottom:3px;">Attend the Labs</div>
+      <div style="font-size:11.5px; color:var(--muted); line-height:1.5;">Instructor-led, on-site sessions. View available cohort dates and register for the sessions you need.</div>
+      <div style="margin-top:8px;"><button onclick="document.querySelector('.tab-btn:nth-child(2)').click()" style="display:inline-block;padding:7px 16px;background:var(--allianz);color:white;font-size:12px;font-weight:700;border-radius:5px;border:none;cursor:pointer;">View Schedule &amp; Register →</button></div>
+    </div>
+    <div></div>
+    <div style="text-align:center; padding:0 4px;">
+      <div style="font-size:12.5px; font-weight:700; color:var(--text); margin-bottom:3px;">Submit Your Certificate</div>
+      <div style="font-size:11.5px; color:var(--muted); line-height:1.5;">Save and upload your Anthropic certificate as proof of completion.</div>
+      <div style="margin-top:8px;"><a href="https://forms.cloud.microsoft/e/dyuAxzbp8h" target="_blank" style="display:inline-block;padding:7px 16px;background:var(--allianz);color:white;font-size:12px;font-weight:700;border-radius:5px;text-decoration:none;">Submit Certificate →</a></div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- ═══ FIND YOUR TRACK ═══ -->
+<div class="section-title">Not Sure Which Track? Find Out Here</div>
+
+<div class="lookup-wrap no-print" id="track-lookup">
+  <div class="lookup-title">Find Your Track</div>
+  <div class="lookup-sub">Enter your name to instantly see which track you're assigned to and what it covers.</div>
+  <div class="lookup-input-row">
+    <input type="text" id="track-lookup-input" placeholder="Type your name…" autocomplete="off" onkeydown="if(event.key==='Enter')runTrackLookup()"/>
+    <button class="lookup-btn" onclick="runTrackLookup()">Find My Track</button>
+    <button class="lookup-btn" onclick="document.getElementById('track-lookup-input').value='';document.getElementById('track-lookup-result').innerHTML='';" style="background:#6B7280;">Clear</button>
+  </div>
+  <div id="track-lookup-result"></div>
+</div>
+
+<script>
+const TRACK_INFO = {
+  1: {
+    label: 'Track 1 — Technical',
+    gradient: 'linear-gradient(135deg,#1565C0 0%,#1976D2 100%)',
+    who: 'For employees who build, code, deploy, maintain, or architect software systems and IT infrastructure.',
+    roles: 'Developers · Engineers · Architects · Tech Leads · DevOps · Data Engineers · Security · IT Support',
+    hours: '~31.5 hours',
+    modules: '7 modules',
+    sessions: '5 instructor-led sessions',
+    desc: 'You will complete Skilljar online courses followed by 5 hands-on lab sessions with Richard Harmer and Ping-Hsien Lin.',
+  },
+  2: {
+    label: 'Track 2 — Non-Technical (IT-Adjacent)',
+    gradient: 'linear-gradient(135deg,#2E7D32 0%,#388E3C 100%)',
+    who: 'For employees in IT delivery, product, Agile, and operations who do not write production code.',
+    roles: 'BA · Product Owner · Project Manager · Scrum Master · UX Designer · Service Manager · Tribe & Chapter Lead',
+    hours: '~20.5 hours',
+    modules: '5 modules',
+    sessions: '4 instructor-led sessions',
+    desc: 'You will complete Skilljar online courses followed by 4 hands-on sessions with Richard Harmer and Ping-Hsien Lin.',
+  },
+  3: {
+    label: 'Track 3 — Supporting Function',
+    gradient: 'linear-gradient(135deg,#6A1B9A 0%,#7B1FA2 100%)',
+    who: 'For employees in HR, Finance, Legal, Compliance, Procurement, Risk, and Data Privacy.',
+    roles: 'HR · Finance · Procurement · Legal & Compliance · Risk · Data Privacy',
+    hours: '~14.5 hours',
+    modules: '4 modules',
+    sessions: '2 instructor-led sessions',
+    desc: 'You will complete Skilljar online courses followed by 2 hands-on sessions with Richard Harmer.',
+  },
+};
+
+function runTrackLookup() {
+  const query = document.getElementById('track-lookup-input').value.trim();
+  const resultDiv = document.getElementById('track-lookup-result');
+  if (!query) { resultDiv.innerHTML = ''; return; }
+  const q = query.toLowerCase();
+  const matches = ATTENDANCE.filter(p => p.name.toLowerCase().includes(q));
+  if (matches.length === 0) {
+    resultDiv.innerHTML = `<div class="lu-divider"></div>
+      <div class="not-found-msg"><strong>Name not found.</strong> Your name may not be in the system yet.
+      Contact <a href="mailto:thiranee.arnupaplawan@allianz.com">thiranee.arnupaplawan@allianz.com</a> to confirm your track assignment.</div>`;
+    return;
+  }
+  if (matches.length > 1) {
+    resultDiv.innerHTML = `<div style="margin-top:10px;font-size:12.5px;color:var(--muted);">Multiple matches: ` +
+      matches.map(p =>
+        `<a href="#" style="color:var(--allianz);font-weight:700;margin-right:10px;" onclick="event.preventDefault();document.getElementById('track-lookup-input').value='${p.name}';runTrackLookup()">${toTitleCase(p.name)}</a>`
+      ).join('') + `</div>`;
+    return;
+  }
+  let html = '<div class="lu-divider"></div>';
+  matches.forEach(person => {
+    const t = TRACK_INFO[person.track];
+    const name = toTitleCase(person.name);
+    html += `
+      <div style="border-radius:10px;overflow:hidden;margin-bottom:12px;border:1px solid var(--border);">
+        <div style="background:${t.gradient};padding:16px 20px;color:white;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.85;margin-bottom:3px;">Your Assigned Track</div>
+          <div style="font-size:20px;font-weight:800;margin-bottom:4px;">${name}</div>
+          <div style="font-size:15px;font-weight:700;opacity:.95;">${t.label}</div>
+        </div>
+        <div style="padding:16px 20px;background:white;">
+          <div style="font-size:12.5px;color:#374151;margin-bottom:10px;">${t.who}</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;"><strong style="color:var(--text);">Typical roles:</strong> ${t.roles}</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+            <span style="background:#F0F4FA;border-radius:20px;padding:4px 12px;font-size:11.5px;font-weight:700;color:var(--allianz);">${t.hours}</span>
+            <span style="background:#F0F4FA;border-radius:20px;padding:4px 12px;font-size:11.5px;font-weight:700;color:var(--allianz);">${t.modules}</span>
+            <span style="background:#F0F4FA;border-radius:20px;padding:4px 12px;font-size:11.5px;font-weight:700;color:var(--allianz);">${t.sessions}</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">${t.desc}</div>
+          <button onclick="document.querySelector('.tab-btn:nth-child(2)').click();setTimeout(()=>{document.getElementById('lookup-input').value='${name}';runLookup();},150);"
+            style="padding:9px 18px;background:var(--allianz);color:white;border:none;border-radius:6px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;">
+            View My Sessions &amp; Register →
+          </button>
+        </div>
+      </div>`;
+  });
+  resultDiv.innerHTML = html;
+
+  // Append the full curriculum for this employee's track
+  const curriculumMap = { 1:'track-curriculum-1', 2:'track-curriculum-2', 3:'track-curriculum-3' };
+  const track = matches[0].track;
+  const srcEl = document.getElementById(curriculumMap[track]);
+  if (srcEl) {
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'margin-top:20px;';
+    wrapper.innerHTML = srcEl.innerHTML;
+    resultDiv.appendChild(wrapper);
+  }
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TRACK 1: TECHNICAL -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="track-curriculum-1">
+<div id="track-technical" class="section-title" style="color:var(--blue); border-color:var(--blue);">Track 1 — Technical</div>
+
+<div class="track-block">
+  <div class="track-header th-blue">
+    <h2>Technical Track</h2>
+    <div class="track-meta"></div>
+  </div>
+  <div class="track-def def-blue">
+    <strong>Who:</strong> Employees who build, code, deploy, maintain, or architect software systems and IT infrastructure. Training covers AI fundamentals through to production-grade agent orchestration, API integration, and autonomous workflows.
+  </div>
+  <div class="segments-bar">
+    <strong>Talent Segments:</strong> Application Development &nbsp;·&nbsp; Application Maintenance &nbsp;·&nbsp; Data Engineer &nbsp;·&nbsp; IT Service DevOps Engineer &nbsp;·&nbsp; Information Security Officer &nbsp;·&nbsp; Information Security Operations &nbsp;·&nbsp; Solution Architect &nbsp;·&nbsp; IT Support
+  </div>
+
+  <table class="curriculum-table">
+
+    <tr class="ct-subheader sub-all">
+      <td colspan="3">CC001 — Universal Foundation &nbsp;<span style="font-weight:400; color:var(--muted);">(All employees — mandatory baseline)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-CAL<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/ai-capabilities-and-limitations">AI Capabilities and Limitations</a><span class="mod-note">Understand what AI can and cannot do. Hallucinations, reasoning limits, capability boundaries.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code" style="color:var(--allianz);">SJ-AFF<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a><span class="mod-note">Anthropic's 4D Framework — Delegation, Description, Discernment, Diligence.</span></td>
+      <td class="col-hours">1 hr</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-C101<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/claude-101">Claude 101</a><span class="mod-note">Core features: conversations, file uploads, artifacts, projects, and memory.</span></td>
+      <td class="col-hours">1 hr</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 01</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-01-basics">Claude Code Basics</a><span class="mod-note">Essential commands, @ file references, permission modes, session management.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-blue">
+      <td colspan="3">SD001 — Foundation Add-ons &nbsp;<span style="font-weight:400;">(Technical only)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 00</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-00-setup">Setup &amp; Verification</a><span class="mod-note">Install Claude Code via Allianz Nexus. Configure GIAM proxy, Azure EntraID, and corporate network. Verify with <code>claude doctor</code>.</span></td>
+      <td class="col-hours">20 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 02</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-02-practical-tasks">Practical Tasks</a><span class="mod-note">Analyse nginx logs, review Kubernetes and Terraform configs, generate documentation.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-blue">
+      <td colspan="3">CC002 — Intermediate Skilljar &nbsp;<span style="font-weight:400;">(Vendor certificate)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-CCW<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-claude-cowork">Introduction to Claude Cowork</a><span class="mod-note">Cowork task loop, plugins, file and research workflows.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code" style="color:var(--allianz);">SJ-CIA<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/claude-code-in-action">Claude Code in Action</a><span class="mod-note">Tool use system, context management, MCP integration, GitHub workflow automation.</span></td>
+      <td class="col-hours">2 hrs</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-IAS<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-agent-skills">Introduction to Agent Skills</a><span class="mod-note">Build reusable SKILL.md files with reliable trigger matching and team sharing.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code" style="color:var(--allianz);">SJ-ISA<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-subagents">Introduction to Subagents</a><span class="mod-note">Delegate focused tasks to isolated Claude instances. Custom agent creation and error handling.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-IMCP<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-model-context-protocol">Introduction to MCP</a><span class="mod-note">Build MCP servers using Python SDK. Tools, resources, and prompts primitives.</span></td>
+      <td class="col-hours">2 hrs</td>
+    </tr>
+
+    <tr class="ct-subheader sub-blue">
+      <td colspan="3">SD002 — Intermediate Labs &nbsp;<span style="font-weight:400;">(Instructor-led · On-site)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 03</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-03-claude-md">CLAUDE.md Files</a><span class="mod-note">Create project context files that persist across sessions using /init and /memory.</span></td>
+      <td class="col-hours">40 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 04</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-04-prompt-context-engineering">Prompt &amp; Context Engineering</a><span class="mod-note">Role prompting, few-shot examples, chain-of-thought reasoning, structured output.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 05</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-05-multimodal">Multimodal Analysis</a><span class="mod-note">Analyse architecture diagrams, PDF security reports, and monitoring dashboards.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 06</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-06-extensibility">Skills &amp; Subagents</a><span class="mod-note">Build specialist subagents — log analysers, security reviewers, infrastructure auditors.</span></td>
+      <td class="col-hours">75 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 07</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-07-automation-features">Hooks, Commands &amp; MCP</a><span class="mod-note">Automate with hooks, create reusable custom commands, connect to external tools via MCP.</span></td>
+      <td class="col-hours">75 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 08</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-08-api-integration">API Integration</a><span class="mod-note">Call Claude via AWS Bedrock API. Automate MS Office. Build S3 + Lambda + Claude workflows.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-blue">
+      <td colspan="3">CC003 — Advanced Skilljar &nbsp;<span style="font-weight:400;">(Vendor certificate)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-API<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/claude-with-the-anthropic-api">Building with the Claude API</a><span class="mod-note">Full Anthropic API: authentication, tool use, RAG, prompt caching, extended thinking, agent architecture.</span></td>
+      <td class="col-hours">3.5 hrs</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code" style="color:var(--allianz);">SJ-MCPA<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/model-context-protocol-advanced-topics">MCP: Advanced Topics</a><span class="mod-note">Production MCP: sampling, notifications, roots-based access control, stdio vs StreamableHTTP.</span></td>
+      <td class="col-hours">2 hrs</td>
+    </tr>
+
+    <tr class="ct-subheader sub-blue">
+      <td colspan="3">SD003 — Advanced Labs &nbsp;<span style="font-weight:400;">(Instructor-led · On-site)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 07b</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-07b-aws-sandbox-setup">AWS Sandbox Setup</a><span class="mod-note">Configure Bedrock credentials and AWS sandbox. Prerequisite for all API and Agent SDK labs.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 09</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-09-agent-sdk">Agent SDK</a><span class="mod-note">Run Claude programmatically in Python scripts and CI/CD pipelines. Multi-turn investigation chains.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 10</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-10-prompt-evaluations">Prompt Evaluations</a><span class="mod-note">Test prompts like code. Run variants, score systematically, validate before production.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 11</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-11-spec-driven-development">Spec-Driven Development</a><span class="mod-note">Write SPEC.md; Claude implements. Repeatable blueprints that scale across the team.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 12</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-12-agent-teams">Agent Teams</a><span class="mod-note">Builder-Validator pattern and parallel investigation: 3 agents on logs, metrics, and configs simultaneously.</span></td>
+      <td class="col-hours">50 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 13</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-13-production-case-studies">Production Case Studies</a><span class="mod-note">Capstone: full production incident — detection → investigation → root cause → remediation → post-incident report.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 14</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-14-mcp-servers">MCP Servers</a><span class="mod-note">Build production MCP integrations. Connect Claude to internal APIs, databases, and monitoring systems.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-blue">
+      <td colspan="3">SD004 — AI DLC &nbsp;<span style="font-weight:400;">(Instructor-led · On-site)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">SD004-1</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/ping-hsien-lin/claude-code-workshops-sdlc/tree/master/workshops/2a-pt1">Claude as Your Agentic Partner</a><span class="mod-note">Claude Code setup on AMC Windows laptop · Agentic Loop · CLAUDE.md customisation · Explore subagent · Context-first prompting.</span></td>
+      <td class="col-hours">~125 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">SD004-2</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/ping-hsien-lin/claude-code-workshops-sdlc/tree/master/workshops/2a-pt2">Testing, Review &amp; Team Workflows</a><span class="mod-note">Adversarial testing · Plan subagent · Spec-driven development · Code-Reviewer subagent · Skills system · Living documentation.</span></td>
+      <td class="col-hours">~173 min</td>
+    </tr>
+
+    <tr class="ct-total">
+      <td colspan="2"><strong>Technical Track Total</strong></td>
+      <td class="total-hrs"><strong>~31.5 hrs</strong></td>
+    </tr>
+  </table>
+
+  <div class="outcomes">
+    <h4>What employees will be able to do after completion</h4>
+    <ul>
+      <li>Accelerate development, debugging, and code review with Claude Code</li>
+      <li>Automate infrastructure management and incident response</li>
+      <li>Build and deploy AI-powered agents and pipelines</li>
+      <li>Integrate Claude into CI/CD workflows via API and Agent SDK</li>
+      <li>Create MCP servers to connect Claude to internal systems</li>
+      <li>Apply responsible AI practices on Allianz environment</li>
+    </ul>
+  </div>
+</div>
+</div><!-- end track-curriculum-1 -->
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TRACK 2: NON-TECHNICAL -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="track-curriculum-2">
+<div id="track-nontech" class="section-title" style="color:var(--green); border-color:var(--green);">Track 2 — Non-Technical (IT-Adjacent)</div>
+
+<div class="track-block">
+  <div class="track-header th-green">
+    <h2>Non-Technical Track</h2>
+    <div class="track-meta"></div>
+  </div>
+  <div class="track-def def-green">
+    <strong>Who:</strong> Employees who work within IT delivery, product management, Agile, and operations but do not write production code. Training focuses on AI-assisted delivery, Agile workflows, business analysis, and service management — no coding required.
+  </div>
+  <div class="segments-bar">
+    <strong>Talent Segments:</strong> Agile Master &amp; Coach &nbsp;·&nbsp; Agile Product Owner &nbsp;·&nbsp; Agile Chapter Leadership &nbsp;·&nbsp; Agile Tribe Leadership &nbsp;·&nbsp; Business Analysis &amp; Solution Design &nbsp;·&nbsp; Project Governance &amp; Management &nbsp;·&nbsp; Service Delivery Management &nbsp;·&nbsp; Senior Management &nbsp;·&nbsp; UX Design / UI Development &nbsp;·&nbsp; Account Management
+  </div>
+
+  <table class="curriculum-table">
+
+    <tr class="ct-subheader sub-all">
+      <td colspan="3">CC001 — Universal Foundation &nbsp;<span style="font-weight:400; color:var(--muted);">(All employees — mandatory baseline)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-CAL<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/ai-capabilities-and-limitations">AI Capabilities and Limitations</a><span class="mod-note">Understand what AI can and cannot do. Hallucinations, reasoning limits, capability boundaries.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code" style="color:var(--allianz);">SJ-AFF<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a><span class="mod-note">Anthropic's 4D Framework — Delegation, Description, Discernment, Diligence.</span></td>
+      <td class="col-hours">1 hr</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-C101<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/claude-101">Claude 101</a><span class="mod-note">Core features: conversations, file uploads, artifacts, projects, and memory.</span></td>
+      <td class="col-hours">1 hr</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 01</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-01-basics">Claude Code Basics</a><span class="mod-note">Essential commands, @ file references, permission modes, session management.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-green">
+      <td colspan="3">CC004 — Non-Technical Skilljar &nbsp;<span style="font-weight:400;">(Vendor certificate)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-CCW<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-claude-cowork">Introduction to Claude Cowork</a><span class="mod-note">Work alongside Claude on real files. Task loop, plugins, file and research workflows.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code" style="color:var(--allianz);">SJ-IAS<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-agent-skills">Introduction to Agent Skills</a><span class="mod-note">Build skills for meeting notes, report templates, and team standards.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-ISA<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-subagents">Introduction to Subagents</a><span class="mod-note">Delegate complex tasks — multi-source research, competitive analysis, parallel document review.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-green">
+      <td colspan="3">NT001 — Cross-Track Labs &nbsp;<span style="font-weight:400;">(Shared with Technical — high productivity gain for all roles)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 04</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-04-prompt-context-engineering">Prompt &amp; Context Engineering</a><span class="mod-note">Role prompting, few-shot examples, chain-of-thought, structured output. Immediate productivity gains.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 05</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-05-multimodal">Multimodal Analysis</a><span class="mod-note">Analyse architecture diagrams, dashboards, and reports. No manual transcription.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-green">
+      <td colspan="3">NT002 — Non-Technical Labs &nbsp;<span style="font-weight:400;">(Instructor-led · On-site)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">NT-01</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-01-basics-nontechnical">Basics for Business</a><span class="mod-note">Essential commands, file references, and session management — no technical jargon.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">NT-02</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-02-business-workflows">Business Workflows</a><span class="mod-note">Analyse meeting transcripts, extract action items, summarise CSVs and Excel, generate reports.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">NT-03</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-03-context-management">Context Management</a><span class="mod-note">Create PROJECT.md, STATE.md, and REQUIREMENTS.md. Context you write once, benefit from every session.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">NT-04</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-04-prompt-engineering-business">Prompt Engineering for Business</a><span class="mod-note">Transform vague asks into precise, structured, high-quality outputs every time.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">NT-05</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-05-multimodal-business">Multimodal Business</a><span class="mod-note">Drag charts, presentations, and reports into prompts. Identify trends, extract data from screenshots.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">NT-06</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-06-skills-and-subagents">Skills &amp; Subagents</a><span class="mod-note">Build reusable skills for meeting notes, research assistants, and report generators.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-green">
+      <td colspan="3">SD005 — AI DLC &nbsp;<span style="font-weight:400;">(Instructor-led · On-site)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">SD005-1</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/ping-hsien-lin/claude-code-workshops-sdlc/tree/master/workshops/3a-pt1">Claude as Your Intelligent Work Assistant</a><span class="mod-note">Claude Code setup · CLAUDE.md for your role · Release notes · Sprint summaries · Stakeholder-ready communication · Non-technical prompting strategies.</span></td>
+      <td class="col-hours">~110 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">SD005-2</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/ping-hsien-lin/claude-code-workshops-sdlc/tree/master/workshops/3a-pt2">Documentation &amp; AI-Enhanced Ceremonies</a><span class="mod-note">User stories · Acceptance criteria · Retrospective summaries · PI planning docs · Living documentation · Reusable prompt templates for ceremonies.</span></td>
+      <td class="col-hours">~174 min</td>
+    </tr>
+
+    <tr class="ct-total">
+      <td colspan="2"><strong>Non-Technical Track Total</strong></td>
+      <td class="total-hrs"><strong>~20.5 hrs</strong></td>
+    </tr>
+  </table>
+
+  <div class="outcomes">
+    <h4>What employees will be able to do after completion</h4>
+    <ul>
+      <li>Automate sprint ceremonies, release notes, and retrospective summaries</li>
+      <li>Generate user stories, acceptance criteria, and backlog items</li>
+      <li>Analyse business documents, meeting transcripts, and Excel data</li>
+      <li>Build reusable prompt skills for recurring team tasks</li>
+      <li>Interpret visual data — dashboards, charts, and presentations</li>
+      <li>Create persistent AI context for projects and team standards</li>
+    </ul>
+  </div>
+</div>
+</div><!-- end track-curriculum-2 -->
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TRACK 3: SUPPORTING FUNCTION -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="track-curriculum-3">
+<div id="track-sf" class="section-title" style="color:var(--purple); border-color:var(--purple);">Track 3 — Supporting Function</div>
+
+<div class="track-block">
+  <div class="track-header th-purple">
+    <h2>Supporting Function Track</h2>
+    <div class="track-meta"></div>
+  </div>
+  <div class="track-def def-purple">
+    <strong>Who:</strong> Employees in corporate back-office functions — HR, Finance, Legal, Compliance, Procurement, Risk, and Data Privacy. Training focuses on AI-assisted productivity for document-heavy, analytical, and process-oriented work. No technical setup or coding required.
+  </div>
+  <div class="segments-bar">
+    <strong>Talent Segments:</strong> Accounting Closing, Reporting &amp; Policies &nbsp;·&nbsp; Compliance &nbsp;·&nbsp; Corporate Real Estate Management &nbsp;·&nbsp; Data Privacy &nbsp;·&nbsp; HR Administration &nbsp;·&nbsp; HR Business Partner &nbsp;·&nbsp; HR Operations &nbsp;·&nbsp; HR Sourcing, Recruiting &amp; Talent &nbsp;·&nbsp; Legal &nbsp;·&nbsp; Learning Professional &nbsp;·&nbsp; Risk Management &nbsp;·&nbsp; Sourcing &amp; Procurement
+  </div>
+
+  <table class="curriculum-table">
+
+    <tr class="ct-subheader sub-all">
+      <td colspan="3">CC001 — Universal Foundation &nbsp;<span style="font-weight:400; color:var(--muted);">(All employees — mandatory baseline)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-CAL<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/ai-capabilities-and-limitations">AI Capabilities and Limitations</a><span class="mod-note">Understand what AI can and cannot do. Hallucinations, reasoning limits, capability boundaries.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code" style="color:var(--allianz);">SJ-AFF<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/ai-fluency-framework-foundations">AI Fluency: Framework &amp; Foundations</a><span class="mod-note">Anthropic's 4D Framework — Delegation, Description, Discernment, Diligence.</span></td>
+      <td class="col-hours">1 hr</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-C101<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/claude-101">Claude 101</a><span class="mod-note">Core features: conversations, file uploads, artifacts, projects, and memory.</span></td>
+      <td class="col-hours">1 hr</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 01</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-01-basics">Claude Code Basics</a><span class="mod-note">Essential commands, @ file references, permission modes, session management.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-purple">
+      <td colspan="3">CC004 — Non-Technical Skilljar &nbsp;<span style="font-weight:400;">(Vendor certificate)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-CCW<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-claude-cowork">Introduction to Claude Cowork</a><span class="mod-note">Work alongside Claude on real files. Task loop, plugins, file and research workflows.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code" style="color:var(--allianz);">SJ-IAS<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-agent-skills">Introduction to Agent Skills</a><span class="mod-note">Build reusable skills for recurring tasks — report templates, document checklists, analysis frameworks.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code" style="color:var(--allianz);">SJ-ISA<span style="display:block;font-size:9px;font-weight:400;color:var(--muted);">Skilljar</span></td>
+      <td class="col-module"><a href="https://anthropic.skilljar.com/introduction-to-subagents">Introduction to Subagents</a><span class="mod-note">Delegate research, document review, and multi-source analysis to focused Claude instances.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-purple">
+      <td colspan="3">NT001 — Cross-Track Labs &nbsp;<span style="font-weight:400;">(High-value for all roles)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">Lab 04</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-04-prompt-context-engineering">Prompt &amp; Context Engineering</a><span class="mod-note">Write prompts that produce precise, actionable results every time.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">Lab 05</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/lab-05-multimodal">Multimodal Analysis</a><span class="mod-note">Analyse charts, reports, and scanned documents. No manual transcription needed.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+
+    <tr class="ct-subheader sub-purple">
+      <td colspan="3">NT002 — Non-Technical Labs &nbsp;<span style="font-weight:400;">(Instructor-led · On-site)</span></td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">NT-01</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-01-basics-nontechnical">Basics for Business</a><span class="mod-note">Essential commands, file references, and session management — no technical jargon.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">NT-02</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-02-business-workflows">Business Workflows</a><span class="mod-note">Analyse documents, extract key information, summarise data, and generate professional reports.</span></td>
+      <td class="col-hours">60 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">NT-03</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-03-context-management">Context Management</a><span class="mod-note">Set up persistent AI context for your team's projects, priorities, and standards.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">NT-04</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-04-prompt-engineering-business">Prompt Engineering for Business</a><span class="mod-note">Transform vague asks into precise, structured, high-quality outputs every time.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row">
+      <td class="col-code">NT-05</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-05-multimodal-business">Multimodal Business</a><span class="mod-note">Analyse visual data — charts, dashboards, and infographics — directly from screenshots.</span></td>
+      <td class="col-hours">30 min</td>
+    </tr>
+    <tr class="ct-row alt">
+      <td class="col-code">NT-06</td>
+      <td class="col-module"><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/lab-06-skills-and-subagents">Skills &amp; Subagents</a><span class="mod-note">Build reusable skills for recurring tasks. Create subagents for complex multi-step analysis.</span></td>
+      <td class="col-hours">45 min</td>
+    </tr>
+
+    <tr class="ct-total">
+      <td colspan="2"><strong>Supporting Function Track Total</strong></td>
+      <td class="total-hrs"><strong>~14.5 hrs</strong></td>
+    </tr>
+  </table>
+
+  <div class="outcomes">
+    <h4>What employees will be able to do after completion</h4>
+    <ul>
+      <li>Accelerate contract, policy, and document review</li>
+      <li>Generate professional reports and structured summaries</li>
+      <li>Automate repetitive analytical and administrative tasks</li>
+      <li>Analyse data from Excel, CSV, and visual reports without manual work</li>
+      <li>Apply responsible AI practices aligned with compliance and data privacy</li>
+      <li>Build reusable prompt templates for recurring HR, Finance, and Legal tasks</li>
+    </ul>
+  </div>
+</div>
+</div><!-- end track-curriculum-3 -->
+
+<!-- ═══ ELECTIVES ═══ -->
+<div class="section-title">Available Electives &nbsp;<span style="font-size:13px; font-weight:400; color:var(--muted);">(Non-mandatory — available on demand after completing mandatory track)</span></div>
+
+<div class="electives-grid">
+  <div class="elective-card">
+    <div class="el-track" style="color:var(--blue);">Technical</div>
+    <h4><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/optional/browser-automation">Browser Automation</a></h4>
+    <p>Playwright + Claude for web automation, scraping, form filling, and end-to-end testing. 60 min.</p>
+  </div>
+  <div class="elective-card">
+    <div class="el-track" style="color:var(--blue);">Technical</div>
+    <h4><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/optional/rag-vector-databases">RAG &amp; Vector Databases</a></h4>
+    <p>Build retrieval-augmented generation systems with semantic search over private knowledge bases. 60 min.</p>
+  </div>
+  <div class="elective-card">
+    <div class="el-track" style="color:var(--blue);">Technical</div>
+    <h4><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/technical/optional/multi-agent-coding">Multi-Agent Coding (AMAC)</a></h4>
+    <p>Nine specialist agents debate approaches; a Tech Lead synthesises the winner. Includes Jira-to-PR automation. 130 min.</p>
+  </div>
+  <div class="elective-card">
+    <div class="el-track" style="color:var(--green);">Non-Technical · Agile roles</div>
+    <h4><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/optional/jira-workflows">Jira Acceleration</a></h4>
+    <p>Sprint audits, bottleneck detection, Excel dashboards, and sprint ceremony automation. Scrum Masters &amp; POs. 3 hrs.</p>
+  </div>
+  <div class="elective-card">
+    <div class="el-track" style="color:var(--muted);">All tracks</div>
+    <h4><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/optional/advanced-productivity">Advanced Productivity</a></h4>
+    <p>Personal productivity system — document templates, recurring workflows, and prompt libraries. 30 min.</p>
+  </div>
+  <div class="elective-card">
+    <div class="el-track" style="color:var(--muted);">All tracks</div>
+    <h4><a href="https://github.developer.allianz.io/genai/claude-code-training-labs/tree/main/labs/non-technical/optional/presentations-with-branding">Presentations with Allianz Branding</a></h4>
+    <p>Generate executive-ready PowerPoint slides with Allianz brand colors and layouts. No design skills needed. 30 min.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <p style="margin-bottom:6px;">For any questions regarding this training, please contact <a href="mailto:thiranee.arnupaplawan@allianz.com">thiranee.arnupaplawan@allianz.com</a></p>
+  <p style="margin-bottom:8px;">For technical questions, please contact:
+    <a href="mailto:richard.harmer@allianz.com">Harmer, Richard (Allianz Technology)</a> &nbsp;·&nbsp;
+    <a href="mailto:ping-hsien.lin@allianz.com">Lin, Ping-Hsien (Allianz Technology)</a> &nbsp;·&nbsp;
+    <a href="mailto:manuel.lindner@allianz.com">Lindner, Manuel (Allianz Technology)</a>
+  </p>
+  <p><strong>Allianz Technology Thailand</strong> &nbsp;·&nbsp; Claude Code Mandatory Training 2026 &nbsp;·&nbsp; Last updated: April 2026</p>
+</div>
+
+</div><!-- end tab-overview -->
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 2: SCHEDULE & REGISTRATION       -->
+<!-- ══════════════════════════════════════ -->
+<div id="tab-schedule" class="tab-panel">
+
+<div class="section-title" style="margin-top:8px;">Onsite Session Schedule &amp; Registration</div>
+
+
+<div class="callout callout-sched callout-blue-s">
+  <strong>How to read this schedule:</strong> Each column is a cohort. Sessions are sequential and build on each other — pick <em>one</em> cohort whose dates fit your calendar and follow the sessions in order.
+</div>
+
+<!-- HOW TO REGISTER -->
+<div class="how-to no-print">
+  <h3>How to Register</h3>
+  <div class="reg-steps">
+    <div class="reg-step"><div class="reg-step-num">1</div><div class="reg-step-body"><strong>Search your name below</strong>The lookup tool already knows your training history — it will show exactly which sessions you still need to complete.</div></div>
+    <div class="reg-step"><div class="reg-step-num">2</div><div class="reg-step-body"><strong>Choose a cohort</strong>Pick one cohort and stick with it — sessions are designed to build on each other. If you have already attended some sessions, simply register for the remaining sessions within your chosen cohort.</div></div>
+    <div class="reg-step"><div class="reg-step-num">3</div><div class="reg-step-body"><strong>Complete Skilljar first</strong>Self-paced online modules must be completed before attending the relevant lab session. Find the Skilljar courses you need to complete from the <strong>Overview</strong> tab.</div></div>
+  </div>
+</div>
+
+<!-- LOOKUP TOOL -->
+<div class="lookup-wrap no-print" id="lookup-tool">
+  <div class="lookup-title">Find Your Registration</div>
+  <div class="lookup-sub">Enter your name to see which sessions you still need and which cohorts are available.</div>
+  <div class="lookup-input-row">
+    <input type="text" id="lookup-input" placeholder="Type your name…" autocomplete="off"/>
+    <button class="lookup-btn" onclick="runLookup()">Find My Sessions</button>
+    <button class="lookup-btn" style="background:#9E9E9E" onclick="clearLookup()">Clear</button>
+  </div>
+  <div id="lookup-suggestions" style="margin-top:6px;font-size:11.5px;color:var(--muted);"></div>
+  <div id="lookup-result"></div>
+</div>
+
+<div class="sched-legend no-print">
+  <div class="sched-li"><div class="sched-ld" style="background:var(--blue)"></div>Track 1 — Technical</div>
+  <div class="sched-li"><div class="sched-ld" style="background:var(--green)"></div>Track 2 — Non-Technical</div>
+  <div class="sched-li"><div class="sched-ld" style="background:var(--purple)"></div>Track 3 — Supporting Function</div>
+</div>
+
+<!-- TRACK 1 SCHEDULE -->
+<div class="sched-track-section">
+  <div class="sched-track-header th-blue">
+    <h2>Track 1 — Technical</h2>
+    <div class="track-meta"><strong>5 cohorts &nbsp;·&nbsp; 5 sessions per cohort</strong>Developers · Engineers · Architects · DevOps · Data Engineers · Security · IT Support</div>
+  </div>
+  <div class="mandatory-bar mandatory-blue">
+    <span class="mandatory-icon">⚠</span>
+    <strong>Mandatory attendance:</strong> You must attend <strong>all 5 sessions</strong> (Sessions 1–5) within your chosen cohort.
+  </div>
+  <div class="table-wrap">
+    <table class="matrix" id="t1-table"></table>
+  </div>
+</div>
+
+<!-- TRACK 2 SCHEDULE -->
+<div class="sched-track-section">
+  <div class="sched-track-header th-green">
+    <h2>Track 2 — Non-Technical (IT-Adjacent)</h2>
+    <div class="track-meta"><strong>4 cohorts &nbsp;·&nbsp; 4 sessions per cohort</strong>BA · Product Owner · Project Manager · Scrum Master · UX · Service Manager · Tribe &amp; Chapter Lead</div>
+  </div>
+  <div class="mandatory-bar mandatory-green">
+    <span class="mandatory-icon">⚠</span>
+    <strong>Mandatory attendance:</strong> You must attend <strong>all 4 sessions</strong> (Sessions 1–4) within your chosen cohort.
+  </div>
+  <div class="table-wrap">
+    <table class="matrix" id="t2-table"></table>
+  </div>
+</div>
+
+<!-- TRACK 3 SCHEDULE -->
+<div class="sched-track-section">
+  <div class="sched-track-header th-purple">
+    <h2>Track 3 — Supporting Function</h2>
+    <div class="track-meta"><strong>1 cohort &nbsp;·&nbsp; 2 sessions</strong>HR · Finance · Procurement · Legal &amp; Compliance · Risk · Data Privacy</div>
+  </div>
+  <div class="mandatory-bar mandatory-purple">
+    <span class="mandatory-icon">⚠</span>
+    <strong>Mandatory attendance:</strong> You must attend <strong>both sessions</strong> (Sessions 1–2).
+  </div>
+  <div class="table-wrap">
+    <table class="matrix" id="t3-table"></table>
+  </div>
+</div>
+
+<script>
+const SLOTS = [
+  ['26 May','Tue'],['27 May','Wed'],
+  ['10 Jun','Wed'],
+  ['16 Jun','Tue'],['17 Jun','Wed'],
+  ['24 Jun','Wed'],['25 Jun','Thu','2:05 PM'],
+  ['30 Jun','Tue'],['1 Jul','Wed'],
+  ['8 Jul','Wed'], ['9 Jul','Thu','2:05 PM'],
+  ['14 Jul','Tue'],['15 Jul','Wed'],
+  ['22 Jul','Wed'],['23 Jul','Thu'],
+  ['4 Aug','Tue'], ['5 Aug','Wed'],
+  ['11 Aug','Tue'],
+  ['18 Aug','Tue'],['19 Aug','Wed'],
+  ['25 Aug','Tue'],['26 Aug','Wed'],
+  ['2 Sep','Wed'], ['3 Sep','Thu'],
+  ['8 Sep','Tue'], ['9 Sep','Wed'],
+  ['16 Sep','Wed'],['17 Sep','Thu'],
+  ['22 Sep','Tue'],['23 Sep','Wed'],
+  ['30 Sep','Wed'],['1 Oct','Thu'],
+  ['6 Oct','Tue'],
+];
+
+const T1_SESS = [
+  { n:'Session 1 / 5 &nbsp;·&nbsp; SD001 — Foundations',                                      fac:'Richard Harmer', dur:'4h', durClass:'dur-ok', topics:'Lab 01 · Lab 00 · Lab 02 · Lab 03 · Lab 04', richard:true,  timeRange:'9:00 AM – 1:00 PM' },
+  { n:'Session 2 / 5 &nbsp;·&nbsp; SD002 — Intermediate',                                     fac:'Richard Harmer', dur:'4h', durClass:'dur-ok', topics:'Lab 05 · Lab 06 · Lab 07 · Lab 08', richard:true,            timeRange:'9:00 AM – 1:00 PM' },
+  { n:'Session 3 / 5 &nbsp;·&nbsp; SD003 — Advanced',                                         fac:'Richard Harmer', dur:'4h', durClass:'dur-ok', topics:'Lab 07b · Lab 09 · Lab 10 · Lab 11 · Lab 12 · Lab 13 · Lab 14', richard:true, timeRange:'9:00 AM – 1:00 PM' },
+  { n:'Session 4 / 5 &nbsp;·&nbsp; SD004-1 — AIDLC 1: Claude as Your Agentic Partner',       fac:'Ping-Hsien Lin', dur:'3h', durClass:'dur-ok', topics:'', richard:false, timeRange:'9:00 AM – 12:00 PM' },
+  { n:'Session 5 / 5 &nbsp;·&nbsp; SD004-2 — AIDLC 2: Testing, Review &amp; Team Workflows', fac:'Ping-Hsien Lin', dur:'3h', durClass:'dur-ok', topics:'', richard:false, timeRange:'9:00 AM – 12:00 PM' },
+];
+
+const PH_T1 = [
+  [['22 Jun','Mon'],['23 Jun','Tue']],
+  [['6 Jul','Mon'], ['7 Jul','Tue']],
+  [['13 Jul','Mon'],['17 Jul','Fri']],
+  [['10 Aug','Mon'],['13 Aug','Thu']],
+  [['24 Aug','Mon'],['28 Aug','Fri']],
+];
+
+const T1_DATES = [];
+for (let c = 0; c < 5; c++) {
+  T1_DATES.push([SLOTS[c*3], SLOTS[c*3+1], SLOTS[c*3+2], PH_T1[c][0], PH_T1[c][1]]);
+}
+
+const T2_SESS = [
+  { n:'Session 1 / 4 &nbsp;·&nbsp; NT001 — Foundation',                                             fac:'Richard Harmer', dur:'4h', durClass:'dur-ok', topics:'NT-01 · Lab 01 · NT-02 · NT-03 · NT-04', richard:true,  timeRange:'9:00 AM – 1:00 PM' },
+  { n:'Session 2 / 4 &nbsp;·&nbsp; NT002 — Intermediate',                                           fac:'Richard Harmer', dur:'3h', durClass:'dur-ok', topics:'NT-05 · NT-06', richard:true,                           timeRange:'9:00 AM – 12:00 PM' },
+  { n:'Session 3 / 4 &nbsp;·&nbsp; SD005-1 — AIDLC: Claude as Your Intelligent Work Assistant',     fac:'Ping-Hsien Lin', dur:'3h', durClass:'dur-ok', topics:'', richard:false,                                       timeRange:'9:00 AM – 12:00 PM' },
+  { n:'Session 4 / 4 &nbsp;·&nbsp; SD005-2 — Documentation &amp; AI-Enhanced Ceremonies',           fac:'Ping-Hsien Lin', dur:'3h', durClass:'dur-ok', topics:'', richard:false,                                       timeRange:'9:00 AM – 12:00 PM' },
+];
+
+const PH_T2 = [
+  [['14 Sep','Mon'],['15 Sep','Tue']],
+  [['28 Sep','Mon'],['29 Sep','Tue']],
+  [['14 Oct','Wed'],['16 Oct','Fri']],
+  [['20 Oct','Tue'],['21 Oct','Wed']],
+  [null, null],
+];
+
+const T2_DATES = [];
+for (let c = 0; c < 5; c++) {
+  T2_DATES.push([SLOTS[15 + c*2], SLOTS[15 + c*2 + 1], PH_T2[c][0], PH_T2[c][1]]);
+}
+
+const T3_SESS = [
+  { n:'Session 1 / 2 &nbsp;·&nbsp; NT001 — Foundation',   fac:'Richard Harmer', dur:'4h', durClass:'dur-ok', topics:'NT-01 · Lab 01 · NT-02 · NT-03 · NT-04', richard:true, completed:true,  timeRange:'9:00 AM – 1:00 PM' },
+  { n:'Session 2 / 2 &nbsp;·&nbsp; NT002 — Intermediate', fac:'Richard Harmer', dur:'3h', durClass:'dur-ok', topics:'NT-05 · NT-06', richard:true, completed:false,                          timeRange:'9:00 AM – 12:00 PM' },
+];
+const T3_DATES = [[['24 Apr', 'Fri'], ['8 May', 'Fri']]];
+
+function buildMatrix(tableId, sessions, cohortDates, trackClass, numCohorts, paxLabel, note28) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+  const thead = table.createTHead();
+  const hr = thead.insertRow();
+  const th0 = document.createElement('th');
+  th0.className = 'sess-col';
+  th0.textContent = 'Session';
+  hr.appendChild(th0);
+  for (let c = 0; c < numCohorts; c++) {
+    const th = document.createElement('th');
+    const firstDate = cohortDates[c][0];
+    th.innerHTML = `<span class="cohort-num">Cohort ${c+1}</span><span class="cohort-cap">${paxLabel}</span><span class="cohort-start">From ${firstDate[0]}</span>`;
+    hr.appendChild(th);
+  }
+  const tbody = table.createTBody();
+  sessions.forEach((sess, si) => {
+    const tr = tbody.insertRow();
+    tr.className = trackClass + (sess.richard ? '' : ' row-ph');
+    const tdInfo = document.createElement('td');
+    tdInfo.className = 'sess-info-cell' + (sess.completed ? ' sess-completed' : '');
+    tdInfo.innerHTML = `
+      <div class="si-num">${sess.n} ${sess.completed ? '<span class="badge-completed">✓ Completed</span>' : ''}</div>
+      <div class="si-fac">${sess.fac}</div>
+      <span class="si-dur ${sess.durClass}">${sess.dur}</span>
+      <div class="si-topics">${sess.topics}</div>`;
+    tr.appendChild(tdInfo);
+    for (let c = 0; c < numCohorts; c++) {
+      const td = document.createElement('td');
+      td.className = 'date-cell';
+      const timeRange = sess.timeRange || '9:00 AM';
+      if (sess.completed) {
+        td.classList.add('cell-done');
+        const [date, day] = cohortDates[c][si];
+        td.innerHTML = `<div class="dc-date">${date}</div><div class="dc-day">${day}</div><div class="dc-time">${timeRange}</div><div class="dc-done">✓ Done</div>`;
+      } else if (sess.richard) {
+        const [date, day] = cohortDates[c][si];
+        td.innerHTML = `<div class="dc-date">${date}</div><div class="dc-day">${day}</div><div class="dc-time">${timeRange}</div>`;
+      } else {
+        const phSlot = cohortDates[c][si];
+        if (phSlot) {
+          const [date, day] = phSlot;
+          td.innerHTML = `<div class="dc-date">${date}</div><div class="dc-day">${day}</div><div class="dc-time">${timeRange}</div>`;
+        } else {
+          td.classList.add('cell-tbc');
+          td.innerHTML = `<div class="dc-date">TBC</div><div class="dc-day">${sess.fac.split(' ')[0]}</div><div class="dc-time">${timeRange}</div>`;
+        }
+      }
+      tr.appendChild(td);
+    }
+  });
+}
+
+buildMatrix('t1-table', T1_SESS, T1_DATES, 'row-t1', 5, 'max 30 pax', true);
+buildMatrix('t2-table', T2_SESS, T2_DATES, 'row-t2', 4, 'max 30 pax', false);
+buildMatrix('t3-table', T3_SESS, T3_DATES, 'row-t3', 1, '~25 pax', false);
+
+// ── ATTENDANCE DATA ───────────────────────────────────────────────────────────
+const ATTENDANCE = [
+  { name:'Khin Myint Myat Thu', track:1, done:[4,5], registered:{} },
+  { name:'Roli Katiyar', track:2, done:[], registered:{} },
+  { name:'Surawut Thanapipat', track:1, done:[4,5], registered:{} },
+  { name:'Gaurav Kumar Gupta', track:1, done:[4,5], registered:{} },
+  { name:'Aruna Ruwan Tennakoon Tennakoon Mudiyanselage', track:1, done:[4,5], registered:{} },
+  { name:'Ekkarat Promrit', track:1, done:[4,5], registered:{} },
+  { name:'Itthi Kruenarongkul', track:2, done:[], registered:{} },
+  { name:'Marc Linden', track:2, done:[], registered:{} },
+  { name:'Natthapong Jiemjintanarom', track:1, done:[4,5], registered:{} },
+  { name:'Chanin Buapradabkul', track:1, done:[4,5], registered:{} },
+  { name:'Teerakarn Asawaroengchai', track:1, done:[4], registered:{} },
+  { name:'Riza Onur Tas', track:1, done:[4,5], registered:{} },
+  { name:'Natthawit Janjaroen', track:1, done:[4,5], registered:{} },
+  { name:'Vijith Venugopal', track:1, done:[4,5], registered:{} },
+  { name:'Kanishka Acharya', track:1, done:[4,5], registered:{} },
+  { name:'Bharathi Mohanraju', track:1, done:[4,5], registered:{} },
+  { name:'Min Naing Oo', track:1, done:[4,5], registered:{} },
+  { name:'Ratthabol Suadmalai', track:2, done:[], registered:{} },
+  { name:'Phanita Thangwitmonai', track:1, done:[4,5], registered:{} },
+  { name:'Michael Andreas Schmidt', track:2, done:[], registered:{} },
+  { name:'Sirirat Saemak', track:1, done:[4,5], registered:{} },
+  { name:'Krithi Hegde Devdas', track:2, done:[], registered:{} },
+  { name:'Rachata Kooamornpattana', track:1, done:[4,5], registered:{} },
+  { name:'Teerapong Srinarong', track:1, done:[4,5], registered:{} },
+  { name:'Supaporn Wetchawat', track:2, done:[], registered:{} },
+  { name:'Stephen Joseph Westhead', track:2, done:[], registered:{} },
+  { name:'Setthawut Punsa-ard', track:1, done:[4,5], registered:{} },
+  { name:'Thanawat Sujitanan', track:1, done:[4,5], registered:{} },
+  { name:'Pirayu Thanatarapong', track:1, done:[4,5], registered:{} },
+  { name:'Chatphol Thossaensin', track:1, done:[4,5], registered:{} },
+  { name:'Noppadol Nuangjamnong', track:1, done:[], registered:{} },
+  { name:'Phongsathon Suriyo', track:1, done:[], registered:{} },
+  { name:'Namtap Tapchareon', track:2, done:[3,4], registered:{} },
+  { name:'Ali Hajighasem', track:2, done:[3,4], registered:{} },
+  { name:'Jia Li', track:2, done:[3,4], registered:{} },
+  { name:'Nattapon Chuen-im', track:2, done:[1,2,3,4], registered:{} },
+  { name:'Nuchaya Boonmaprasert', track:2, done:[3,4], registered:{} },
+  { name:'Nariesy Plengkhum', track:2, done:[3,4], registered:{} },
+  { name:'Parichart Wangkaew', track:2, done:[3,4], registered:{} },
+  { name:'Apirak Anatanarak', track:2, done:[1,2,3,4], registered:{} },
+  { name:'Siwadol Julawongsarn', track:2, done:[3,4], registered:{} },
+  { name:'Wanida Leelarodjalek', track:2, done:[3,4], registered:{} },
+  { name:'Kankamol Jermplung', track:2, done:[3,4], registered:{} },
+  { name:'Syed Usman Wamiq', track:2, done:[3], registered:{} },
+  { name:'Nuchada Dhangwattanotai', track:2, done:[3,4], registered:{} },
+  { name:'Luxsamee Jongvimansin', track:2, done:[3,4], registered:{} },
+  { name:'Ridin Dinesh Choorai Perumethi', track:2, done:[3,4], registered:{} },
+  { name:'Kwanprapa Unarat', track:2, done:[3], registered:{} },
+  { name:'Thanankrit Akarathanawutphokin', track:2, done:[3,4], registered:{} },
+  { name:'Tawinee Laplikitkul', track:2, done:[3,4], registered:{} },
+  { name:'Theerapon Tiankaew', track:2, done:[3,4], registered:{} },
+  { name:'Sorasak Bunnag', track:2, done:[3,4], registered:{} },
+  { name:'Titaveeraya Jaruratjamorn', track:2, done:[3,4], registered:{} },
+  { name:'Sukhpreet Kaur Randhawa', track:2, done:[1,2,3,4], registered:{} },
+  { name:'Thanaporn Panjan', track:2, done:[3], registered:{} },
+  { name:'Rawisara Loekiatthamrong', track:2, done:[3], registered:{} },
+  { name:'Vasupol Tipmongkol', track:2, done:[3,4], registered:{} },
+  { name:'Marc Philippe Andrieu', track:2, done:[3,4], registered:{} },
+  { name:'Ketchana Nuntiyakul', track:2, done:[3,4], registered:{} },
+  { name:'Johannes Alexander Silvester Kagerer', track:2, done:[4], registered:{} },
+  { name:'VIRAJ DHARSHANA SIRIMANNA', track:2, done:[3,4], registered:{} },
+  { name:'Supanlada Kampetch', track:1, done:[], registered:{} },
+  { name:'Ping-Hsien Lin', track:2, done:[], registered:{} },
+  { name:'Zellur Rahman', track:1, done:[], registered:{} },
+  { name:'Aung Myo Htet', track:1, done:[4], registered:{} },
+  { name:'James Christopher Hone', track:3, done:[], registered:{2:'8 May'} },
+  { name:'Wit Duangpattra', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Chonticha Srisuk', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Nonglak Thatanam', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Bhajan Preet Singh', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Thiranee Arnupaplawan', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Sasitorn Teerakulkittipong', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Khomsan Chaipuak', track:3, done:[], registered:{2:'8 May'} },
+  { name:'Nathanich Kuarjirattikan', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Thitima Buranawat', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Erin Niyomtham', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Jihan Nadri', track:3, done:[], registered:{2:'8 May'} },
+  { name:'Thakanda Boonchant', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Neeranat Mangkonthong', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Sakkarin Oupkaew', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Natthawut Weerarak', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Durgesh Saxena', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Wannika Maithi', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Janthima Likitmungmongkol', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Natthaporn Prasertsri', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Pimonchaya Panitchawong', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Buntarik Tangsiripisan', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Prattana Suwannasak', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Rut Jungvong', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Soraya Suphan', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'David Jeric', track:3, done:[], registered:{2:'8 May'} },
+  { name:'Czaneil Johnson', track:3, done:[1], registered:{2:'8 May'} },
+  { name:'Benjarat Chantharothai', track:3, done:[], registered:{2:'8 May'} },
+  { name:'Shabaz Pasha', track:1, done:[1,2], registered:{} },
+  { name:'MING MANEERAT', track:1, done:[], registered:{} },
+  { name:'SUPATTRA MAJITTA', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'BOONCHAI NAMFA', track:2, done:[], registered:{} },
+  { name:'VARUT APHIMANCHINDAKUL', track:2, done:[], registered:{} },
+  { name:'KANYAKRIT KARNCHANAPOOM', track:1, done:[], registered:{} },
+  { name:'WIROJ SUKSASUNEE', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'JIRAVATS VARNSIRIPATS', track:1, done:[], registered:{} },
+  { name:'PRAMOTE SRITANON', track:1, done:[2], registered:{} },
+  { name:'ARNAJAK PATTRAPAKDIKUL', track:2, done:[], registered:{} },
+  { name:'MICHAL JAN ZAWIEJA', track:2, done:[], registered:{} },
+  { name:'VICTOR BORRULL ALONSO', track:1, done:[], registered:{} },
+  { name:'NOP RIENSAVAPAK', track:2, done:[], registered:{} },
+  { name:'NAPATTHORN JEAWCHAROENCHAI', track:2, done:[], registered:{} },
+  { name:'VIVIZ THAPUNYAPHAT', track:1, done:[], registered:{} },
+  { name:'BASTIEN PIERRE SAUVAN', track:2, done:[], registered:{} },
+  { name:'NIPAPORN YAMMANOJ', track:2, done:[], registered:{} },
+  { name:'AUNG KYAW SOE', track:1, done:[], registered:{} },
+  { name:'CHANAKARN WARAPORN', track:2, done:[1,2], registered:{} },
+  { name:'CHANCHAI ITTHIAMORNLERD', track:1, done:[], registered:{} },
+  { name:'MAXIM ZAPARA', track:2, done:[], registered:{} },
+  { name:'JOSEPH GOJECKS KADIRI', track:1, done:[], registered:{} },
+  { name:'APINAN KHAMPA', track:1, done:[], registered:{} },
+  { name:'JARROD PAUL ZUELLIG', track:2, done:[], registered:{} },
+  { name:'GANTA SANGAROONTHONG', track:2, done:[1,2], registered:{} },
+  { name:'DANIEL CHRISTOPHER KELLY', track:2, done:[], registered:{} },
+  { name:'ZAW WIN HLAING', track:2, done:[], registered:{} },
+  { name:'Farah Cambaya Tayone', track:1, done:[], registered:{} },
+  { name:'KEERIS NITHIPIPITCHAI', track:2, done:[1,2], registered:{} },
+  { name:'KAMTHON SAIMAI', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'NANTASAK SOOKANAN', track:2, done:[], registered:{} },
+  { name:'ALICIA MEANA BAAMONDE', track:2, done:[], registered:{} },
+  { name:'PHAIJIT JARIT-EK', track:1, done:[1], registered:{} },
+  { name:'WORANOP CHAIYAKULVAT', track:1, done:[], registered:{} },
+  { name:'RAJESH CHEEYANCHERRY', track:2, done:[], registered:{} },
+  { name:'WATCHARA HANCHAVA', track:2, done:[], registered:{} },
+  { name:'ANTONIO MELE', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'SUNCHAI YAIRAYA', track:1, done:[1], registered:{} },
+  { name:'PARICHART PINIT', track:2, done:[], registered:{} },
+  { name:'THITAYAPORN SRIRATTANA', track:2, done:[], registered:{} },
+  { name:'WASITA HATSACHU', track:2, done:[], registered:{} },
+  { name:'KRAISORN THONGSUK', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'PINMANEE CHAISAWAT', track:2, done:[], registered:{} },
+  { name:'KAMOL JUTIWATTANANUKUL', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'MUKUL WANI', track:2, done:[], registered:{} },
+  { name:'ARURUK LERTKITCHA', track:1, done:[], registered:{} },
+  { name:'TAGDANAI SUJINNAPRAM', track:1, done:[], registered:{} },
+  { name:'ANYAMANEE HIRANSUPACHOTE', track:2, done:[], registered:{} },
+  { name:'KHATAWUT KRAJAYSI', track:1, done:[], registered:{} },
+  { name:'NARUPHORN NITCHAPHANIT', track:2, done:[], registered:{} },
+  { name:'SIRAPOP KWANLERTCHIT', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'PISAN AMMARAT', track:1, done:[1], registered:{} },
+  { name:'MICHAEL FRITSCH', track:2, done:[1,2], registered:{} },
+  { name:'NATCHAYA JARUSOMBAT', track:1, done:[], registered:{} },
+  { name:'KORNSAKUL WONGNAYA', track:2, done:[], registered:{} },
+  { name:'RATCHA CHONWANIT', track:1, done:[], registered:{} },
+  { name:'PADUNGSIN CHUAYHOM', track:1, done:[], registered:{} },
+  { name:'SARANYA MARNKHAIMOOK', track:2, done:[], registered:{} },
+  { name:'SASIWIMON RACHATASOMBOON', track:2, done:[], registered:{} },
+  { name:'PORNPONG CHUNCHADATHARN', track:1, done:[1], registered:{} },
+  { name:'NATHAKA SETHI', track:2, done:[], registered:{} },
+  { name:'WORRAPAT SANHARN', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'TEERAYOT JURDRUJIKUL', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'KRISZTINA TAMAS', track:1, done:[], registered:{} },
+  { name:'CHANIDA TECHACHAREONSUKCHILA', track:2, done:[1,2], registered:{} },
+  { name:'CHAROEN SIRISUCHARITTHAM', track:2, done:[1,2], registered:{} },
+  { name:'KWANCHANOK WATANATHIRAWOOTH', track:2, done:[], registered:{} },
+  { name:'NIWAT CHANDONTRIKIT', track:2, done:[], registered:{} },
+  { name:'Edmelyn Jade Santillan Agbayani', track:2, done:[], registered:{} },
+  { name:'IGOR BONNY TUA', track:1, done:[], registered:{} },
+  { name:'KITTIWAT LAOROONGROJ', track:1, done:[], registered:{} },
+  { name:'KRITTAPAS BAVONTAWEEPANYA', track:1, done:[], registered:{} },
+  { name:'SORAWIT TULYANON', track:1, done:[], registered:{} },
+  { name:'NATTIDA PONGSUWAN', track:2, done:[], registered:{} },
+  { name:'PRATSANEE SANEENUNTAWONG', track:2, done:[], registered:{} },
+  { name:'PORNTIP POJCHANIKOOL', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'CHOMPUNOOT SINLAPASANGCHAI', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'SIRISAK WONGSURA', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'AHMED ADEEB ARSHAD AHMED', track:1, done:[], registered:{} },
+  { name:'NUTTAPOL PHONG-U-DOM', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'TANAWAT THITATUMMAPUN', track:1, done:[], registered:{} },
+  { name:'NATCHA TOSAKULCHAI', track:1, done:[], registered:{} },
+  { name:'KANDIS TOOMPILA', track:1, done:[], registered:{} },
+  { name:'NEEN PONGSAKUL', track:1, done:[], registered:{} },
+  { name:'ATHICHA ATHIITSARIYAKUL', track:1, done:[], registered:{} },
+  { name:'SURASIN LAPKITTICHOT', track:1, done:[], registered:{} },
+  { name:'THAMMARAT MANEE', track:1, done:[], registered:{} },
+  { name:'APINANT SATCHANONT', track:1, done:[], registered:{} },
+  { name:'TEERAWUT KITBUNJERDJARUD', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'KAMONRAT WEERAWANITPATTANA', track:2, done:[], registered:{} },
+  { name:'LEANDRO MARIO MARCELLO BEDIN', track:1, done:[], registered:{} },
+  { name:'ABIRAMI PALANIAPPAN', track:2, done:[1,2], registered:{} },
+  { name:'SRIJESH NAKARMI', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'LEONHARD HERMANN FREY', track:2, done:[], registered:{} },
+  { name:'THANAKORN KARAKATE', track:1, done:[], registered:{} },
+  { name:'WORAPONG WONGDECHSAREEKUL', track:2, done:[], registered:{} },
+  { name:'NOPAKUN SANGON', track:1, done:[], registered:{} },
+  { name:'VEERAPHAT AMORNSIRIKUL', track:1, done:[], registered:{} },
+  { name:'ANCHISA TEACHALIKHIDKUL', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'SATAPITCHAKORN PUNJARAT', track:1, done:[], registered:{} },
+  { name:'KANAWAT PHUENGPHADUNG', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'KRITTIN KANOKWILAIRAT', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'ADISORN WATTANA', track:1, done:[], registered:{} },
+  { name:'KERATI KASISUWAN', track:1, done:[], registered:{} },
+  { name:'SMARCH POONKWAN', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'JITRIN PANITDIRAKE', track:1, done:[], registered:{} },
+  { name:'DONLAPORN CHANTARAT', track:1, done:[], registered:{} },
+  { name:'ASHES MUKHERJEE', track:2, done:[], registered:{} },
+  { name:'WEERAPAN SAE-NGOV', track:2, done:[], registered:{} },
+  { name:'KOUSHIK PAL', track:1, done:[], registered:{} },
+  { name:'KIREN PAUL', track:1, done:[], registered:{} },
+  { name:'TITIRUCK NUNTAPRAMOTE', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'KORAWEE RUNGRUENGWONG', track:1, done:[], registered:{} },
+  { name:'NUTTAWUT KASEMDETUDOMSUK', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'KITTIPAK RATASUKAROM', track:1, done:[], registered:{} },
+  { name:'SUPANAT KAMALES', track:1, done:[], registered:{} },
+  { name:'CHINNAWAT WIPAWAPAT', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'PAWARUT KLAIARMON', track:1, done:[], registered:{} },
+  { name:'THANAKORN YAMCHUONG', track:1, done:[], registered:{} },
+  { name:'PHIPAT LIMPRASUTR', track:1, done:[], registered:{} },
+  { name:'WEERAWAT RATTANACHAI', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'ARTIT SUTTIPHAN', track:2, done:[], registered:{} },
+  { name:'SUPAPRAPAT NOIPHAN', track:1, done:[], registered:{} },
+  { name:'JARUWAT PANTURAT', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'TOSAPORN SANGPISAN', track:1, done:[], registered:{} },
+  { name:'KITTIGORN KONGPET', track:1, done:[1], registered:{} },
+  { name:'WIPU POOJAREARN', track:1, done:[], registered:{} },
+  { name:'YOTHIN PORNDIREKLAP', track:1, done:[], registered:{} },
+  { name:'NATHAKORN SUKUMSIRICHART', track:1, done:[], registered:{} },
+  { name:'VASILII POLIANKIN', track:1, done:[], registered:{} },
+  { name:'WIPADA WAISAYA', track:1, done:[], registered:{} },
+  { name:'NUTTAPON METHA', track:1, done:[], registered:{} },
+  { name:'KAMOLLAK NGERNTHONGKAM', track:1, done:[1,2], registered:{} },
+  { name:'NAWAPHAT KHANKASIKAM', track:1, done:[], registered:{} },
+  { name:'Ruturaj Vasantrao Shinde', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'NANTAWAN ANUCHITDASSAGORN', track:2, done:[], registered:{} },
+  { name:'THITIMA RUENGROTWICHAI', track:2, done:[], registered:{} },
+  { name:'KRISTIAN GERALD COOPER', track:2, done:[], registered:{} },
+  { name:'PANADDA THOOPPAE', track:2, done:[], registered:{} },
+  { name:'YE MAUNG MAUNG HEIN', track:2, done:[1,2], registered:{} },
+  { name:'KITSANA FHUNPROMMIN', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'PIMTEERA CHALERMMEEPRASERT', track:2, done:[], registered:{} },
+  { name:'TATCHAPAN JEENWECHASAT', track:2, done:[], registered:{} },
+  { name:'KANOKKARN WINYANGOON', track:2, done:[], registered:{} },
+  { name:'RINRADEE BUDSRI', track:2, done:[], registered:{} },
+  { name:'MONICA MANOJ MUTHA', track:1, done:[], registered:{} },
+  { name:'PASIN TANGSAKUL', track:1, done:[], registered:{} },
+  { name:'PAKAPONG HOMYAM', track:1, done:[], registered:{} },
+  { name:'KAMPANART LEOSIRIKUL', track:2, done:[], registered:{} },
+  { name:'Richard Harmer', track:1, done:[], registered:{} },
+  { name:'NISHANT PRASAD', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'TANAWAT UTHAIKITWANICH', track:2, done:[], registered:{} },
+  { name:'KITTIMA MEESRISONG', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'ORAPHAN ITRITMEECHAI', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'PIYAPONG KLONGBUNJONG', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'THANADIT BUTHONG', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'SREYROUTH SOTH', track:1, done:[], registered:{} },
+  { name:'RAJNIKANT PANDURANG GAIKWAD', track:1, done:[], registered:{} },
+  { name:'PARNITA SAHA', track:1, done:[], registered:{} },
+  { name:'CHRISTOPHER NICHOLSON', track:2, done:[], registered:{} },
+  { name:'JARUBHASS SUDHAMASAPA', track:2, done:[], registered:{} },
+  { name:'KHOMSAN THONGKHAMHO', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'WAI LIN PHYO', track:2, done:[], registered:{} },
+  { name:'CHAWENGWUT PATTANAKUL', track:1, done:[], registered:{} },
+  { name:'HSU NYEINT THU', track:1, done:[], registered:{} },
+  { name:'PORNSIN WATANAGOMEN', track:2, done:[], registered:{} },
+  { name:'THITIWAT SUKCHAROENTHONG', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'MYO THANT', track:1, done:[1], registered:{} },
+  { name:'KYAW NAING TUN', track:1, done:[], registered:{} },
+  { name:'SIRATHEE KOSIT', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'YUNSHUO TIAN', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'RAVI PRASEETH RAVEENDRAN NAIR SOBHANA', track:1, done:[1,2], registered:{} },
+  { name:'KUNWASU CHENKANSUEK', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'AUNG KYAW MYO', track:1, done:[], registered:{} },
+  { name:'Thatoe Zaw', track:1, done:[], registered:{} },
+  { name:'PRATIBHA NILESH JADHAV', track:1, done:[], registered:{} },
+  { name:'ANOOP KAITHAMANA PUSHPAKARAN', track:1, done:[], registered:{} },
+  { name:'NAW SARAH AYE', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'PATTARASAK CHUNHAMANEEWAT', track:2, done:[], registered:{} },
+  { name:'KRICHPAS KHUMTHANOM', track:2, done:[], registered:{} },
+  { name:'LEMUEL NABONG', track:1, done:[], registered:{} },
+  { name:'OHNMAR HTWE', track:1, done:[], registered:{} },
+  { name:'SAW KHAING', track:1, done:[], registered:{} },
+  { name:'Trung Duc Nguyen', track:1, done:[], registered:{} },
+  { name:'PUNYAWEE KANGVANSAICHOL', track:2, done:[], registered:{} },
+  { name:'EKAMORN PETCHAREON', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'NICOLAS MARC ERIC ALLOO', track:1, done:[], registered:{} },
+  { name:'Stephanie Ann Lagumbay Relacion', track:2, done:[], registered:{} },
+  { name:'RACHAN KONGSILATHONG', track:1, done:[], registered:{} },
+  { name:'SIRAPOP PROMRIT', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'SARANNUCH TRONGTORSAK', track:1, done:[], registered:{} },
+  { name:'KANTARAT KRUTTA', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'PHUMIPHAS NOPTHAISONG', track:1, done:[], registered:{} },
+  { name:'CHUCK ATITNORAKAN', track:2, done:[], registered:{} },
+  { name:'CHALIT TANTIPRASITTHIKUL', track:1, done:[], registered:{} },
+  { name:'THET MYAT NOE', track:1, done:[], registered:{} },
+  { name:'Mark Marion Gamboa Bunquin', track:1, done:[], registered:{} },
+  { name:'SUPAKIAT PATTICHART', track:2, done:[1,2], registered:{} },
+  { name:'MEE MEE MAUNG', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'KHINE SU WAI THWIN', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'Archibald Serrano Ponce De Leon', track:2, done:[], registered:{} },
+  { name:'KANYAPAT ONGSIRIWATTANAKUL', track:2, done:[], registered:{} },
+  { name:'PAN EI KHAING', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'WAI PHYO HAN', track:1, done:[], registered:{} },
+  { name:'SUPICHAI POTHONG', track:1, done:[], registered:{} },
+  { name:'TEHCHAS BANGCHAROENSUK', track:1, done:[], registered:{} },
+  { name:'THAPANEE CHAYAKUL', track:1, done:[], registered:{} },
+  { name:'WIN MYAT AUNG', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'JIRAYUT SANGSIWARIT', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'SATIENPONG CHAVALITTHANAWONG', track:2, done:[], registered:{} },
+  { name:'PIMNIPA SAKULCHAISIRIVIT', track:1, done:[], registered:{} },
+  { name:'MYAT THU', track:1, done:[], registered:{} },
+  { name:'POOHKIJ PETCHDEE', track:1, done:[], registered:{} },
+  { name:'KYAW MYO TUN', track:1, done:[1], registered:{} },
+  { name:'NANTAWAT BOONLUEAN', track:2, done:[], registered:{} },
+  { name:'SAJJAD ILKHAN', track:1, done:[], registered:{} },
+  { name:'Virginia Adajar Asari', track:1, done:[], registered:{} },
+  { name:'CHANARAT UPPATAMTIPPAYA', track:1, done:[1,2], registered:{} },
+  { name:'MOE LWIN AUNG', track:1, done:[], registered:{} },
+  { name:'JANNARONG WADTHONG', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'PAWAT YUTTATEERANONT', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'NUTTHAPOOM SUWANWITWAJ', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'SUSHMITA DEY', track:2, done:[1,2], registered:{} },
+  { name:'ARKAR MOE', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'Rhalp Caballero Reyes', track:1, done:[], registered:{} },
+  { name:'Tinmon Yu Ang', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'WASSA TUNSIRI', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'WITSAKORN POOMJAN', track:2, done:[], registered:{} },
+  { name:'CHAYUT TUNGSAGUNWATTANA', track:1, done:[], registered:{} },
+  { name:'ASANGA MADUSANKA WIJESEKARA GUNAWARDHANA GURUSINGHA ARACHCHI', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'KEVIN KORAH ABRAHAM', track:2, done:[], registered:{} },
+  { name:'NAVARICH CHATASARAWACH', track:2, done:[1,2], registered:{} },
+  { name:'DHAMADIT CHAROENYING', track:1, done:[1,2], registered:{} },
+  { name:'ONPREEYA SAMNUANLERT', track:1, done:[], registered:{} },
+  { name:'ARUN KURIAN', track:2, done:[1,2], registered:{} },
+  { name:'RAKESH MURALI NAIR', track:1, done:[1,2], registered:{} },
+  { name:'MANUEL LINDNER', track:1, done:[1,2], registered:{} },
+  { name:'RAJARAM KULKARNI', track:1, done:[], registered:{} },
+  { name:'MANOJ SETHUMADHAVAN', track:2, done:[], registered:{} },
+  { name:'NASTHADA SURINONTAANAT', track:1, done:[], registered:{4:'18 May',5:'25 May'} },
+  { name:'Shilpa Rohit Nikam', track:1, done:[], registered:{} },
+  { name:'NOPPON UMNAJWANNAPHAN', track:1, done:[], registered:{} },
+  { name:'GITAP PRIYA NITHYANANDAM', track:1, done:[], registered:{} },
+  { name:'KAMOL KLOMPLIAN', track:1, done:[], registered:{} },
+  { name:'NATTHAPAT NOMSAWADI', track:2, done:[], registered:{} },
+  { name:'NIBIN NARIMATTATHIL JAMES', track:1, done:[], registered:{} },
+  { name:'JATUPORN PASSANAKRAISORN', track:2, done:[], registered:{} },
+  { name:'SONGPOL UDOMPUNYARAT', track:1, done:[], registered:{} },
+  { name:'EAINT YE MARN', track:1, done:[], registered:{4:'8 Jun',5:'9 Jun'} },
+  { name:'SUMEET JOYDEV MONDAL', track:1, done:[], registered:{} },
+  { name:'SONGSYNTH SIRIKHUNARATSMI', track:2, done:[], registered:{} },
+  { name:'ATITAN CHUDPIMAI', track:2, done:[], registered:{} },
+  { name:'SUWAT TRAICHIRAARPORN', track:2, done:[], registered:{} },
+  { name:'ELDHO BEHANAN MATHEW', track:2, done:[], registered:{} },
+  { name:'CHONLATAS TASANAPREECHACHAI', track:1, done:[], registered:{} },
+  { name:'SU MYAT HNIN', track:2, done:[], registered:{} },
+  { name:'RATCH RUAYLARP', track:1, done:[], registered:{} },
+  { name:'SUPRAJAK PETCHDEE', track:1, done:[], registered:{} },
+  { name:'ALEXANDER SCHILPP', track:1, done:[], registered:{} },
+  { name:'CARL DANIEL HEATON', track:2, done:[], registered:{} },
+  { name:'KHEMMAPHORN CHOMPHUKAEW', track:2, done:[], registered:{} },
+  { name:'NONTAJID PANTARAK', track:2, done:[], registered:{} },
+  { name:'SID ALI RAMI CHELLALI', track:2, done:[], registered:{} },
+  { name:'CLAUDIO ROMA', track:1, done:[], registered:{} },
+  { name:'INGO JANZEN', track:2, done:[], registered:{} },
+  { name:'Kuan Chu Yen', track:2, done:[], registered:{} },
+  { name:'TANAWITCH SAENTREE', track:2, done:[], registered:{} },
+  { name:'NAKHARIN DONSUYPAE', track:1, done:[], registered:{} },
+  { name:'RAWIPON SRIVIBHA', track:1, done:[], registered:{} },
+  { name:'NANG HNIN MYAT HLA', track:2, done:[], registered:{} },
+  { name:'KHELEN SINGH LOITONGBAM', track:1, done:[], registered:{} },
+  { name:'GUVANCH BAYRYYEV', track:1, done:[], registered:{} },
+  { name:'KYAW SOE WIN', track:1, done:[], registered:{} },
+  { name:'SUPANAN INKAEW', track:2, done:[], registered:{} },
+  { name:'KRITTANON KULJITTISUTEEPORN', track:1, done:[], registered:{} },
+  { name:'THANAKORN INTAJAK', track:2, done:[], registered:{} },
+  { name:'SANDEEP MAHARJAN', track:1, done:[], registered:{} },
+  { name:'SITTIRUSH SRIPODOK', track:2, done:[], registered:{} },
+  { name:'PLOYPITCHA CHENG', track:2, done:[], registered:{} },
+  { name:'PONIR KUMER SAHA', track:1, done:[], registered:{} },
+  { name:'MARCIN MILEWSKI', track:1, done:[], registered:{} },
+  { name:'JIRAKRIT YODVANICH', track:1, done:[], registered:{} },
+  { name:'OLIVIA MAI-LARNE PARRY', track:2, done:[], registered:{} },
+];
+
+const CAPACITY = {
+  1: {
+    1: { 1:30, 2:30, 3:30, 4:30, 5:30 },
+    2: { 1:30, 2:30, 3:30, 4:30, 5:30 },
+    3: { 1:30, 2:30, 3:30, 4:30, 5:30 },
+    4: { 1:30, 2:30, 3:30, 4:30, 5:30 },
+    5: { 1:30, 2:30, 3:30, 4:30, 5:30 },
+  },
+  2: {
+    1: { 1:30, 2:30, 3:30, 4:30 },
+    2: { 1:30, 2:30, 3:30, 4:30 },
+    3: { 1:30, 2:30, 3:30, 4:30 },
+    4: { 1:30, 2:30, 3:30, 4:30 },
+  },
+  3: {
+    1: { 1:30, 2:30 },
+  },
+};
+
+const FORM_LINKS = {
+  1: {
+    1: { 1:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 2:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 3:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 4:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 5:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u' },
+    2: { 1:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 2:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 3:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 4:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 5:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u' },
+    3: { 1:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 2:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 3:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 4:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 5:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u' },
+    4: { 1:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 2:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 3:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 4:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 5:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u' },
+    5: { 1:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 2:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 3:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 4:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u', 5:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUOENDTTIzTEhPVzdPUVBaQ1E2WTgwRkRHRS4u' },
+  },
+  2: {
+    1: { 1:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 2:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 3:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 4:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u' },
+    2: { 1:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 2:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 3:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 4:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u' },
+    3: { 1:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 2:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 3:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 4:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u' },
+    4: { 1:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 2:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 3:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u', 4:'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=LeQGbiVpxke555WBx8owKoOG9r7QQqVIj6lAhFk83rtUNFRFMjNDS1NDMjM1N0hEUlk5NjdJUUpQOS4u' },
+  },
+  3: {
+    1: { 1:'', 2:'SCHEDULED' },
+  },
+};
+
+const SESSION_LABELS = {
+  1: {
+    1:'SD001 — Foundations',
+    2:'SD002 — Intermediate',
+    3:'SD003 — Advanced',
+    4:'SD004-1 — Claude as Your Agentic Partner',
+    5:'SD004-2 — Testing, Review &amp; Team Workflows',
+  },
+  2: {
+    1:'NT001 — Foundation',
+    2:'NT002 — Intermediate',
+    3:'SD005-1 — AIDLC: Intelligent Work Assistant',
+    4:'SD005-2 — Documentation &amp; AI-Enhanced Ceremonies',
+  },
+  3: {
+    1:'NT001 — Foundation',
+    2:'NT002 — Intermediate',
+  },
+};
+
+const SESSION_FAC = {
+  1: { 1:'Richard', 2:'Richard', 3:'Richard', 4:'Ping-Hsien', 5:'Ping-Hsien' },
+  2: { 1:'Richard', 2:'Richard', 3:'Ping-Hsien', 4:'Ping-Hsien' },
+  3: { 1:'Richard', 2:'Richard' },
+};
+
+const SESSION_TIMES = {
+  1: { 1:'9:00 AM – 1:00 PM', 2:'9:00 AM – 1:00 PM', 3:'9:00 AM – 1:00 PM', 4:'9:00 AM – 12:00 PM', 5:'9:00 AM – 12:00 PM' },
+  2: { 1:'9:00 AM – 1:00 PM', 2:'9:00 AM – 12:00 PM', 3:'9:00 AM – 12:00 PM', 4:'9:00 AM – 12:00 PM' },
+  3: { 1:'9:00 AM – 1:00 PM', 2:'9:00 AM – 12:00 PM' },
+};
+
+function getDateLabel(track, cohort, sess) {
+  let slot;
+  if (track === 1) slot = T1_DATES[cohort-1]?.[sess-1];
+  if (track === 2) slot = T2_DATES[cohort-1]?.[sess-1];
+  if (track === 3) slot = T3_DATES[cohort-1]?.[sess-1];
+  if (!slot) return 'TBC';
+  return `${slot[0]} (${slot[1]})${slot[2] ? ' · ' + slot[2] : ''}`;
+}
+
+function spotsLabel(spots) {
+  if (spots === null) return { text:'TBC', cls:'spots-ok' };
+  if (spots <= 0)  return { text:'Full',           cls:'spots-full' };
+  if (spots <= 5)  return { text:`${spots} spots`, cls:'spots-low' };
+  return { text:`${spots} spots`, cls:'spots-ok' };
+}
+
+function numSessions(track) { return track === 1 ? 5 : track === 2 ? 4 : 2; }
+function numCohorts(track)  { return track === 1 ? 5 : track === 2 ? 4 : 1; }
+
+function toTitleCase(str) {
+  return str.replace(/\S+/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+}
+
+function renderResult(person) {
+  const track = person.track;
+  const done = person.done || [];
+  const registered = person.registered || {};
+  const total = numSessions(track);
+  const needed = [];
+  for (let s = 1; s <= total; s++) if (!done.includes(s) && !registered[s]) needed.push(s);
+
+  const trackLabel = track === 1 ? 'Track 1 — Technical' : track === 2 ? 'Track 2 — Non-Technical' : 'Track 3 — Supporting';
+  const trackBadgeCls = track === 1 ? 'rtb-t1' : track === 2 ? 'rtb-t2' : 'rtb-t3';
+
+  const displayName = toTitleCase(person.name);
+  let html = `<div class="lu-divider"></div>
+    <div class="result-header">
+      <span class="result-name">${displayName}</span>
+      <span class="result-track-badge ${trackBadgeCls}">${trackLabel}</span>
+    </div>`;
+
+  html += `<div class="progress-section">
+    <div class="progress-label">Your Progress</div>
+    <div class="session-pills">`;
+  for (let s = 1; s <= total; s++) {
+    if (done.includes(s))
+      html += `<span class="pill pill-done">✓ Session ${s} — Attended</span>`;
+    else if (registered[s])
+      html += `<span class="pill pill-scheduled">📅 Session ${s} — Scheduled ${registered[s]}</span>`;
+    else
+      html += `<span class="pill pill-todo">Session ${s} — To complete</span>`;
+  }
+  html += `</div></div>`;
+
+  const allAccountedFor = needed.length === 0;
+  if (allAccountedFor) {
+    const hasScheduled = Object.keys(registered).length > 0;
+    if (hasScheduled) {
+      html += `<div class="callout callout-amber-s" style="margin-top:8px"><strong>You're all set!</strong> You have attended or are scheduled for all required sessions. See your scheduled dates above.</div>`;
+    } else {
+      html += `<div class="callout callout-blue-s" style="margin-top:8px"><strong>All sessions completed!</strong> You have fulfilled your mandatory training requirement.</div>`;
+    }
+    document.getElementById('lookup-result').innerHTML = html;
+    return;
+  }
+
+  html += `<div class="cohort-options-title">Available Cohorts for Sessions Still to Complete</div>
+    <div class="cohort-grid">`;
+
+  const nc = numCohorts(track);
+  for (let c = 1; c <= nc; c++) {
+    const cap = CAPACITY[track]?.[c];
+    html += `<div class="cohort-card">
+      <div class="cohort-card-head"><span class="cc-name">Cohort ${c}</span></div>`;
+    needed.forEach(s => {
+      const spots = cap?.[s] ?? null;
+      const { text: sText, cls: sCls } = spotsLabel(spots);
+      const dateStr = getDateLabel(track, c, s);
+      const fac = SESSION_FAC[track][s];
+      const label = SESSION_LABELS[track][s];
+      const timeStr = SESSION_TIMES[track]?.[s] || '';
+      const link = FORM_LINKS[track]?.[c]?.[s] || '';
+      const isFull = spots !== null && spots <= 0;
+      const isScheduled = link === 'SCHEDULED';
+      const isTBC = !link;
+      const btnCls = isFull ? 'reg-btn reg-btn-full' : (isTBC && !isScheduled) ? 'reg-btn reg-btn-tbc' : 'reg-btn';
+      const btnText = isFull ? 'Full' : isScheduled ? 'Scheduled' : isTBC ? 'Link TBC' : 'Register';
+      const btnHtml = isFull || isTBC || isScheduled
+        ? `<span class="${btnCls}" style="${isScheduled ? 'background:#2E7D32;cursor:default;pointer-events:none' : ''}">${btnText}</span>`
+        : `<a class="${btnCls}" href="${link}" target="_blank">${btnText}</a>`;
+      html += `<div class="sess-reg-row">
+        <span class="srr-num">Session ${s}</span>
+        <span class="srr-date">${label}<br><span style="color:var(--muted);font-size:11px">${dateStr}${timeStr ? ' &nbsp;·&nbsp; ' + timeStr : ''}</span></span>
+        <span class="spots-badge ${sCls}">${sText}</span>
+        ${btnHtml}
+      </div>`;
+    });
+    html += `</div>`;
+  }
+  html += `</div>`;
+
+  // T3 cross-track option: NT001 and NT002 are identical to T2 Sessions 1 and 2.
+  // If a T3 employee still needs session 1 or 2, show available T2 cohort dates.
+  if (track === 3 && needed.length > 0) {
+    // Map T3 session number → T2 session number (1→1, 2→2)
+    const t3ToT2 = { 1: 1, 2: 2 };
+    const crossNeeded = needed.filter(s => t3ToT2[s] !== undefined);
+    if (crossNeeded.length > 0) {
+      html += `<div class="cohort-options-title" style="margin-top:20px; color:var(--green);">
+        Also Available via Track 2 Cohorts
+        <span style="font-size:11px; font-weight:400; color:var(--muted); display:block; margin-top:2px;">
+          The sessions you still need (NT001 Foundation / NT002 Intermediate) run the same content in Track 2.
+          You may join any Track 2 cohort for these sessions instead.
+        </span>
+      </div>
+      <div class="cohort-grid">`;
+      for (let c = 1; c <= 4; c++) {  // only C1–C4 (C5 is reserve)
+        const cap2 = CAPACITY[2]?.[c];
+        html += `<div class="cohort-card" style="border-top:3px solid var(--green);">
+          <div class="cohort-card-head"><span class="cc-name">T2 Cohort ${c}</span></div>`;
+        crossNeeded.forEach(s3 => {
+          const s2 = t3ToT2[s3];
+          const spots = cap2?.[s2] ?? null;
+          const { text: sText, cls: sCls } = spotsLabel(spots);
+          const dateStr = getDateLabel(2, c, s2);
+          const fac = SESSION_FAC[2][s2];
+          const label = SESSION_LABELS[2][s2];
+          const timeStr = SESSION_TIMES[2]?.[s2] || '';
+          const link = FORM_LINKS[2]?.[c]?.[s2] || '';
+          const isFull = spots !== null && spots <= 0;
+          const isTBC = !link;
+          const btnCls = isFull ? 'reg-btn reg-btn-full' : isTBC ? 'reg-btn reg-btn-tbc' : 'reg-btn';
+          const btnText = isFull ? 'Full' : isTBC ? 'Link TBC' : 'Register';
+          const btnHtml = isFull || isTBC
+            ? `<span class="${btnCls}">${btnText}</span>`
+            : `<a class="${btnCls}" href="${link}" target="_blank">${btnText}</a>`;
+          html += `<div class="sess-reg-row">
+            <span class="srr-num">T3 Sess ${s3}</span>
+            <span class="srr-date">${label}<br><span style="color:var(--muted);font-size:11px">${dateStr}${timeStr ? ' &nbsp;·&nbsp; ' + timeStr : ''}</span></span>
+            <span class="spots-badge ${sCls}">${sText}</span>
+            ${btnHtml}
+          </div>`;
+        });
+        html += `</div>`;
+      }
+      html += `</div>`;
+    }
+  }
+
+  document.getElementById('lookup-result').innerHTML = html;
+}
+
+function clearLookup() {
+  document.getElementById('lookup-input').value = '';
+  document.getElementById('lookup-result').innerHTML = '';
+  document.getElementById('lookup-suggestions').innerHTML = '';
+  document.getElementById('lookup-input').focus();
+}
+
+function runLookup() {
+  const query = document.getElementById('lookup-input').value.trim().toLowerCase();
+  const resultDiv = document.getElementById('lookup-result');
+  const suggestDiv = document.getElementById('lookup-suggestions');
+  suggestDiv.innerHTML = '';
+  resultDiv.innerHTML = '';
+  if (!query) return;
+  const matches = ATTENDANCE.filter(p => p.name.toLowerCase().includes(query));
+  if (matches.length === 0) {
+    resultDiv.innerHTML = `<div class="lu-divider"></div>
+      <div class="not-found-msg">
+        <strong>Name not found.</strong> Your name may not be in the system yet, or you may not have attended any previous sessions.
+        <div class="track-select-btns" style="margin-top:10px;">
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px;width:100%">Select your track to see all cohorts:</div>
+          <button class="lookup-btn tsb-t1" onclick="renderResult({name:'${query}',track:1,done:[]})">Track 1 — Technical</button>
+          <button class="lookup-btn tsb-t2" onclick="renderResult({name:'${query}',track:2,done:[]})">Track 2 — Non-Technical</button>
+          <button class="lookup-btn tsb-t3" onclick="renderResult({name:'${query}',track:3,done:[]})">Track 3 — Supporting</button>
+        </div>
+      </div>`;
+    return;
+  }
+  if (matches.length > 1) {
+    suggestDiv.innerHTML = 'Multiple matches: ' + matches.map(p =>
+      `<a href="#" style="color:var(--allianz);font-weight:700;margin-right:10px" onclick="event.preventDefault();document.getElementById('lookup-input').value='${p.name}';runLookup()">${toTitleCase(p.name)}</a>`
+    ).join('');
+    return;
+  }
+  renderResult(matches[0]);
+}
+
+document.getElementById('lookup-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') runLookup();
+});
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+
+<div class="footer">
+  <p style="margin-bottom:6px;">For any questions regarding this training, please contact <a href="mailto:thiranee.arnupaplawan@allianz.com">thiranee.arnupaplawan@allianz.com</a></p>
+  <p style="margin-bottom:8px;">For technical questions, please contact:
+    <a href="mailto:richard.harmer@allianz.com">Harmer, Richard (Allianz Technology)</a> &nbsp;·&nbsp;
+    <a href="mailto:ping-hsien.lin@allianz.com">Lin, Ping-Hsien (Allianz Technology)</a> &nbsp;·&nbsp;
+    <a href="mailto:manuel.lindner@allianz.com">Lindner, Manuel (Allianz Technology)</a>
+  </p>
+  <p><strong>Allianz Technology Thailand</strong> &nbsp;·&nbsp; Claude Code Mandatory Training 2026 &nbsp;·&nbsp; Last updated: April 2026</p>
+</div>
+
+</div><!-- end tab-schedule -->
+</body>
+</html>
