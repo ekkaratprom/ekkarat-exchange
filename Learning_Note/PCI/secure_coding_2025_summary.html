@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Coding 2025 — สรุปบทเรียน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --bg-alt: #ebe5d3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3d;
+    --ink-mute: #6b6b6b;
+    --paper: #faf7f0;
+    --accent: #c8330d;
+    --accent-dark: #8a1f00;
+    --gold: #b8860b;
+    --rule: #2a2a2a;
+    --critical: #c8330d;
+    --warning: #b8860b;
+    --safe: #2d5016;
+    --code-bg: #1a1a1a;
+    --code-ink: #f0ead2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans Thai', 'Fraunces', serif;
+    font-weight: 400;
+    line-height: 1.65;
+    font-size: 16px;
+    overflow-x: hidden;
+  }
+
+  /* Texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(184, 134, 11, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(200, 51, 13, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* SIDEBAR */
+  aside {
+    border-right: 1px solid var(--rule);
+    padding: 3rem 2rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--bg);
+  }
+
+  aside::-webkit-scrollbar { width: 4px; }
+  aside::-webkit-scrollbar-thumb { background: var(--ink-mute); }
+
+  .brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .brand .em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .brand-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--ink-mute);
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1.5rem;
+  }
+
+  nav ol {
+    list-style: none;
+    counter-reset: section;
+  }
+
+  nav li {
+    counter-increment: section;
+    margin-bottom: 0.5rem;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    padding: 0.4rem 0;
+    transition: color 0.2s, transform 0.2s;
+    border-bottom: 1px dotted transparent;
+  }
+
+  nav a::before {
+    content: counter(section, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-mute);
+    min-width: 1.5rem;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  .nav-section {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+    margin: 1.8rem 0 0.6rem;
+    font-weight: 700;
+  }
+
+  /* MAIN */
+  main {
+    padding: 4rem 4rem 6rem;
+    max-width: 880px;
+  }
+
+  /* HEADER */
+  .masthead {
+    border-bottom: 3px double var(--rule);
+    padding-bottom: 2.5rem;
+    margin-bottom: 3.5rem;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  h1.title {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    margin-bottom: 1rem;
+  }
+
+  h1 .it {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .deck {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    font-weight: 300;
+    max-width: 60ch;
+    margin-top: 1.5rem;
+    font-style: italic;
+  }
+
+  .meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+  }
+
+  .meta span strong {
+    color: var(--ink);
+    display: block;
+    margin-top: 0.2rem;
+    font-weight: 700;
+  }
+
+  /* SECTIONS */
+  section.chapter {
+    margin: 5rem 0;
+    scroll-margin-top: 2rem;
+  }
+
+  .chapter-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 .em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .chapter-intro {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--accent);
+    padding: 0.3rem 0 0.3rem 1.5rem;
+    margin: 1.5rem 0 2.5rem;
+    font-style: italic;
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 2.5rem 0 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin: 2rem 0 0.8rem;
+    font-weight: 700;
+  }
+
+  p { margin-bottom: 1.1rem; }
+
+  p strong { color: var(--accent-dark); font-weight: 600; }
+
+  /* Drop cap for chapter intro */
+  .chapter > p:first-of-type::first-letter {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 4rem;
+    float: left;
+    line-height: 0.85;
+    padding: 0.3rem 0.6rem 0 0;
+    color: var(--accent);
+  }
+
+  /* CALLOUT BOXES */
+  .callout {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.8rem 2rem;
+    margin: 2rem 0;
+    position: relative;
+    box-shadow: 6px 6px 0 var(--rule);
+  }
+
+  .callout-label {
+    position: absolute;
+    top: -0.7rem;
+    left: 1.5rem;
+    background: var(--bg);
+    padding: 0 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .callout.critical {
+    background: #fff;
+    border-left: 4px solid var(--critical);
+  }
+
+  .callout.warn { border-left: 4px solid var(--warning); }
+  .callout.safe { border-left: 4px solid var(--safe); }
+
+  .pullquote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.35;
+    color: var(--ink);
+    text-align: center;
+    padding: 2.5rem 1rem;
+    margin: 3rem 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .pullquote::before, .pullquote::after {
+    content: '※';
+    display: block;
+    color: var(--accent);
+    font-size: 1rem;
+    font-style: normal;
+    margin: 0.5rem 0;
+  }
+
+  /* LISTS */
+  ul.styled, ol.styled {
+    list-style: none;
+    margin: 1rem 0 1.5rem;
+    padding-left: 0;
+  }
+
+  ul.styled li, ol.styled li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 0.7rem;
+    line-height: 1.6;
+  }
+
+  ul.styled li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  ol.styled { counter-reset: list-item; }
+
+  ol.styled li {
+    counter-increment: list-item;
+  }
+
+  ol.styled li::before {
+    content: counter(list-item, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 700;
+    top: 0.3rem;
+  }
+
+  /* TABLE */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1.5rem 0 2rem;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: left;
+    padding: 0.9rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+  }
+
+  td {
+    padding: 0.9rem 1.2rem;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+
+  td strong { color: var(--accent); }
+
+  /* OWASP GRID */
+  .owasp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 2rem 0;
+  }
+
+  .owasp-item {
+    background: var(--paper);
+    padding: 1.5rem 1.3rem;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .owasp-item:hover { background: var(--bg-alt); }
+
+  .owasp-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 2.5rem;
+    line-height: 1;
+    color: var(--accent);
+    font-style: italic;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .owasp-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .owasp-desc {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  /* CODE */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    background: var(--bg-alt);
+    padding: 0.1em 0.4em;
+    border-radius: 2px;
+    color: var(--accent-dark);
+  }
+
+  .codeblock {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    border-left: 4px solid var(--accent);
+  }
+
+  .codeblock code { background: none; color: var(--code-ink); padding: 0; }
+
+  /* TIMELINE for SDLC */
+  .timeline {
+    margin: 2.5rem 0;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 2rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .phase {
+    position: relative;
+    padding-left: 5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .phase-num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4rem;
+    height: 4rem;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: var(--accent);
+    font-style: italic;
+    z-index: 2;
+  }
+
+  .phase h4 {
+    margin-top: 0.5rem;
+    color: var(--ink);
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+
+  .phase p { font-size: 0.95rem; }
+
+  /* QUIZ SECTION */
+  .quiz-zone {
+    background: var(--ink);
+    color: var(--paper);
+    margin: 4rem -4rem -6rem;
+    padding: 5rem 4rem 6rem;
+    position: relative;
+  }
+
+  .quiz-zone::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--accent),
+      var(--accent) 12px,
+      transparent 12px,
+      transparent 24px
+    );
+  }
+
+  .quiz-zone h2 {
+    color: var(--paper);
+  }
+
+  .quiz-zone .chapter-num,
+  .quiz-zone h2 .em,
+  .quiz-zone .chapter-intro {
+    color: #ffa07a;
+  }
+
+  .quiz-zone .chapter-intro {
+    border-color: #ffa07a;
+    color: rgba(250, 247, 240, 0.85);
+  }
+
+  .question {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 2rem;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #ffa07a;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .q-text {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    color: var(--paper);
+  }
+
+  .options {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+  }
+
+  .option {
+    padding: 0.8rem 1.2rem;
+    margin: 0.6rem 0;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    user-select: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .option:hover {
+    background: rgba(255,255,255,0.08);
+    border-left-color: #ffa07a;
+  }
+
+  .option .letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #ffa07a;
+    font-weight: 700;
+    min-width: 1.2rem;
+  }
+
+  .option.correct {
+    background: rgba(45, 80, 22, 0.4);
+    border-left-color: #6ab04c;
+  }
+
+  .option.wrong {
+    background: rgba(200, 51, 13, 0.25);
+    border-left-color: var(--critical);
+    text-decoration: line-through;
+    opacity: 0.8;
+  }
+
+  .reveal-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    background: transparent;
+    color: #ffa07a;
+    border: 1px solid #ffa07a;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 700;
+  }
+
+  .reveal-btn:hover {
+    background: #ffa07a;
+    color: var(--ink);
+  }
+
+  .explanation {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, margin 0.4s ease, padding 0.4s ease;
+    background: rgba(255, 160, 122, 0.08);
+    border-left: 3px solid #ffa07a;
+    color: var(--paper);
+  }
+
+  .explanation.shown {
+    max-height: 2000px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .explanation h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #ffa07a;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+
+  .explanation p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+  }
+
+  .explanation code {
+    background: rgba(0,0,0,0.4);
+    color: #ffa07a;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 3rem 0 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(250, 247, 240, 0.4);
+  }
+
+  footer .ornament {
+    color: #ffa07a;
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    aside { display: none; }
+    main { padding: 2.5rem 1.5rem 4rem; }
+    .quiz-zone { margin: 3rem -1.5rem -4rem; padding: 3.5rem 1.5rem 4rem; }
+    h1.title { font-size: 2.5rem; }
+    .meta { flex-direction: column; gap: 0.8rem; }
+    .phase { padding-left: 3.5rem; }
+    .phase-num { width: 2.8rem; height: 2.8rem; font-size: 1.1rem; }
+    .timeline::before { left: 1.4rem; }
+  }
+
+  /* DETAIL element styling */
+  details {
+    border: 1px solid var(--rule);
+    padding: 0;
+    margin: 1rem 0;
+    background: var(--paper);
+  }
+
+  details summary {
+    padding: 1rem 1.3rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Fraunces', serif;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  details summary::after {
+    content: '+';
+    font-size: 1.3rem;
+    color: var(--accent);
+    transition: transform 0.2s;
+  }
+
+  details[open] summary::after {
+    content: '−';
+  }
+
+  details summary::-webkit-details-marker { display: none; }
+
+  details .detail-body {
+    padding: 0 1.3rem 1.3rem;
+  }
+
+  /* SCORE TRACKER */
+  .score-tracker {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.7rem 1.1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    z-index: 100;
+    border: 1px solid var(--accent);
+    box-shadow: 4px 4px 0 var(--accent);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .score-tracker.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .score-tracker .score-num {
+    color: #ffa07a;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 600px) {
+    .score-tracker { top: auto; bottom: 1rem; right: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="score-tracker" id="scoreTracker">
+  REVEALED <span class="score-num" id="scoreNum">0</span><span style="color:var(--ink-mute)">/5</span>
+</div>
+
+<div class="layout">
+
+<aside>
+  <div class="brand">SECURE<br><span class="em">coding</span></div>
+  <div class="brand-sub">Compendium · 2025</div>
+
+  <nav>
+    <div class="nav-section">Foundation</div>
+    <ol>
+      <li><a href="#s1">Threats & Vulnerabilities</a></li>
+      <li><a href="#s2">OWASP Top 10</a></li>
+    </ol>
+
+    <div class="nav-section">Process</div>
+    <ol>
+      <li><a href="#s3">The SDLC</a></li>
+      <li><a href="#s4">Security in SDLC</a></li>
+    </ol>
+
+    <div class="nav-section">Compliance</div>
+    <ol>
+      <li><a href="#s5">PCI DSS</a></li>
+      <li><a href="#s6">Dev Requirements</a></li>
+      <li><a href="#s7">Tooling — SonarQube</a></li>
+    </ol>
+
+    <div class="nav-section">Assessment</div>
+    <ol>
+      <li><a href="#quiz">Quiz · 5 Questions</a></li>
+    </ol>
+  </nav>
+</aside>
+
+<main>
+
+<!-- ============ MASTHEAD ============ -->
+<header class="masthead">
+  <div class="eyebrow">A Field Guide · vol. 01 · 2025</div>
+  <h1 class="title">Secure <span class="it">Coding</span><br>คู่มือฉบับย่อ</h1>
+  <p class="deck">รวมหลักการเขียนโค้ดปลอดภัย วงจรพัฒนาซอฟต์แวร์ มาตรฐาน PCI DSS v4.0 และเครื่องมือวิเคราะห์ช่องโหว่ — สำหรับนักพัฒนาที่ต้องการป้องกันโค้ดของตัวเองจากภัยคุกคามยุคใหม่</p>
+  <div class="meta">
+    <span>Format<strong>Reference Guide</strong></span>
+    <span>Sections<strong>7 Chapters</strong></span>
+    <span>Assessment<strong>5 Questions</strong></span>
+    <span>Standard<strong>PCI DSS v4.0</strong></span>
+  </div>
+</header>
+
+<!-- ============ SECTION 1 ============ -->
+<section class="chapter" id="s1">
+  <span class="chapter-num">Chapter 01</span>
+  <h2>Threats, Attacks <span class="em">&</span> Vulnerabilities</h2>
+  <p class="chapter-intro">ก่อนจะป้องกัน เราต้องเข้าใจก่อนว่าศัตรูคืออะไร — และอะไรคือสิ่งที่เปิดประตูให้พวกเขาเข้ามา</p>
+
+  <h3>Vulnerability vs Exploit</h3>
+  <p><strong>Vulnerability</strong> คือจุดอ่อนในระบบ ไม่ว่าจะเป็นบั๊กในโค้ด การตั้งค่าผิด กระบวนการที่บกพร่อง หรือ algorithm ที่ล้าสมัย เปรียบเทียบเหมือนประตูที่ไม่ได้ล็อก</p>
+
+  <p><strong>Exploit</strong> คือวิธีการที่แฮกเกอร์ใช้เพื่อเข้าระบบผ่านจุดอ่อนนั้น เช่น hacking tool, malware, malicious script หรือ social engineering อย่าง phishing เปรียบเทียบเหมือนการเดินเข้าประตูบานนั้น</p>
+
+  <div class="callout warn">
+    <span class="callout-label">Remember this</span>
+    <p style="margin:0">Vulnerability = <em>"ช่องโหว่อยู่ที่ไหน"</em> — Exploit = <em>"ใช้ช่องโหว่นั้นยังไง"</em></p>
+  </div>
+
+  <h3>กรณีศึกษาจริง</h3>
+
+  <details>
+    <summary>Adobe Server Exposure (2019)</summary>
+    <div class="detail-body">
+      <p>ข้อมูลผู้ใช้ 7.5 ล้านบัญชีรั่วสู่อินเทอร์เน็ตเพราะ <strong>misconfiguration</strong> ของ development environment ทำให้ใครก็ตามที่มี web browser สามารถเข้าถึงได้</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Epic Games Hack (2016)</summary>
+    <div class="detail-body">
+      <p>ผู้ใช้ forum 800,000 บัญชีถูกขโมยข้อมูลผ่าน <strong>SQL injection</strong> ในระบบ forum รุ่นเก่าที่ยังไม่ได้อัปเดต</p>
+    </div>
+  </details>
+
+  <h3>10 Secure Coding Tips</h3>
+  <ol class="styled">
+    <li><strong>Validate Inputs</strong> — ด่านแรกของการป้องกัน ตรวจ length, format, character set</li>
+    <li><strong>Manage Authentication</strong> — ระบบยืนยันตัวตนและจัดการรหัสผ่านที่แข็งแรง</li>
+    <li><strong>Sanitize Data</strong> — ลบอักขระอันตรายด้วย whitelist/blacklist/escape</li>
+    <li><strong>Least Privilege</strong> — ให้สิทธิ์น้อยที่สุดเท่าที่จำเป็น เฉพาะช่วงที่ต้องใช้</li>
+    <li><strong>Secure Architecture</strong> — ออกแบบเอง แบ่ง subsystem ใช้ plugin ที่ปลอดภัย</li>
+    <li><strong>Keep it Simple</strong> — ยิ่งซับซ้อน ยิ่งเสี่ยงพลาด</li>
+    <li><strong>Default "Deny"</strong> — ตั้งค่าเริ่มต้นเป็นปฏิเสธ แล้วค่อยให้สิทธิ์</li>
+    <li><strong>Multiple Layers</strong> — Defense in depth — firewall + hashing + MFA</li>
+    <li><strong>Use Encryption</strong> — เข้ารหัสทั้ง at rest และ in transit</li>
+    <li><strong>Quality Checks</strong> — code review, มาตรฐาน, threat modeling</li>
+  </ol>
+
+  <div class="pullquote">
+    อย่าเชื่อ input, ให้สิทธิ์น้อย, เข้ารหัสเสมอ, และทำงานเป็นชั้นๆ
+  </div>
+</section>
+
+<!-- ============ SECTION 2 ============ -->
+<section class="chapter" id="s2">
+  <span class="chapter-num">Chapter 02</span>
+  <h2>The OWASP <span class="em">Top 10</span></h2>
+  <p class="chapter-intro">OWASP (Open Web Application Security Project) จัดอันดับช่องโหว่ตามความถี่ในการพบ ความง่ายในการตรวจจับ ความง่ายในการโจมตี และผลกระทบทางเทคนิค ฉบับ 2021 มีดังนี้</p>
+
+  <div class="owasp-grid">
+    <div class="owasp-item">
+      <span class="owasp-num">01</span>
+      <div class="owasp-name">Broken Access Control</div>
+      <div class="owasp-desc">ผู้ใช้เข้าถึงข้อมูล/ฟังก์ชันที่ไม่ควรเข้าได้</div>
+    </div>
+    <div class="owasp-item">
+      <span class="owasp-num">02</span>
+      <div class="owasp-name">Cryptographic Failures</div>
+      <div class="owasp-desc">ไม่ป้องกันข้อมูลด้วยการเข้ารหัสที่เหมาะสม</div>
+    </div>
+    <div class="owasp-item">
+      <span class="owasp-num">03</span>
+      <div class="owasp-name">Injection</div>
+      <div class="owasp-desc">SQL, Shell, HTML script — ฉีดโค้ดผ่าน input</div>
+    </div>
+    <div class="owasp-item">
+      <span class="owasp-num">04</span>
+      <div class="owasp-name">Insecure Design</div>
+      <div class="owasp-desc">ช่องโหว่จาก architecture ตั้งแต่ต้น</div>
+    </div>
+    <div class="owasp-item">
+      <span class="owasp-num">05</span>
+      <div class="owasp-name">Security Misconfiguration</div>
+      <div class="owasp-desc">ซอฟต์แวร์ล้าสมัย, default password, port เปิด</div>
+    </div>
+    <div class="owasp-item">
+      <span class="owasp-num">06</span>
+      <div class="owasp-name">Vulnerable Components</div>
+      <div class="owasp-desc">Library/framework ที่มีช่องโหว่</div>
+    </div>
+    <div class="owasp-item">
+      <span class="owasp-num">07</span>
+      <div class="owasp-name">Auth Failures</div>
+      <div class="owasp-desc">ระบบยืนยันตัวตนอ่อนแอ ไม่มี MFA</div>
+    </div>
+    <div class="owasp-item">
+      <span class="owasp-num">08</span>
+      <div class="owasp-name">Integrity Failures</div>
+      <div class="owasp-desc">โค้ด/ข้อมูลไม่ถูกตรวจสอบ — SolarWinds</div>
+    </div>
+    <div class="owasp-item">
+      <span class="owasp-num">09</span>
+      <div class="owasp-name">Logging Failures</div>
+      <div class="owasp-desc">ไม่ log ไม่ monitor ผู้โจมตีอยู่นาน 200+ วัน</div>
+    </div>
+    <div class="owasp-item">
+      <span class="owasp-num">10</span>
+      <div class="owasp-name">Server-Side Request Forgery</div>
+      <div class="owasp-desc">บังคับ server ยิง request โดยไม่ validate URL</div>
+    </div>
+  </div>
+
+  <h3>ตัวอย่าง Injection — สำคัญที่สุดที่ต้องเห็น</h3>
+  <p>สมมติแอปใช้ SQL function แบบนี้:</p>
+  <div class="codeblock"><code>Query = "SELECT * FROM accounts WHERE custID='" 
+        + request.getParameter("id") + "'";</code></div>
+
+  <p>ผู้โจมตีใส่ <code>' or '1'='1</code> เป็น parameter <code>id</code> → query กลายเป็นคืนข้อมูลทั้ง table</p>
+  <p><strong>วิธีป้องกัน:</strong> Input validation + Input/Output encoding + ใช้ parameterized queries</p>
+
+  <div class="callout critical">
+    <span class="callout-label">CSRF vs SSRF — อย่าสับสน</span>
+    <p style="margin:0"><strong>CSRF</strong> = หลอก browser ของผู้ใช้ให้ทำ action แทนเขา · <strong>SSRF</strong> = หลอก server ของเป้าหมายให้ยิง request ไปที่ภายใน</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 3 ============ -->
+<section class="chapter" id="s3">
+  <span class="chapter-num">Chapter 03</span>
+  <h2>The <span class="em">SDLC</span></h2>
+  <p class="chapter-intro">Software Development Life Cycle คือกระบวนการผลิตซอฟต์แวร์ — คุณภาพสูงสุด ต้นทุนต่ำสุด ใช้เวลาน้อยที่สุด</p>
+
+  <div class="timeline">
+    <div class="phase">
+      <div class="phase-num">01</div>
+      <h4>Requirements</h4>
+      <p>เก็บความต้องการและกำหนด security requirements ตาม corporate policy/PCI DSS</p>
+    </div>
+    <div class="phase">
+      <div class="phase-num">02</div>
+      <h4>Design</h4>
+      <p>ออกแบบและทำ risk assessment ของ architecture ที่เสนอ</p>
+    </div>
+    <div class="phase">
+      <div class="phase-num">03</div>
+      <h4>Implementation</h4>
+      <p>เขียนโค้ดและใช้ automated static source code checking (SAST)</p>
+    </div>
+    <div class="phase">
+      <div class="phase-num">04</div>
+      <h4>Testing / QA</h4>
+      <p>ทดสอบโดยใช้ OWASP Top 10 / SANS Top 25 เป็นแนวทาง</p>
+    </div>
+    <div class="phase">
+      <div class="phase-num">05</div>
+      <h4>Maintenance / Deployment</h4>
+      <p>Monitor data leakage 24/7 + ใช้ WAF/IPS ป้องกันชั่วคราว</p>
+    </div>
+  </div>
+
+  <div class="callout critical">
+    <span class="callout-label">Cost of fixing</span>
+    <p style="margin:0">การแก้ปัญหาบน production แพงกว่าการแก้ตั้งแต่ Design/Requirements <strong>ถึง 100 เท่า</strong> นี่คือเหตุผลที่แนวคิด "Shift Left" สำคัญมาก</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 4 ============ -->
+<section class="chapter" id="s4">
+  <span class="chapter-num">Chapter 04</span>
+  <h2>Security <span class="em">in the</span> SDLC</h2>
+  <p class="chapter-intro">SDLC ที่ปลอดภัยไม่ใช่แค่เรื่องเครื่องมือ แต่ต้องครบทั้งสามด้าน — People, Processes, Technologies</p>
+
+  <h3>The Human Factor</h3>
+  <p>แม้จะมีเครื่องมือดีแค่ไหน ถ้าคนไม่ได้รับการอบรม security ก็ไม่มีประโยชน์ Security awareness training สำคัญสำหรับ <strong>ทุกคน</strong> ที่เกี่ยวข้องกับการพัฒนา ไม่ใช่แค่ developer ผู้บริหารระดับสูงไม่จำเป็นต้องรู้ secure coding เชิงลึก แต่ควรเข้าใจผลกระทบของการละเลย security ต่อข้อมูลลูกค้า</p>
+
+  <div class="pullquote">
+    Build security in, don't bolt it on
+  </div>
+
+  <h3>กิจกรรมสำคัญในแต่ละ Phase</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Phase</th><th>กิจกรรม Security หลัก</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Requirements</strong></td><td>กำหนด security requirements + รายการ misuse cases</td></tr>
+        <tr><td><strong>Design</strong></td><td>Risk assessment + ออกแบบ controls</td></tr>
+        <tr><td><strong>Implementation</strong></td><td>SAST tools + spot check โค้ด</td></tr>
+        <tr><td><strong>Testing/QA</strong></td><td>OWASP Top 10 / SANS Top 25 แยก env</td></tr>
+        <tr><td><strong>Deployment</strong></td><td>Monitor, data leak detection, IPS/WAF</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ SECTION 5 ============ -->
+<section class="chapter" id="s5">
+  <span class="chapter-num">Chapter 05</span>
+  <h2>PCI <span class="em">DSS</span></h2>
+  <p class="chapter-intro">Payment Card Industry Data Security Standard — มาตรฐานความปลอดภัยสำหรับองค์กรที่ process, store หรือ transmit ข้อมูลบัตรเครดิต สร้างโดย Visa, MasterCard, American Express, Discover และ JCB</p>
+
+  <h3>ทำไม PCI DSS ถึงสำคัญ?</h3>
+  <p>จาก Verizon 2022 Data Breach Investigations Report: <strong>84%</strong> ของเคส data breach เกี่ยวข้องกับ payment card data และ <strong>93%</strong> ของ breach มี financial motive — ทุกคนในระบบ payment คือเป้า</p>
+
+  <h3>6 Goals · 12 Requirements</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Goal</th><th>Requirements</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>1. Build Secure Network</strong></td><td>1. NSCs (Firewalls) · 2. Secure configurations</td></tr>
+        <tr><td><strong>2. Protect Data</strong></td><td>3. Stored data · 4. Cryptography in transit</td></tr>
+        <tr><td><strong>3. Vulnerability Mgmt</strong></td><td>5. Anti-malware · 6. Secure development</td></tr>
+        <tr><td><strong>4. Access Control</strong></td><td>7. Need-to-know · 8. Auth · 9. Physical</td></tr>
+        <tr><td><strong>5. Monitor & Test</strong></td><td>10. Logging · 11. Testing</td></tr>
+        <tr><td><strong>6. Security Policy</strong></td><td>12. Organizational policies</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>The Continuous Cycle</h3>
+  <ol class="styled">
+    <li><strong>Assess</strong> — ระบุที่ตั้งข้อมูลบัตร, inventory IT, วิเคราะห์ช่องโหว่</li>
+    <li><strong>Remediate</strong> — แก้ไขช่องโหว่, ลบข้อมูลที่ไม่จำเป็น</li>
+    <li><strong>Report</strong> — เขียนเอกสารและส่งให้ acquirer/payment brands</li>
+    <li><strong>Monitor & Maintain</strong> — ตรวจสอบ control ตลอดปี</li>
+  </ol>
+</section>
+
+<!-- ============ SECTION 6 ============ -->
+<section class="chapter" id="s6">
+  <span class="chapter-num">Chapter 06</span>
+  <h2>PCI DSS · <span class="em">Developer's</span> Cut</h2>
+  <p class="chapter-intro">หาก code ของคุณแตะข้อมูลบัตรเครดิต — นี่คือข้อบังคับที่ต้องปฏิบัติตาม</p>
+
+  <h4>Requirement 3 · Protect Stored Account Data</h4>
+  <p><strong>3.4</strong> Render PAN unreadable ทุกที่ที่ถูกเก็บ — encrypt, hash, truncate หรือ tokenize</p>
+
+  <h4>Requirement 6 · Secure Development ⭐</h4>
+  <ul class="styled">
+    <li><strong>6.1</strong> มีกระบวนการระบุ vulnerability + จัด risk ranking (high/medium/low)</li>
+    <li><strong>6.2</strong> Critical patches ต้องลงภายใน <strong>1 เดือน</strong> หลังออก</li>
+    <li><strong>6.2.2</strong> Developer ต้องได้รับการอบรม <strong>ทุก 12 เดือน</strong></li>
+    <li><strong>6.3</strong> พัฒนาตาม industry best practices · ฝัง security ตลอด SDLC</li>
+    <li><strong>6.4</strong> แยก dev/test/prod · ไม่ใช้ production data ในการทดสอบ</li>
+    <li><strong>6.5.1</strong> อบรม secure coding อย่างน้อย<strong>ปีละครั้ง</strong></li>
+    <li><strong>6.6</strong> Public-facing apps ต้องมี WAF หรือ annual assessment</li>
+  </ul>
+
+  <h4>Requirements 8, 10, 11, 12</h4>
+  <ul class="styled">
+    <li><strong>8.1</strong> Policy ให้เฉพาะคนที่ได้รับอนุญาตเข้าถึงระบบ + MFA สำหรับ CDE</li>
+    <li><strong>10.1</strong> Audit trail เชื่อมโยงการเข้าถึงทุกครั้งกับ user แต่ละคน</li>
+    <li><strong>11.3</strong> Pen test หลังการเปลี่ยนแปลงสำคัญของแอป</li>
+    <li><strong>12.6</strong> Security awareness program สำหรับพนักงานทุกคน</li>
+  </ul>
+
+  <div class="callout safe">
+    <span class="callout-label">PCI DSS v4.0 — สิ่งใหม่</span>
+    <p style="margin:0"><strong>Defined Approach</strong> (วิธีดั้งเดิม) vs <strong>Customized Approach</strong> (วิธียืดหยุ่นสำหรับองค์กร risk-mature) · บาง requirement เป็น best practice จนถึง <strong>31 March 2025</strong> แล้วบังคับใช้</p>
+  </div>
+</section>
+
+<!-- ============ SECTION 7 ============ -->
+<section class="chapter" id="s7">
+  <span class="chapter-num">Chapter 07</span>
+  <h2>Tooling · <span class="em">SonarQube</span></h2>
+  <p class="chapter-intro">เครื่องมือ Static Application Security Testing (SAST) ที่สแกนโค้ดหาช่องโหว่ — เป็นตัวอย่างของการนำ secure coding ไปใช้จริงใน CI/CD</p>
+
+  <h3>2 ประเภท Pipeline</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Build Pipeline</th><th>Quality Pipeline</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Compile + test + sonar scan + build + publish package ไป INT/UAT/PROD</td>
+          <td>Compile + unit test + sonar scan โดยไม่ build — ใช้สแกน feature branch ก่อน merge</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>3 ประเภท Issue</h3>
+  <ul class="styled">
+    <li><strong>Bug</strong> — ข้อผิดพลาดในโค้ด</li>
+    <li><strong>Vulnerability</strong> — จุดในโค้ดที่เปิดให้ถูกโจมตี (มาจากโค้ดเองหรือ external dependency)</li>
+    <li><strong>Code Smell</strong> — โค้ดไม่สวย/บำรุงรักษายาก</li>
+  </ul>
+
+  <h3>Security Hotspots</h3>
+  <p>จุดในโค้ดที่ <strong>อ่อนไหวด้าน security</strong> และต้องการ <strong>review จากมนุษย์</strong> ไม่ใช่ vulnerability ที่ยืนยันแล้ว แต่เป็นจุดที่ควรตรวจสอบ ทำผ่าน SonarQube UI</p>
+
+  <p>ตัวอย่าง: <code>printStackTrace()</code> ใน production code → Sonar เตือนว่า "Make sure this debug feature is deactivated before delivering the code in production"</p>
+
+  <div class="callout">
+    <span class="callout-label">Workflow</span>
+    <ol class="styled" style="margin:0">
+      <li>Sonar scan fail → ดู Quality gate ERROR</li>
+      <li>เข้า SonarQube UI ดู failed conditions</li>
+      <li>Vulnerability → แก้โค้ด · Security Hotspot → review manually</li>
+      <li>รัน build ใหม่ → ตรวจให้แน่ใจว่า issue ไม่กลับมา</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ QUIZ ZONE ============ -->
+<section class="quiz-zone" id="quiz">
+  <span class="chapter-num">Assessment</span>
+  <h2>The <span class="em">Quiz</span></h2>
+  <p class="chapter-intro">แบบทดสอบ 5 ข้อพร้อมเฉลยและคำอธิบาย คลิก "Reveal Answer" เพื่อดูคำตอบและเหตุผล</p>
+
+  <!-- Q1 -->
+  <div class="question">
+    <span class="q-num">Question 01 / 05</span>
+    <div class="q-text">Out-of-date software, use of default passwords, and open ports are characteristic of which type of vulnerability?</div>
+    <ul class="options" data-correct="2">
+      <li class="option" data-idx="0"><span class="letter">A</span>Cross-site scripting</li>
+      <li class="option" data-idx="1"><span class="letter">B</span>Insecure direct object references</li>
+      <li class="option" data-idx="2"><span class="letter">C</span>Security misconfiguration</li>
+      <li class="option" data-idx="3"><span class="letter">D</span>Cross-site request forgery</li>
+    </ul>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal Answer</button>
+    <div class="explanation">
+      <h5>คำตอบ: C · Security Misconfiguration</h5>
+      <p>จาก OWASP Top 10 อันดับ 5 — Security Misconfiguration ครอบคลุมการตั้งค่าผิดทุกระดับ ตัวอย่างที่ระบุไว้ตรงเป๊ะ: ซอฟต์แวร์ล้าสมัย, default password, port เปิดโดยไม่จำเป็น</p>
+      <p><strong>ทำไมตัวอื่นไม่ใช่:</strong> XSS เป็นการฉีด script (กลุ่ม Injection) · IDOR เกี่ยวกับการเข้าถึง object ผ่าน parameter (Broken Access Control) · CSRF คือการหลอกผู้ใช้ที่ login แล้วทำ action</p>
+      <p><strong>Key insight:</strong> ถ้าคำถามพูดถึง patch ไม่อัปเดต / default credentials / port เปิด → คิดถึง <code>misconfiguration</code> ทันที</p>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="question">
+    <span class="q-num">Question 02 / 05</span>
+    <div class="q-text">Which of the following is a feature of 'Server-Side Request Forgeries' in terms of secure coding?</div>
+    <ul class="options" data-correct="3">
+      <li class="option" data-idx="0"><span class="letter">A</span>Unauthorized users may access administrative functions</li>
+      <li class="option" data-idx="1"><span class="letter">B</span>Allows an attacker to forge digital signatures</li>
+      <li class="option" data-idx="2"><span class="letter">C</span>Allows an attacker to make requests on a user's behalf</li>
+      <li class="option" data-idx="3"><span class="letter">D</span>Flaws occurring when a web application fetches a remote resource without validating the user-supplied URL</li>
+    </ul>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal Answer</button>
+    <div class="explanation">
+      <h5>คำตอบ: D</h5>
+      <p>SSRF (OWASP #10) มีนิยามตรงตัว: "SSRF flaws occur when a web application fetches a remote resource without validating the user-supplied URL" ทำให้ผู้โจมตีบังคับ server ไปยิง request ปลายทางที่ไม่คาดคิด — แม้จะมี firewall ก็ตาม</p>
+      <p><strong>ตัวอย่างการโจมตี:</strong> Port scan internal network · เข้าถึง <code>file:///etc/passwd</code> · ดึง cloud metadata จาก <code>http://169.254.169.254/</code></p>
+      <p><strong>⚠️ ระวังกับดัก:</strong> ตัวเลือก C คือ CSRF (Cross-Site Request Forgery) ไม่ใช่ SSRF · CSRF หลอก browser ของผู้ใช้ · SSRF หลอก server ของเป้าหมาย</p>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="question">
+    <span class="q-num">Question 03 / 05</span>
+    <div class="q-text">Which of the following statements is true? (Select all that apply)</div>
+    <ul class="options" data-correct="0,1,2">
+      <li class="option" data-idx="0"><span class="letter">A</span>When writing secure code, input validation is your first line of defence</li>
+      <li class="option" data-idx="1"><span class="letter">B</span>Use data sanitization to remove unsafe characters from input data</li>
+      <li class="option" data-idx="2"><span class="letter">C</span>Run processes with the minimum permissions required to complete them</li>
+      <li class="option" data-idx="3"><span class="letter">D</span>Add complexity to code to minimize the risk of it being compromised</li>
+    </ul>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal Answer</button>
+    <div class="explanation">
+      <h5>คำตอบ: A, B, C (ไม่ใช่ D)</h5>
+      <p><strong>A ถูก:</strong> Input validation คือ first line of defence (Secure Coding Tip #1)</p>
+      <p><strong>B ถูก:</strong> Data sanitization ลบอักขระอันตรายผ่าน whitelist/blacklist/escape (Tip #3)</p>
+      <p><strong>C ถูก:</strong> Principle of Least Privilege — สิทธิ์น้อยที่สุดและให้เฉพาะเวลาที่ต้องใช้ (Tip #4)</p>
+      <p><strong>D ผิด — ตรงข้ามกับความจริง!</strong> หลักการ "Keep it Simple" (Tip #6) บอกว่า "ยิ่งซับซ้อน ยิ่งมีโอกาสพลาดและพลาดช่องโหว่" หลักการนี้เรียกว่า KISS (Keep It Simple, Stupid)</p>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="question">
+    <span class="q-num">Question 04 / 05</span>
+    <div class="q-text">Which of the following statements is false?</div>
+    <ul class="options" data-correct="0">
+      <li class="option" data-idx="0"><span class="letter">A</span>PCI DSS Requirement 6.2.2 requires that software development personnel receive training at least once every 2 years</li>
+      <li class="option" data-idx="1"><span class="letter">B</span>PCI DSS Requirement 10.1 mandates the use of audit trails to link all access to system components to individual users</li>
+      <li class="option" data-idx="2"><span class="letter">C</span>PCI DSS Requirement 3.4 requires that payment card PAN codes should be rendered unreadable anywhere they are stored</li>
+      <li class="option" data-idx="3"><span class="letter">D</span>PCI DSS Requirement 8.1 states that policies should be defined and implemented to ensure only authorized personnel have access</li>
+    </ul>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal Answer</button>
+    <div class="explanation">
+      <h5>คำตอบ: A · ข้อความนี้ FALSE</h5>
+      <p>Requirement 6.2.2 บังคับให้ training <strong>ทุก 12 เดือน</strong> (ปีละครั้ง) ไม่ใช่ทุก 2 ปี — เพราะภัยคุกคามเปลี่ยนแปลงเร็ว รออบรม 2 ปีถือว่านานเกินไป</p>
+      <p><strong>ที่เหลือถูกทั้งหมด:</strong> Req 10.1 = audit trails · Req 3.4 = PAN unreadable · Req 8.1 = authorized access policy</p>
+      <p><strong>จำง่ายๆ:</strong> PCI DSS เกือบทุก periodic activity → <code>annual / 12 months</code> (เช่น 6.2.2, 6.5.1, 12.6)</p>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="question">
+    <span class="q-num">Question 05 / 05</span>
+    <div class="q-text">Which of the following best describes an "exploit"?</div>
+    <ul class="options" data-correct="2">
+      <li class="option" data-idx="0"><span class="letter">A</span>An email-based phishing scam</li>
+      <li class="option" data-idx="1"><span class="letter">B</span>An inbuilt weakness in a line of code</li>
+      <li class="option" data-idx="2"><span class="letter">C</span>A method by which a hacker enters the system at a vulnerable location</li>
+    </ul>
+    <button class="reveal-btn" onclick="reveal(this)">Reveal Answer</button>
+    <div class="explanation">
+      <h5>คำตอบ: C</h5>
+      <p>นิยามตรงตัวจากบทเรียน: "An exploit is a method by which the hacker enters the system at a vulnerable location" — อาจเป็น hacking tool, scanner, malware, script หรือ social engineering</p>
+      <p><strong>ทำไมตัวอื่นไม่ใช่:</strong> A · Phishing เป็นแค่ตัวอย่างหนึ่ง ไม่ใช่นิยามทั้งหมด · B · นี่คือนิยามของ Vulnerability ไม่ใช่ Exploit</p>
+      <p><strong>สูตรจำ:</strong> Vulnerability = "ช่องโหว่อยู่ที่ไหน" · Exploit = "ใช้ช่องโหว่นั้นยังไง" · เปรียบเทียบ: Vuln = ประตูไม่ล็อก · Exploit = การเดินผ่านประตูเข้าไป</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ornament">※ ※ ※</div>
+    <div>End of Compendium · Secure Coding 2025</div>
+    <div style="margin-top:0.5rem">Build security in, don't bolt it on</div>
+  </footer>
+</section>
+
+</main>
+</div>
+
+<script>
+  let revealedCount = 0;
+  const tracker = document.getElementById('scoreTracker');
+  const scoreNum = document.getElementById('scoreNum');
+
+  function reveal(btn) {
+    const question = btn.closest('.question');
+    const optionsList = question.querySelector('.options');
+    const correctIdx = optionsList.dataset.correct.split(',').map(Number);
+    const options = optionsList.querySelectorAll('.option');
+    const explanation = question.querySelector('.explanation');
+
+    options.forEach((opt, i) => {
+      if (correctIdx.includes(i)) {
+        opt.classList.add('correct');
+      } else {
+        opt.classList.add('wrong');
+      }
+    });
+
+    explanation.classList.add('shown');
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    btn.style.cursor = 'default';
+    btn.textContent = '✓ Revealed';
+
+    revealedCount++;
+    scoreNum.textContent = revealedCount;
+    tracker.classList.add('visible');
+
+    // Smooth scroll to explanation
+    setTimeout(() => {
+      explanation.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+
+  // Highlight nav on scroll
+  const sections = document.querySelectorAll('section.chapter, .quiz-zone');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.style.color = '';
+          if (link.getAttribute('href') === '#' + id) {
+            link.style.color = 'var(--accent)';
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
