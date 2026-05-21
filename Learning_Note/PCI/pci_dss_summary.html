@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCI DSS — คู่มือสรุปฉบับสมบูรณ์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a0a;
+  --paper: #f4f1ea;
+  --paper-deep: #e8e3d6;
+  --accent: #d4332f;
+  --accent-deep: #a82420;
+  --gold: #c8a449;
+  --green: #2d5e3e;
+  --blue: #1e3a5f;
+  --line: rgba(10,10,10,0.12);
+  --line-strong: rgba(10,10,10,0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+/* Grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(212,51,47,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(30,58,95,0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.5;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 3;
+}
+
+/* === HERO === */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px 0 64px;
+  border-bottom: 1px solid var(--line-strong);
+  position: relative;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.hero-top span { display: block; }
+
+.hero-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: end;
+  margin: auto 0;
+}
+
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 48px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 18vw, 240px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  color: var(--ink);
+}
+
+.hero h1 .accent {
+  color: var(--accent);
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 0.5em;
+  vertical-align: super;
+  letter-spacing: 0;
+}
+
+.hero-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3vw, 32px);
+  font-style: italic;
+  font-weight: 700;
+  max-width: 700px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.hero-meta {
+  display: flex;
+  gap: 48px;
+  margin-top: 48px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.hero-meta div { border-left: 2px solid var(--accent); padding-left: 12px; }
+.hero-meta div strong {
+  display: block;
+  font-size: 18px;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* === SECTION === */
+section {
+  padding: 96px 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.section-header {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 32px;
+  align-items: baseline;
+  margin-bottom: 64px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.section-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.section-title-block h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  margin-bottom: 8px;
+}
+
+.section-title-block .subtitle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* === CONTENT BLOCKS === */
+.lead {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 32px;
+  max-width: 800px;
+}
+
+.lead .drop {
+  font-size: 1.8em;
+  font-weight: 900;
+  color: var(--accent);
+  float: left;
+  line-height: 0.85;
+  margin: 0.05em 0.08em 0 0;
+}
+
+p { margin-bottom: 16px; max-width: 760px; font-size: 16px; }
+
+.body-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+  margin-top: 32px;
+}
+
+@media (max-width: 768px) {
+  .body-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* === CARDS === */
+.card {
+  background: var(--paper-deep);
+  padding: 32px;
+  border-left: 4px solid var(--ink);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateX(4px);
+  box-shadow: -8px 8px 0 var(--ink);
+}
+
+.card.accent { border-left-color: var(--accent); }
+.card.gold { border-left-color: var(--gold); }
+.card.green { border-left-color: var(--green); }
+.card.blue { border-left-color: var(--blue); }
+
+.card h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.card .icon {
+  font-size: 24px;
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.card ul { list-style: none; padding: 0; }
+.card li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  font-size: 15px;
+  border-bottom: 1px dashed var(--line);
+}
+.card li:last-child { border-bottom: none; }
+.card li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* === DATA TABLE / COMPARISON === */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 32px 0;
+  border: 2px solid var(--ink);
+}
+
+@media (max-width: 640px) {
+  .split { grid-template-columns: 1fr; }
+}
+
+.split-half {
+  padding: 32px;
+  position: relative;
+}
+
+.split-half:first-child {
+  background: var(--ink);
+  color: var(--paper);
+  border-right: 2px solid var(--ink);
+}
+
+.split-half:last-child {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.split-half h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.split-half ul { list-style: none; padding: 0; }
+.split-half li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  font-size: 15px;
+}
+.split-half li:last-child { border-bottom: none; }
+
+/* === PCI DATA TABLE === */
+.pci-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 32px 0;
+  background: var(--paper-deep);
+  font-size: 15px;
+}
+
+.pci-table th {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 16px 20px;
+  text-align: left;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.05em;
+}
+
+.pci-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.pci-table tr:last-child td { border-bottom: none; }
+.pci-table tr:hover td { background: rgba(212,51,47,0.05); }
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  font-weight: 600;
+}
+.badge-yes { background: var(--green); color: var(--paper); }
+.badge-no { background: var(--accent); color: var(--paper); }
+
+/* === GOALS GRID === */
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+
+@media (max-width: 640px) {
+  .goals-grid { grid-template-columns: 1fr; }
+}
+
+.goal {
+  padding: 28px;
+  background: var(--paper-deep);
+  border-top: 6px solid var(--accent);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.goal:hover {
+  background: var(--ink);
+  color: var(--paper);
+  transform: translateY(-4px);
+}
+
+.goal-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.goal:hover .goal-num { color: var(--paper); }
+
+.goal h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.goal p { font-size: 14px; max-width: none; margin: 0; }
+
+/* === MALWARE GRID === */
+.malware-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.malware-card {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.malware-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 100%;
+  background: var(--accent);
+}
+
+.malware-card .emoji {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.malware-card h5 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+  color: var(--gold);
+}
+
+.malware-card p {
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: none;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* === QUOTE / CALLOUT === */
+.callout {
+  margin: 48px 0;
+  padding: 40px 48px;
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+  border-left: 12px solid var(--accent);
+}
+
+.callout::before {
+  content: '"';
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  font-family: 'Playfair Display', serif;
+  font-size: 180px;
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.4;
+  font-weight: 900;
+}
+
+.callout p {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+}
+
+.callout .attribution {
+  font-family: 'IBM Plex Mono', monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 24px;
+  opacity: 0.7;
+  display: block;
+}
+
+/* === WARNING BLOCK === */
+.warning {
+  background: var(--accent);
+  color: var(--paper);
+  padding: 24px 32px;
+  margin: 24px 0;
+  border-radius: 0;
+  font-weight: 500;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.warning .label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.warning p {
+  margin: 0;
+  max-width: none;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* === PAN FORMAT === */
+.pan-display {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(18px, 3vw, 28px);
+  letter-spacing: 0.1em;
+  padding: 20px 24px;
+  margin: 12px 0;
+  border: 2px dashed var(--line-strong);
+  background: var(--paper-deep);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pan-display.valid { border-color: var(--green); border-style: solid; }
+.pan-display.invalid { border-color: var(--accent); border-style: solid; }
+
+.pan-display .mark {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.pan-display.valid .mark { background: var(--green); color: var(--paper); }
+.pan-display.invalid .mark { background: var(--accent); color: var(--paper); }
+
+/* === PASSWORD TIER === */
+.password-tier {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+
+.password-tier:last-child { border-bottom: none; }
+
+.password-tier .pw {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.password-tier .meter {
+  height: 8px;
+  background: var(--paper-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+.password-tier .meter span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.6s ease;
+}
+
+.password-tier .meter.tier-1 span { width: 10%; background: #c93838; }
+.password-tier .meter.tier-2 span { width: 20%; background: #c93838; }
+.password-tier .meter.tier-3 span { width: 50%; background: var(--gold); }
+.password-tier .meter.tier-4 span { width: 95%; background: var(--green); }
+
+.password-tier .label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+/* === STEP LIST === */
+.steps {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+  margin-top: 24px;
+}
+
+.steps li {
+  counter-increment: step;
+  padding: 24px 0 24px 80px;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 20px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+.steps li strong {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+/* === FOOTER === */
+footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 96px 0 48px;
+  position: relative;
+}
+
+footer .container { z-index: 3; position: relative; }
+
+.footer-mark {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 12vw, 160px);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  margin-bottom: 48px;
+}
+
+.footer-mark .em { color: var(--accent); font-style: italic; font-family: 'Playfair Display', serif; }
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(244,241,234,0.2);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+
+.footer-grid h6 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  color: var(--gold);
+}
+
+.footer-bottom {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(244,241,234,0.2);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* === GOLDEN RULES === */
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.rule {
+  background: var(--paper-deep);
+  padding: 28px;
+  border-bottom: 4px solid var(--ink);
+  position: relative;
+}
+
+.rule .num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--accent);
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  opacity: 0.25;
+}
+
+.rule h5 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+
+.rule p { font-size: 14px; margin: 0; max-width: none; }
+
+/* TOC */
+.toc {
+  background: var(--paper-deep);
+  padding: 24px 32px;
+  margin: 32px 0;
+  border-left: 4px solid var(--gold);
+}
+
+.toc h6 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+.toc ol {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+
+@media (max-width: 640px) {
+  .toc ol { grid-template-columns: 1fr; }
+}
+
+.toc li {
+  counter-increment: toc;
+  padding: 6px 0;
+  font-size: 14px;
+  font-family: 'IBM Plex Sans Thai', sans-serif;
+}
+
+.toc a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--line-strong);
+  transition: color 0.2s ease;
+}
+
+.toc a:hover { color: var(--accent); }
+
+.toc a::before {
+  content: '§ ';
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+/* === QUIZ === */
+.quiz-card {
+  background: var(--paper-deep);
+  margin: 32px 0;
+  border: 2px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 20px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.quiz-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+
+.quiz-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  background: var(--accent);
+  color: var(--paper);
+  border-radius: 2px;
+}
+
+.quiz-body {
+  padding: 28px;
+}
+
+.quiz-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 24px;
+  color: var(--ink);
+}
+
+.quiz-options {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+}
+
+.quiz-options li {
+  padding: 14px 20px 14px 56px;
+  margin-bottom: 8px;
+  background: var(--paper);
+  position: relative;
+  font-size: 15px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.quiz-options li::before {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+}
+
+.quiz-options li.wrong {
+  opacity: 0.6;
+  border-left-color: var(--line);
+}
+
+.quiz-options li.wrong::before {
+  content: '✗';
+  background: var(--paper-deep);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.quiz-options li.correct {
+  background: #e8f0e6;
+  border-left-color: var(--green);
+  font-weight: 600;
+}
+
+.quiz-options li.correct::before {
+  content: '✓';
+  background: var(--green);
+  color: var(--paper);
+}
+
+.quiz-answer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 20px 24px;
+  border-left: 6px solid var(--green);
+  margin-top: 20px;
+}
+
+.quiz-answer-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.quiz-answer-text {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: none;
+}
+
+.quiz-answer-text strong { color: var(--gold); }
+
+/* Reveal on scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-top">
+      <div>
+        <span>Payment Card Industry</span>
+        <span>Data Security Standard</span>
+      </div>
+      <div style="text-align:right;">
+        <span>Edition 01</span>
+        <span>Vol. 4.0</span>
+      </div>
+    </div>
+
+    <div class="hero-main">
+      <div>
+        <div class="hero-eyebrow">คู่มือสรุปฉบับสมบูรณ์</div>
+        <h1>PCI<span class="accent">dss</span></h1>
+        <p class="hero-sub">มาตรฐานความปลอดภัยข้อมูลบัตร — ตั้งแต่พื้นฐาน รหัสผ่าน มัลแวร์ ไปจนถึงแนวปฏิบัติในชีวิตประจำวัน</p>
+        <div class="hero-meta">
+          <div>มาตรฐาน<strong>V 4.0</strong></div>
+          <div>ก่อตั้งเมื่อ<strong>2004</strong></div>
+          <div>เป้าหมายหลัก<strong>6 GOALS</strong></div>
+          <div>ข้อกำหนด<strong>12 REQS</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-cue">↓ เลื่อนลง</div>
+  </div>
+</header>
+
+<!-- TOC SECTION -->
+<section style="padding: 48px 0;">
+  <div class="container">
+    <div class="toc">
+      <h6>สารบัญ — Table of Contents</h6>
+      <ol>
+        <li><a href="#s1">PCI DSS คืออะไร</a></li>
+        <li><a href="#s2">ข้อมูลที่ต้องปกป้อง</a></li>
+        <li><a href="#s3">6 เป้าหมายของ PCI</a></li>
+        <li><a href="#s4">การจัดเก็บและป้องกัน</a></li>
+        <li><a href="#s5">รหัสผ่านที่แข็งแกร่ง</a></li>
+        <li><a href="#s6">Unique ID</a></li>
+        <li><a href="#s7">Physical Security</a></li>
+        <li><a href="#s8">Malware</a></li>
+        <li><a href="#s9">Email Security</a></li>
+        <li><a href="#s10">DO &amp; DON'T</a></li>
+        <li><a href="#s11">เฉลยข้อสอบท้ายบท</a></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- S1 -->
+<section id="s1">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-title-block">
+        <h2>PCI DSS คืออะไร</h2>
+        <div class="subtitle">Foundations &mdash; The Standard</div>
+      </div>
+    </div>
+
+    <p class="lead"><span class="drop">P</span>CI DSS คือมาตรฐานความปลอดภัยและข้อกำหนดทางธุรกิจที่ออกแบบมาเพื่อให้องค์กรที่<strong>ประมวลผล จัดเก็บ หรือส่ง</strong>ข้อมูลบัตรชำระเงิน รักษาสภาพแวดล้อมที่ปลอดภัย</p>
+
+    <div class="body-grid">
+      <div class="card accent">
+        <div class="icon">🏛️</div>
+        <h3>ก่อตั้งโดย 5 แบรนด์หลัก</h3>
+        <ul>
+          <li>Visa</li>
+          <li>MasterCard</li>
+          <li>American Express</li>
+          <li>Discover Financial Services</li>
+          <li>Japan Credit Bureau (JCB)</li>
+        </ul>
+      </div>
+
+      <div class="card gold">
+        <div class="icon">📜</div>
+        <h3>ประวัติและเวอร์ชัน</h3>
+        <ul>
+          <li>สร้างขึ้นในปี 2004</li>
+          <li>เวอร์ชันก่อนหน้า: 3.2.1</li>
+          <li>เวอร์ชันปัจจุบัน: 4.0</li>
+          <li>บังคับใช้เต็มรูปแบบ: เมษายน 2024</li>
+          <li>ดูแลโดย PCI Security Council</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:32px;margin:48px 0 16px;letter-spacing:0.02em;">ประโยชน์ vs ผลกระทบหากไม่ปฏิบัติตาม</h3>
+
+    <div class="split">
+      <div class="split-half">
+        <h4>✓ ปฏิบัติตาม</h4>
+        <ul>
+          <li>ระบบปลอดภัย ลูกค้าไว้วางใจ</li>
+          <li>ลดความเสี่ยงข้อมูลรั่วไหล</li>
+          <li>เพิ่มชื่อเสียงกับธนาคารและผู้ออกบัตร</li>
+          <li>เป็นพันธมิตรทางธุรกิจที่น่าเชื่อถือ</li>
+        </ul>
+      </div>
+      <div class="split-half">
+        <h4>✗ ไม่ปฏิบัติตาม</h4>
+        <ul>
+          <li>เสียชื่อเสียง สูญเสียลูกค้า</li>
+          <li>ถูกฟ้องร้อง เรียกค่าเสียหาย</li>
+          <li>ถูกปรับจากผู้ออกบัตร</li>
+          <li>ถูกปรับจากรัฐบาล</li>
+          <li>อาจถูกยกเลิกสมาชิกภาพการรับบัตร</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S2 -->
+<section id="s2">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-title-block">
+        <h2>ข้อมูลที่ต้องปกป้อง</h2>
+        <div class="subtitle">Cardholder Data vs Sensitive Authentication Data</div>
+      </div>
+    </div>
+
+    <p class="lead"><span class="drop">P</span>CI แบ่งข้อมูลออกเป็น 2 ประเภทหลัก — บางอย่างเก็บได้ บางอย่างห้ามเก็บเด็ดขาด</p>
+
+    <table class="pci-table">
+      <thead>
+        <tr>
+          <th>ประเภท</th>
+          <th>ข้อมูลที่รวมอยู่</th>
+          <th>เก็บได้หรือไม่</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Cardholder Data (CD)</strong><br><small style="opacity:0.7">ข้อมูลผู้ถือบัตร</small></td>
+          <td>
+            • Primary Account Number (PAN) — เลข 16 หลัก<br>
+            • Cardholder Name — ชื่อผู้ถือบัตร<br>
+            • Expiration Date — วันหมดอายุ<br>
+            • Service Code — รหัสบริการ
+          </td>
+          <td><span class="badge badge-yes">เก็บได้</span><br><small>หากมีเหตุผลและมาตรการที่เข้มงวด</small></td>
+        </tr>
+        <tr>
+          <td><strong>Sensitive Authentication Data (SAD)</strong><br><small style="opacity:0.7">ข้อมูลยืนยันตัวตน</small></td>
+          <td>
+            • Full Magnetic Stripe — แถบแม่เหล็กทั้งหมด<br>
+            • CSC / CVV2 / CID / CAV2 — รหัสความปลอดภัย<br>
+            • PIN และ PIN Block
+          </td>
+          <td><span class="badge badge-no">ห้ามเก็บ</span><br><small>ใช้ได้เฉพาะตอนทำธุรกรรม</small></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warning">
+      <div class="label">⚠ จดจำ</div>
+      <p>ข้อมูล SAD <strong>ห้ามจัดเก็บในรูปแบบใดๆ ทั้งสิ้น</strong> — ไม่ว่าจะเป็นกระดาษ ไฟล์ ฐานข้อมูล หรืออีเมล ใช้ได้เฉพาะ ณ เวลาทำธุรกรรมเท่านั้น แล้วต้องลบทิ้งทันที</p>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">วัตถุประสงค์ของ CVV/CSC</h3>
+    <p>CVV (Card Verification Value) หรือ CSC (Card Security Code) มีจุดประสงค์เดียวคือ <strong>ยืนยันว่าผู้ทำธุรกรรมมีบัตรอยู่ในครอบครองจริง</strong> โดยเฉพาะธุรกรรมที่ไม่ได้สแกนบัตร (Card Not Present) เช่น การซื้อของออนไลน์หรือทางโทรศัพท์</p>
+  </div>
+</section>
+
+<!-- S3 -->
+<section id="s3">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-title-block">
+        <h2>6 เป้าหมายของ PCI</h2>
+        <div class="subtitle">The Six Goals &amp; Twelve Requirements</div>
+      </div>
+    </div>
+
+    <p>องค์กรต้องปฏิบัติตาม <strong>ข้อกำหนด 12 ข้อ</strong> ที่ครอบคลุม <strong>6 เป้าหมายหลัก (Goals)</strong> โดยต้องกรอก Self-Assessment Questionnaire (SAQ) และ Attestation of Compliance (AOC) ส่งให้ <em>acquiring bank</em></p>
+
+    <div class="goals-grid">
+      <div class="goal">
+        <div class="goal-num">01</div>
+        <h4>Build &amp; Maintain a Secure Network</h4>
+        <p>ติดตั้ง firewall, การตั้งค่าระบบอย่างปลอดภัย ไม่ใช้ค่า default จากผู้ผลิต</p>
+      </div>
+      <div class="goal">
+        <div class="goal-num">02</div>
+        <h4>Protect Cardholder Data</h4>
+        <p>ปกป้องข้อมูลที่จัดเก็บ และเข้ารหัสข้อมูลขณะส่งผ่านเครือข่ายสาธารณะ</p>
+      </div>
+      <div class="goal">
+        <div class="goal-num">03</div>
+        <h4>Vulnerability Management</h4>
+        <p>ใช้ anti-virus, พัฒนาและดูแลระบบและซอฟต์แวร์ให้ปลอดภัยอยู่เสมอ</p>
+      </div>
+      <div class="goal">
+        <div class="goal-num">04</div>
+        <h4>Strong Access Control</h4>
+        <p>จำกัดการเข้าถึงตามความจำเป็น, ใช้ Unique ID และคุมการเข้าถึงทางกายภาพ</p>
+      </div>
+      <div class="goal">
+        <div class="goal-num">05</div>
+        <h4>Monitor &amp; Test Networks</h4>
+        <p>ติดตามการเข้าถึงทรัพยากรเครือข่าย ทดสอบระบบและกระบวนการอย่างสม่ำเสมอ</p>
+      </div>
+      <div class="goal">
+        <div class="goal-num">06</div>
+        <h4>Information Security Policy</h4>
+        <p>กำหนดนโยบายความปลอดภัยข้อมูลที่ครอบคลุมทุกฝ่ายในองค์กร</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>Acquiring Bank คือธนาคารที่ประมวลผลการชำระเงินบัตรในนามของร้านค้า ธนาคารกลุ่มนี้ <strong>กำหนดให้</strong>ร้านค้าทุกรายต้องปฏิบัติตาม PCI DSS</p>
+      <span class="attribution">— ข้อกำหนดของระบบการชำระเงิน</span>
+    </div>
+  </div>
+</section>
+
+<!-- S4 -->
+<section id="s4">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-title-block">
+        <h2>การจัดเก็บและป้องกัน</h2>
+        <div class="subtitle">Storage &amp; Protection Methods</div>
+      </div>
+    </div>
+
+    <p class="lead"><span class="drop">"</span>Stored" หมายถึง <em>ทุกที่</em>, <em>ทุกรูปแบบ</em> — ฐานข้อมูล, อีเมล, คอมพิวเตอร์, มือถือ, เอกสารกระดาษ, ใบเสร็จบัตร — ทั้งหมดต้องปลอดภัย</p>
+
+    <div class="rules-grid">
+      <div class="rule">
+        <div class="num">01</div>
+        <h5>Encryption</h5>
+        <p>เข้ารหัสข้อมูล ทำให้อ่านไม่ออกหากไม่มี encryption key</p>
+      </div>
+      <div class="rule">
+        <div class="num">02</div>
+        <h5>Tokenization</h5>
+        <p>แทนที่ PAN จริงด้วยโทเค็นอิเล็กทรอนิกส์ที่ไม่มีความหมาย</p>
+      </div>
+      <div class="rule">
+        <div class="num">03</div>
+        <h5>Truncation</h5>
+        <p>ปกปิดเลขบัตร ตัดออกอย่างน้อย 6 หลัก แสดงเฉพาะ 6 แรก/4 ท้าย</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">รูปแบบ PAN ที่ถูกและผิด</h3>
+
+    <p style="font-size:14px;opacity:0.7;margin-bottom:12px;">ตัวอย่าง: หมายเลขบัตรจริง <code style="font-family:'IBM Plex Mono',monospace;">1234 5678 4321 8765</code></p>
+
+    <div class="pan-display valid">
+      <span>XXXX XXXX XXXX 8765</span>
+      <span class="mark">VALID</span>
+    </div>
+    <div class="pan-display valid">
+      <span>1234 56XX XXXX 8765</span>
+      <span class="mark">VALID</span>
+    </div>
+    <div class="pan-display invalid">
+      <span>1234 5678 4321 8765</span>
+      <span class="mark">FULL — INVALID</span>
+    </div>
+    <div class="pan-display invalid">
+      <span>1234 5678 4321 XXXX</span>
+      <span class="mark">ปกปิดน้อยเกินไป</span>
+    </div>
+  </div>
+</section>
+
+<!-- S5 -->
+<section id="s5">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div class="section-title-block">
+        <h2>รหัสผ่านที่แข็งแกร่ง</h2>
+        <div class="subtitle">Your First Line of Defense</div>
+      </div>
+    </div>
+
+    <p class="lead"><span class="drop">2</span>3 ล้านบัญชีถูกแฮก โดยใช้รหัสผ่านเดียวกัน — <code style="font-family:'IBM Plex Mono',monospace;font-style:normal;font-size:0.85em;background:var(--ink);color:var(--paper);padding:2px 8px;">123456</code></p>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:32px 0 16px;letter-spacing:0.02em;">ข้อกำหนดของ PCI DSS</h3>
+
+    <div class="body-grid">
+      <div class="card">
+        <h3>ข้อกำหนดขั้นต่ำ</h3>
+        <ul>
+          <li>อย่างน้อย 7 ตัวอักษร</li>
+          <li>ต้องมีทั้งตัวเลขและตัวอักษร</li>
+          <li>เปลี่ยนทุก 90 วัน</li>
+          <li>ห้ามซ้ำกับรหัสเดิม</li>
+          <li>ห้ามใช้ค่า default จากผู้ผลิต</li>
+          <li>ล็อกบัญชีหลังป้อนผิด ≤ 6 ครั้ง</li>
+        </ul>
+      </div>
+      <div class="card accent">
+        <h3>Best Practice</h3>
+        <ul>
+          <li>ผสม upper/lower/ตัวเลข/อักขระพิเศษ</li>
+          <li>ความยาว 8-10 ตัวขึ้นไป</li>
+          <li>ไม่ใช้วลีหรือเลขที่นิยม</li>
+          <li>ไม่ใช้ข้อมูลส่วนตัว (ชื่อ ทีม ลูก)</li>
+          <li>ไม่แชร์กับใคร แม้แต่ครอบครัว</li>
+          <li>ไม่จด ไม่ส่งทางอีเมล</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">เปรียบเทียบความปลอดภัย</h3>
+
+    <div style="background:var(--paper-deep);padding:24px;">
+      <div class="password-tier">
+        <span class="pw">admin</span>
+        <div class="meter tier-1"><span></span></div>
+        <span class="label">อันตรายมาก</span>
+      </div>
+      <div class="password-tier">
+        <span class="pw">manutd</span>
+        <div class="meter tier-2"><span></span></div>
+        <span class="label">อ่อนแอ</span>
+      </div>
+      <div class="password-tier">
+        <span class="pw">901246723</span>
+        <div class="meter tier-3"><span></span></div>
+        <span class="label">ปานกลาง</span>
+      </div>
+      <div class="password-tier">
+        <span class="pw">momP!anc3!!</span>
+        <div class="meter tier-4"><span></span></div>
+        <span class="label">แข็งแกร่ง</span>
+      </div>
+    </div>
+
+    <div class="warning">
+      <div class="label">🔐 จำไว้</div>
+      <p>โปรแกรมแฮกสามารถทดสอบ <strong>หลายพันรหัสต่อวินาที</strong> — ทดสอบคำในพจนานุกรมทั้งภาษา ถอดรหัสผ่านได้ <strong>30%</strong> ภายในเวลาไม่ถึง 1 วินาที</p>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">ลืมรหัสผ่าน?</h3>
+    <ol class="steps">
+      <li><strong>อย่าเดารหัสผ่าน</strong>ระบบจะล็อกบัญชีหลังป้อนผิด 6 ครั้ง</li>
+      <li><strong>อย่าใช้บัญชีคนอื่น</strong>ละเมิด PCI และคุณจะรับผิดชอบสิ่งที่พวกเขาทำ</li>
+      <li><strong>ติดต่อ IT หรือหัวหน้างาน</strong>เพื่อขอรีเซ็ตรหัสอย่างถูกต้อง</li>
+      <li><strong>เปลี่ยนรหัสใหม่ทันที</strong>หลังจากได้รับรหัสชั่วคราว</li>
+    </ol>
+  </div>
+</section>
+
+<!-- S6 -->
+<section id="s6">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div class="section-title-block">
+        <h2>Unique ID</h2>
+        <div class="subtitle">Use Your Own — Never Share</div>
+      </div>
+    </div>
+
+    <p class="lead"><span class="drop">O</span>ne person = One ID. ทุกการกระทำต้องสืบย้อนได้ถึงบุคคลคนเดียว ไม่มีข้อยกเว้น</p>
+
+    <div class="callout">
+      <p>ID ของคุณคือ <strong>ลายเซ็นดิจิทัล</strong> ทุกครั้งที่มีการเข้าใช้ระบบด้วย ID ของคุณ ระบบจะถือว่า<strong>เป็นคุณ</strong>ที่ทำ — ไม่ว่าจริงๆ จะเป็นคุณหรือไม่ก็ตาม</p>
+      <span class="attribution">— หลักการ Accountability ใน PCI DSS</span>
+    </div>
+
+    <div class="body-grid">
+      <div class="card accent">
+        <h3>❌ การแชร์ Credentials</h3>
+        <ul>
+          <li>ตรวจสอบย้อนหลังไม่ได้</li>
+          <li>ระบบ logging ใช้ไม่ได้ผล</li>
+          <li>ความรับผิดตกอยู่ที่คุณ</li>
+          <li>เสี่ยงโดนลงโทษทางวินัย</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h3>✓ Unique ID</h3>
+        <ul>
+          <li>ตรวจสอบ (audit) ได้ชัดเจน</li>
+          <li>ระบุตัวผู้กระทำได้</li>
+          <li>ปฏิบัติตาม PCI DSS</li>
+          <li>ปกป้องตัวเองและทีม</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S7 -->
+<section id="s7">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div class="section-title-block">
+        <h2>Physical Security</h2>
+        <div class="subtitle">25% ของเหตุการณ์ปลอดภัยมาจากการขโมยทางกายภาพ</div>
+      </div>
+    </div>
+
+    <p class="lead"><span class="drop">"</span>มีไฟร์วอลล์ระดับเทพ ใช้แอนตี้ไวรัสตัวท็อป รหัสผ่านแข็งแกร่งทุกคน <em>แต่ถ้าทิ้งประตูหน้าเปิดไว้ ทุกอย่างก็ไร้ความหมาย</em></p>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:32px 0 16px;letter-spacing:0.02em;">ภัยคุกคามทางกายภาพ</h3>
+
+    <div class="malware-grid">
+      <div class="malware-card">
+        <div class="emoji">💳</div>
+        <h5>Card Skimming</h5>
+        <p>ติด skimmer บนเครื่องรูดบัตรพกพา เพื่อขโมยข้อมูลบัตรลูกค้า</p>
+      </div>
+      <div class="malware-card">
+        <div class="emoji">🔧</div>
+        <h5>Device Tampering</h5>
+        <p>การแอบดัดแปลงอุปกรณ์เพื่อเก็บหรือส่งข้อมูลออก</p>
+      </div>
+      <div class="malware-card">
+        <div class="emoji">📦</div>
+        <h5>Device Theft</h5>
+        <p>ขโมยอุปกรณ์ที่มีข้อมูลผู้ถือบัตรไปทั้งเครื่อง</p>
+      </div>
+      <div class="malware-card">
+        <div class="emoji">🗑️</div>
+        <h5>Dumpster Diving</h5>
+        <p>รื้อค้นถังขยะหาเอกสารหรือใบเสร็จที่มีข้อมูลบัตร</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">มาตรการป้องกัน</h3>
+    <div class="rules-grid">
+      <div class="rule">
+        <div class="num">01</div>
+        <h5>🔒 Lock Devices</h5>
+        <p>ล็อกคอมพิวเตอร์ ลิ้นชัก ตู้เก็บเอกสารเมื่อไม่ใช้</p>
+      </div>
+      <div class="rule">
+        <div class="num">02</div>
+        <h5>👀 Inspect Terminals</h5>
+        <p>ตรวจเครื่องรูดบัตรประจำ สังเกตร่องรอยการดัดแปลง</p>
+      </div>
+      <div class="rule">
+        <div class="num">03</div>
+        <h5>🚪 Access Control</h5>
+        <p>จำกัดผู้เข้าออกพื้นที่ที่มีอุปกรณ์ประมวลผลข้อมูล</p>
+      </div>
+      <div class="rule">
+        <div class="num">04</div>
+        <h5>👥 Escort Visitors</h5>
+        <p>บุคคลภายนอกต้องมีผู้ดูแลตลอดเวลา</p>
+      </div>
+      <div class="rule">
+        <div class="num">05</div>
+        <h5>🗑️ Shred Documents</h5>
+        <p>ทำลายเอกสารด้วยเครื่องย่อยกระดาษมาตรฐาน PCI</p>
+      </div>
+      <div class="rule">
+        <div class="num">06</div>
+        <h5>📋 Inventory</h5>
+        <p>บันทึกรายการอุปกรณ์ครบ ตรวจนับสม่ำเสมอ</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S8 -->
+<section id="s8">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <div class="section-title-block">
+        <h2>Malware</h2>
+        <div class="subtitle">ซอฟต์แวร์ร้าย — ภัยที่มองไม่เห็น</div>
+      </div>
+    </div>
+
+    <p class="lead"><span class="drop">M</span>alware คือซอฟต์แวร์ที่ออกแบบมาเพื่อบุกรุกและทำลายคอมพิวเตอร์ <em>โดยไม่ได้รับความยินยอม</em></p>
+
+    <div class="malware-grid">
+      <div class="malware-card">
+        <div class="emoji">🔒</div>
+        <h5>Ransomware</h5>
+        <p>เข้ารหัสไฟล์เหยื่อ เรียกค่าไถ่ผ่าน Bitcoin เพื่อปลดล็อก</p>
+      </div>
+      <div class="malware-card">
+        <div class="emoji">👁️</div>
+        <h5>Spyware</h5>
+        <p>แอบสอดแนม ขโมยข้อมูลการใช้งานและข้อมูลส่วนตัว</p>
+      </div>
+      <div class="malware-card">
+        <div class="emoji">📢</div>
+        <h5>Adware</h5>
+        <p>แสดงโฆษณาที่ไม่ต้องการ เปลี่ยนเส้นทางเบราว์เซอร์</p>
+      </div>
+      <div class="malware-card">
+        <div class="emoji">🦠</div>
+        <h5>Viruses</h5>
+        <p>แก้ไขไฟล์ปกติให้กลายเป็นพาหะ — 10% ของการติดมัลแวร์</p>
+      </div>
+      <div class="malware-card">
+        <div class="emoji">🐴</div>
+        <h5>Trojans</h5>
+        <p>ปลอมเป็นโปรแกรมปกติ มักแฝงผ่านอีเมลและเว็บที่ติดเชื้อ</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">6 วิธีป้องกัน</h3>
+
+    <ol class="steps">
+      <li><strong>ระวังอีเมลแปลก ๆ</strong>อย่าเปิดอีเมล ไฟล์แนบ หรือคลิกลิงก์จากผู้ส่งที่ไม่รู้จัก</li>
+      <li><strong>หลีกเลี่ยงเว็บไซต์น่าสงสัย</strong>โดยเฉพาะเว็บที่โฆษณาในสแปม</li>
+      <li><strong>ระวัง USB Drive ที่ไม่รู้จัก</strong>ห้ามเสียบ USB ที่ไม่รู้ที่มา</li>
+      <li><strong>อัปเดตระบบสม่ำเสมอ</strong>ติดตั้ง security update โดยเร็วที่สุด</li>
+      <li><strong>ใช้ Anti-virus</strong>ต้องเปิดและอัปเดตก่อนออนไลน์เสมอ</li>
+      <li><strong>ระวัง Social Media</strong>โฆษณาปลอมและแอปอันตรายแพร่กระจายผ่านโซเชียล</li>
+    </ol>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">สัญญาณว่าติดเชื้อ</h3>
+    <div class="body-grid">
+      <div class="card">
+        <h3>🚨 สังเกตเหล่านี้</h3>
+        <ul>
+          <li>พฤติกรรมแปลกตอนเปิดเครื่อง/เบราว์เซอร์</li>
+          <li>เห็นโปรแกรมหรือไฟล์ที่ไม่เคยติดตั้ง</li>
+          <li>เครื่องช้าลงผิดปกติแม้ reboot</li>
+          <li>Anti-virus ถูกปิดโดยไม่ทราบสาเหตุ</li>
+          <li>เครื่องค้าง/crash บ่อย</li>
+          <li>ป๊อปอัพโฆษณาเด้งเยอะ</li>
+        </ul>
+      </div>
+      <div class="card accent">
+        <h3>🛠️ เมื่อสงสัย</h3>
+        <ul>
+          <li>หยุดใช้งานทันที</li>
+          <li>ไม่กรอกข้อมูลใดๆ เพิ่ม</li>
+          <li>ติดต่อแผนก IT</li>
+          <li>อย่าพยายามแก้ไขเอง</li>
+          <li>แจ้งหัวหน้างานทราบ</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S9 -->
+<section id="s9">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">09</div>
+      <div class="section-title-block">
+        <h2>Email Security</h2>
+        <div class="subtitle">อีเมลไม่ปลอดภัยโดยธรรมชาติ</div>
+      </div>
+    </div>
+
+    <p class="lead"><span class="drop">E</span>mail ส่งข้อมูลแบบ <em>ไม่เข้ารหัส</em> โดยปริยาย แฮกเกอร์ใช้โปรแกรม "sniffer" ดักจับและอ่านได้ระหว่างเดินทาง</p>
+
+    <div class="warning">
+      <div class="label">📧 ห้ามทำ</div>
+      <p>ห้ามส่งรหัสผ่าน, PAN เต็ม, CVV, หรือข้อมูลละเอียดอ่อนใด ๆ ผ่านอีเมล <strong>ไม่ว่ากรณีใด</strong> — แม้ลูกค้าจะร้องขอก็ตาม</p>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">อันตรายของอีเมลฟรี</h3>
+    <p>บริการเช่น Hotmail, Gmail ไม่เข้ารหัสและ<strong>ไม่ปลอดภัย</strong>สำหรับข้อมูลธุรกิจ คุณไม่รู้ว่าข้อมูลถูกเก็บที่ไหน นานเท่าไร และมีมาตรการอะไร — แม้ลบอีเมลแล้ว ข้อมูลก็ยังอยู่บนเซิร์ฟเวอร์</p>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">แนวทางความปลอดภัย</h3>
+    <div class="split">
+      <div class="split-half">
+        <h4>✓ ควรทำ</h4>
+        <ul>
+          <li>เขียนอีเมลด้วยความระมัดระวัง</li>
+          <li>ตรวจชื่อผู้รับก่อนกด Send</li>
+          <li>ใช้โทรศัพท์เมื่อต้องส่งข้อมูลลับ</li>
+          <li>ใช้ระบบที่เข้ารหัสสำหรับรหัสผ่าน</li>
+        </ul>
+      </div>
+      <div class="split-half">
+        <h4>✗ ห้ามทำ</h4>
+        <ul>
+          <li>ส่งรหัสผ่าน/ข้อมูลบัตรทางอีเมล</li>
+          <li>คลิกลิงก์จากผู้ส่งที่ไม่รู้จัก</li>
+          <li>ใช้อีเมลฟรีส่งข้อมูลบริษัท</li>
+          <li>ใช้อีเมลบริษัทส่งเรื่องส่วนตัว</li>
+          <li>ส่งข้อมูลผ่าน WiFi สาธารณะ</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S10 -->
+<section id="s10">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <div class="section-title-block">
+        <h2>DO &amp; DON'T</h2>
+        <div class="subtitle">แนวปฏิบัติประจำวัน — Daily Practice</div>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:32px 0 16px;letter-spacing:0.02em;">✓ DO — ทำสิ่งเหล่านี้</h3>
+
+    <div class="rules-grid">
+      <div class="rule">
+        <div class="num">01</div>
+        <h5>Secure Receipts</h5>
+        <p>เก็บใบเสร็จในตู้ล็อก ทำลายเมื่อไม่จำเป็นด้วย shredder</p>
+      </div>
+      <div class="rule">
+        <div class="num">02</div>
+        <h5>Protect the PAN</h5>
+        <p>ตรวจสอบใบเสร็จให้แสดงแบบ truncated เสมอ</p>
+      </div>
+      <div class="rule">
+        <div class="num">03</div>
+        <h5>Keep It Tidy</h5>
+        <p>รักษาความเป็นระเบียบ ใช้นโยบาย Clean Desk</p>
+      </div>
+      <div class="rule">
+        <div class="num">04</div>
+        <h5>Read the Policy</h5>
+        <p>อ่านและเข้าใจนโยบายความปลอดภัยขององค์กร</p>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">✗ DON'T — ห้ามทำสิ่งเหล่านี้</h3>
+
+    <div class="rules-grid">
+      <div class="rule" style="border-bottom-color:var(--accent);">
+        <div class="num">01</div>
+        <h5>Make It Easy</h5>
+        <p>ห้ามวางใบเสร็จในที่เปิดเผยหรือพื้นที่ไม่ปลอดภัย</p>
+      </div>
+      <div class="rule" style="border-bottom-color:var(--accent);">
+        <div class="num">02</div>
+        <h5>Bin It</h5>
+        <p>ห้ามทิ้งใบเสร็จในถังขยะปกติ — เสี่ยง dumpster diving</p>
+      </div>
+      <div class="rule" style="border-bottom-color:var(--accent);">
+        <div class="num">03</div>
+        <h5>Write Down CVV</h5>
+        <p>ห้ามจด อีเมล หรือเก็บ CVV ในรูปแบบใด ๆ ทั้งสิ้น</p>
+      </div>
+      <div class="rule" style="border-bottom-color:var(--accent);">
+        <div class="num">04</div>
+        <h5>Email the PAN</h5>
+        <p>ห้ามส่ง PAN เต็มทางอีเมล — ส่งได้เฉพาะ truncated/encrypted</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>ก่อนทำอะไรกับข้อมูลบัตร — ถามตัวเองว่า "ถ้าข้อมูลนี้รั่ว ใครจะเดือดร้อน?" หากคำตอบคือ <strong>ลูกค้าหรือบริษัท</strong> = อย่าทำ และหาวิธีที่ปลอดภัยกว่า</p>
+      <span class="attribution">— กฎทองของ PCI DSS</span>
+    </div>
+  </div>
+</section>
+
+<!-- S11: QUIZ ANSWERS -->
+<section id="s11">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <div class="section-title-block">
+        <h2>เฉลยข้อสอบท้ายบท</h2>
+        <div class="subtitle">Quiz Answers &amp; Explanations</div>
+      </div>
+    </div>
+
+    <p class="lead"><span class="drop">7</span> ข้อสอบจากบทเรียนทั้งหมด พร้อมเฉลยและคำอธิบายอย่างละเอียด</p>
+
+    <!-- Q1 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <span class="quiz-num">QUESTION 01</span>
+        <span class="quiz-tag">Physical Security</span>
+      </div>
+      <div class="quiz-body">
+        <p class="quiz-question">เช้าวันหนึ่งเมื่อมาถึงที่ทำงาน คุณพบว่าเพื่อนร่วมงานจดข้อมูลบัตรเครดิตของลูกค้าลงบนกระดาษและทิ้งไว้หลังเคาน์เตอร์ คุณควรทำอย่างไร?</p>
+        <ul class="quiz-options">
+          <li class="wrong">ทิ้งกระดาษโน้ตลงในถังขยะธรรมดา</li>
+          <li class="correct">ทำลายกระดาษโน้ตด้วยเครื่องย่อยกระดาษที่ได้มาตรฐาน PCI</li>
+        </ul>
+        <div class="quiz-answer">
+          <span class="quiz-answer-label">✓ Correct Answer · Explanation</span>
+          <p class="quiz-answer-text">ต้องใช้ <strong>PCI-compliant shredder</strong> เท่านั้น เพราะถังขยะธรรมดาเสี่ยงต่อ <strong>Dumpster Diving</strong> — อาชญากรอาจรื้อค้นถังขยะหาข้อมูล ทั้งยังควรแจ้งเพื่อนร่วมงานและรายงานเหตุการณ์ให้หัวหน้าทราบ</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <span class="quiz-num">QUESTION 02</span>
+        <span class="quiz-tag">Email Security</span>
+      </div>
+      <div class="quiz-body">
+        <p class="quiz-question">ต้องส่งรหัสผ่านบัญชีใหม่ให้พนักงานที่ทำงานจากบ้าน ควรส่งรหัสผ่านอย่างไร?</p>
+        <ul class="quiz-options">
+          <li class="wrong">ใส่ในอีเมลฉบับเดียวกับลิงก์</li>
+          <li class="wrong">ส่งในอีเมลแยกฉบับ</li>
+          <li class="correct">โทรหาพนักงานและบอกรหัสผ่านทางโทรศัพท์</li>
+        </ul>
+        <div class="quiz-answer">
+          <span class="quiz-answer-label">✓ Correct Answer · Explanation</span>
+          <p class="quiz-answer-text">อีเมล <strong>ไม่ปลอดภัยโดยธรรมชาติ</strong> — ส่งข้อมูลแบบไม่เข้ารหัส แฮกเกอร์สามารถดักจับได้ด้วยโปรแกรม sniffer ห้ามส่งข้อมูลลับเช่นรหัสผ่านทางอีเมลโดยเด็ดขาด ไม่ว่าจะแยกอีเมลหรือไม่ก็ตาม</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <span class="quiz-num">QUESTION 03</span>
+        <span class="quiz-tag">Best Practice</span>
+      </div>
+      <div class="quiz-body">
+        <p class="quiz-question">ข้อใดเป็นแนวปฏิบัติด้านความปลอดภัยที่ดีที่สุดในการจัดการข้อมูลบัตรชำระเงิน?</p>
+        <ul class="quiz-options">
+          <li class="correct">จัดเก็บข้อมูลบัตรในสถานที่ปลอดภัย</li>
+          <li class="wrong">จดเลข CVV ไว้เพื่อจำได้</li>
+          <li class="wrong">ส่ง PAN ทางอีเมลหากมีการร้องขอ</li>
+          <li class="wrong">ทำสำเนาเลข PAN เก็บไว้</li>
+        </ul>
+        <div class="quiz-answer">
+          <span class="quiz-answer-label">✓ Correct Answer · Explanation</span>
+          <p class="quiz-answer-text">PCI DSS อนุญาตให้จัดเก็บ <strong>Cardholder Data</strong> ได้ หากมีเหตุผลทางธุรกิจและมาตรการความปลอดภัยที่เข้มงวด ส่วน <strong>CVV ห้ามจดเด็ดขาด</strong> (เป็น SAD), <strong>PAN ห้ามส่งทางอีเมลแบบเต็ม</strong>, และไม่ควรทำสำเนาที่เพิ่มความเสี่ยง</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <span class="quiz-num">QUESTION 04</span>
+        <span class="quiz-tag">Truncation</span>
+      </div>
+      <div class="quiz-body">
+        <p class="quiz-question">หมายเลขบัตรเครดิตของลูกค้าคือ 1234 5678 4321 8765 ใบเสร็จควรแสดงหมายเลขนี้อย่างไร?</p>
+        <ul class="quiz-options">
+          <li class="wrong">1234 5678 4321 8765</li>
+          <li class="wrong">xxx xxxx 4321 8765</li>
+          <li class="correct">xxxx xxxx xxxx 8765</li>
+          <li class="wrong">1234 5678 4321 xxxx</li>
+        </ul>
+        <div class="quiz-answer">
+          <span class="quiz-answer-label">✓ Correct Answer · Explanation</span>
+          <p class="quiz-answer-text">หลัก <strong>Truncation</strong> ของ PCI — ต้องปกปิดอย่างน้อย <strong>6 หลัก</strong> แสดงได้เฉพาะ <strong>6 หลักแรก และ/หรือ 4 หลักสุดท้าย</strong> เท่านั้น ตัวเลือกที่ปลอดภัยที่สุดคือแสดงเพียง 4 หลักสุดท้าย ปกปิดอีก 12 หลัก</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <span class="quiz-num">QUESTION 05</span>
+        <span class="quiz-tag">CVV / CSC</span>
+      </div>
+      <div class="quiz-body">
+        <p class="quiz-question">จุดประสงค์หลักของ CSC (CVV) บนบัตรชำระเงินคืออะไร?</p>
+        <ul class="quiz-options">
+          <li class="wrong">ยืนยันว่าบัตรยังไม่หมดอายุ</li>
+          <li class="correct">ยืนยันว่าผู้ถือบัตรมีบัตรอยู่ในครอบครอง</li>
+          <li class="wrong">ยืนยันว่าผู้ถือบัตรมีเงินเพียงพอสำหรับธุรกรรม</li>
+        </ul>
+        <div class="quiz-answer">
+          <span class="quiz-answer-label">✓ Correct Answer · Explanation</span>
+          <p class="quiz-answer-text">CVV/CSC คือเลข 3-4 หลักที่ <strong>ไม่ได้พิมพ์บนแถบแม่เหล็ก/ชิป</strong> และ <strong>ห้ามจัดเก็บ</strong> — ออกแบบมาเพื่อพิสูจน์ว่าผู้ทำธุรกรรมถือบัตรจริงในมือ (สำคัญมากในการซื้อออนไลน์/โทรศัพท์) ส่วนวันหมดอายุใช้ Expiration Date และยอดเงินคงเหลือเป็นหน้าที่ของธนาคารผู้ออกบัตร</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <span class="quiz-num">QUESTION 06</span>
+        <span class="quiz-tag">Strong Password</span>
+      </div>
+      <div class="quiz-body">
+        <p class="quiz-question">ข้อใดถือเป็นรหัสผ่านที่แข็งแกร่ง?</p>
+        <ul class="quiz-options">
+          <li class="wrong">901246723</li>
+          <li class="wrong">manutd</li>
+          <li class="wrong">admin</li>
+          <li class="correct">momP!anc3!!</li>
+        </ul>
+        <div class="quiz-answer">
+          <span class="quiz-answer-label">✓ Correct Answer · Explanation</span>
+          <p class="quiz-answer-text"><code style="font-family:'IBM Plex Mono',monospace;background:rgba(255,255,255,0.1);padding:2px 6px;">momP!anc3!!</code> ผ่านทุกข้อกำหนด — ยาว 11 ตัว, มีตัวอักษร+ตัวเลข+อักขระพิเศษ, ผสมพิมพ์ใหญ่-เล็ก ส่วนตัวเลือกอื่น: <strong>901246723</strong> มีแต่ตัวเลข, <strong>manutd</strong> สั้นและเป็นชื่อทีมที่เดาง่าย, <strong>admin</strong> เป็น default password ที่อันตรายที่สุด</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-card">
+      <div class="quiz-header">
+        <span class="quiz-num">QUESTION 07</span>
+        <span class="quiz-tag">Password Management</span>
+      </div>
+      <div class="quiz-body">
+        <p class="quiz-question">จำรหัสผ่านไม่ได้ ควรทำอย่างไร?</p>
+        <ul class="quiz-options">
+          <li class="wrong">ใช้บัญชีของเพื่อนร่วมงานแทน</li>
+          <li class="wrong">ไม่เป็นไร เพราะจดไว้บนกระดาษ post-it แล้ว</li>
+          <li class="correct">ขอให้หัวหน้างานหรือแผนก IT รีเซ็ตรหัสผ่านให้</li>
+          <li class="wrong">เดารหัสผ่าน</li>
+        </ul>
+        <div class="quiz-answer">
+          <span class="quiz-answer-label">✓ Correct Answer · Explanation</span>
+          <p class="quiz-answer-text">ติดต่อ <strong>IT หรือหัวหน้างาน</strong> เป็นวิธีที่ปลอดภัยและถูกต้องตาม PCI DSS เพราะมีการยืนยันตัวตนและบันทึก audit trail ส่วนตัวเลือกอื่น: ใช้บัญชีคนอื่น <strong>ละเมิด Unique ID</strong>, จดบน post-it <strong>ใครก็เห็นได้</strong>, เดารหัส <strong>ระบบจะล็อกหลังป้อนผิด 6 ครั้ง</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>การรู้คำตอบที่ถูกต้องคือก้าวแรก แต่การ <strong>เข้าใจเหตุผล</strong>เบื้องหลังต่างหากที่ทำให้คุณเป็นพนักงานที่ปลอดภัยจริงๆ</p>
+      <span class="attribution">— สิ้นสุดบทเรียน · End of Course</span>
+    </div>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;margin:48px 0 16px;letter-spacing:0.02em;">สรุปคะแนนของคุณ</h3>
+    <div class="body-grid">
+      <div class="card green">
+        <h3>7/7 — ยอดเยี่ยม!</h3>
+        <p style="margin:0;">คุณเข้าใจหลักการ PCI DSS อย่างครบถ้วน พร้อมเป็นปราการสำคัญในการปกป้องข้อมูลลูกค้า</p>
+      </div>
+      <div class="card gold">
+        <h3>5-6/7 — ดี</h3>
+        <p style="margin:0;">เข้าใจหลักการดี ทบทวนหัวข้อที่ตอบผิดเพื่อความแม่นยำขึ้น</p>
+      </div>
+      <div class="card accent">
+        <h3>ต่ำกว่า 5/7</h3>
+        <p style="margin:0;">ควรทบทวนเนื้อหาใหม่อีกครั้ง โดยเฉพาะเรื่อง SAD vs CD และ Best Practices</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-mark">
+      Stay <span class="em">vigilant.</span><br>
+      Stay <span class="em">compliant.</span>
+    </div>
+
+    <div class="footer-grid">
+      <div>
+        <h6>มาตรฐาน</h6>
+        Payment Card Industry<br>
+        Data Security Standard<br>
+        Version 4.0 — 2024
+      </div>
+      <div>
+        <h6>ติดต่อ</h6>
+        PCI Security Standards Council<br>
+        pcisecuritystandards.org<br>
+        ฝ่าย IT ขององค์กรของคุณ
+      </div>
+      <div>
+        <h6>จำไว้</h6>
+        ความปลอดภัยข้อมูลบัตร<br>
+        คือความรับผิดชอบ<br>
+        ของทุกคน
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>คู่มือสรุป PCI DSS — เพื่อการอบรมและทบทวน</span>
+      <span>EDITION 01 · MMXXVI</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Reveal on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('section').forEach(el => {
+  el.classList.add('reveal');
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
